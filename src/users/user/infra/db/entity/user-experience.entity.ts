@@ -1,5 +1,5 @@
 import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn } from 'typeorm';
-import { User } from './user.entity';
+import { UserEntity } from './user.entity';
 import { Company } from './company.entity';
 
 @Entity()
@@ -7,9 +7,9 @@ export class UserExperience {
   @PrimaryGeneratedColumn()
   experience_id: number;
 
-  @ManyToOne(() => User, (user) => user.userExperiences)
+  @ManyToOne(() => UserEntity, (user) => user.userExperiences)
   @JoinColumn({ name: 'user_id' })
-  user: User;
+  user: UserEntity;
 
   @ManyToOne(() => Company, (company) => company.userExperiences)
   @JoinColumn({ name: 'company_id' })

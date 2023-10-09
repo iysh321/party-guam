@@ -3,11 +3,14 @@ import { Transform } from 'class-transformer';
 import { IsEmail, IsString, Matches, MaxLength, MinLength } from 'class-validator';
 
 export class CreateUserDto {
+  @IsString()
+  readonly account: string;
+
   @Transform((params) => params.value.trim())
   @IsString()
   @MinLength(2)
   @MaxLength(30)
-  readonly name: string;
+  readonly nickname: string;
 
   @Transform(({ value, obj }) => {
     if (obj.password.includes(value.trim())) {

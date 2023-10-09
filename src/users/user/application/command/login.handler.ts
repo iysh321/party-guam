@@ -1,6 +1,6 @@
 import { Inject, Injectable, NotFoundException } from '@nestjs/common';
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
-import { IUserRepository } from 'src/users/domain/repository/iuser.repository';
+import { IUserRepository } from 'src/users/user/domain/repository/iuser.repository';
 import { AuthService } from 'src/auth/auth.service';
 import { LoginCommand } from './login.command';
 
@@ -13,7 +13,7 @@ export class LoginHandler implements ICommandHandler<LoginCommand> {
   ) {}
 
   async execute(command: LoginCommand) {
-    const { email } = command;
+    const { account, email } = command;
 
     const user = await this.userRepository.findByEmail(email);
     if (user === null) {

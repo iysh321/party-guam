@@ -1,7 +1,7 @@
-import { LoginCommand } from '../application/command/login.command';
+import { CommandBus, QueryBus } from '@nestjs/cqrs';
 import { Body, Controller, Post } from '@nestjs/common';
 
-import { CommandBus, QueryBus } from '@nestjs/cqrs';
+import { LoginCommand } from '../application/command/login.command';
 import { CreateUserCommand } from '../application/command/create-user.command';
 
 import { CreateUserDto } from './dto/create-user.dto';
@@ -19,9 +19,9 @@ export class UserController {
   @Post()
   @ApiOperation({ summary: '회원가입' })
   async createUser(@Body() dto: CreateUserDto): Promise<void> {
-    const { name, email } = dto;
+    const { nickname, email } = dto;
 
-    const command = new CreateUserCommand(name, email);
+    const command = new CreateUserCommand(nickname, email);
 
     return this.commandBus.execute(command);
   }
@@ -29,9 +29,9 @@ export class UserController {
   @Post('/login')
   @ApiOperation({ summary: '로그인' })
   async login(@Body() dto: UserLoginDto): Promise<string> {
-    const { email } = dto;
+    const { account, password } = dto;
 
-    const command = new LoginCommand(email);
+    const command = new LoginCommand(account, password);
 
     return this.commandBus.execute(command);
   }

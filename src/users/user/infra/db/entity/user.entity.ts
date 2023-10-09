@@ -9,12 +9,12 @@ import { PartyProposal } from 'src/parties/apply/party-proposal.entity';
 import { PartyRecruitment } from 'src/parties/apply/party-recruitment.entity';
 
 @Entity()
-export class User {
+export class UserEntity {
   @PrimaryGeneratedColumn()
-  user_id: number;
+  id: number;
 
   @Column({ nullable: true })
-  oauth: string;
+  account: string;
 
   @Column({ nullable: true, unique: true })
   email: string;
