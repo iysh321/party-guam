@@ -1,14 +1,13 @@
 import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm';
 
-import { UserSkill } from './user-skill.entity';
-import { UserExperience } from './user-experience.entity';
-import { Party } from 'src/parties/party/party.entity';
-import { UserLike } from 'src/users/like/infra/db/entity/user-like.entity';
-import { Follow } from 'src/users/follow/infra/db/entity/follow.entity';
-import { PartyProposal } from 'src/parties/apply/party-proposal.entity';
-import { PartyRecruitment } from 'src/parties/apply/party-recruitment.entity';
+import { UserSkillEntity } from './user-skill.entity';
+import { ExperienceEntity } from './experience.entity';
+import { PartyUserEntity } from 'src/parties/party/party-user.entity';
+import { FollowEntity } from 'src/users/follow/infra/db/entity/follow.entity';
+import { PartyProposalEntity } from 'src/parties/apply/party-proposal.entity';
+import { PartyRecruitmentEntity } from 'src/parties/apply/party-recruitment.entity';
 
-@Entity()
+@Entity('user')
 export class UserEntity {
   @PrimaryGeneratedColumn()
   id: number;
@@ -49,24 +48,21 @@ export class UserEntity {
   @Column()
   status: string;
 
-  @OneToMany(() => UserLike, (userLike) => userLike.user)
-  userLikes: UserLike[];
+  @OneToMany(() => FollowEntity, (follow) => follow.user)
+  follows: FollowEntity[];
 
-  @OneToMany(() => Follow, (follow) => follow.user)
-  follows: Follow[];
+  @OneToMany(() => PartyUserEntity, (party) => party.user)
+  parties: PartyUserEntity[];
 
-  @OneToMany(() => Party, (party) => party.user)
-  parties: Party[];
+  @OneToMany(() => UserSkillEntity, (userSkill) => userSkill.user)
+  userSkills: UserSkillEntity[];
 
-  @OneToMany(() => UserSkill, (userSkill) => userSkill.user)
-  userSkills: UserSkill[];
+  @OneToMany(() => ExperienceEntity, (userExperience) => userExperience.user)
+  userExperiences: ExperienceEntity[];
 
-  @OneToMany(() => UserExperience, (userExperience) => userExperience.user)
-  userExperiences: UserExperience[];
+  @OneToMany(() => PartyProposalEntity, (userExperience) => userExperience.user)
+  partyProposals: PartyProposalEntity[];
 
-  @OneToMany(() => PartyProposal, (userExperience) => userExperience.user)
-  partyProposals: PartyProposal[];
-
-  @OneToMany(() => PartyRecruitment, (userExperience) => userExperience.user)
-  partyRecruitments: PartyRecruitment[];
+  @OneToMany(() => PartyRecruitmentEntity, (userExperience) => userExperience.user)
+  partyRecruitments: PartyRecruitmentEntity[];
 }

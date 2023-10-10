@@ -1,18 +1,15 @@
-import { Entity, PrimaryGeneratedColumn, ManyToOne, JoinColumn, Column, OneToMany } from 'typeorm';
-import { PartyCommentLike } from './party-comment-like.entity';
-import { PartyPost } from '../post/party-post.entity';
+import { Entity, PrimaryGeneratedColumn, ManyToOne, JoinColumn, Column } from 'typeorm';
+
+import { PartyEntity } from '../post/party.entity';
 
 @Entity()
-export class PartyComment {
+export class PartyCommentEntity {
   @PrimaryGeneratedColumn()
-  party_comment_id: number;
+  id: number;
 
-  @ManyToOne(() => PartyPost, (post) => post.comments)
+  @ManyToOne(() => PartyEntity, (post) => post.comments)
   @JoinColumn({ name: 'party_post_id' })
-  partyPost: PartyPost;
-
-  @OneToMany(() => PartyCommentLike, (partyCommentLike) => partyCommentLike.partyComment)
-  partyCommentLikes: PartyCommentLike[];
+  party: PartyEntity;
 
   @Column()
   content: string;

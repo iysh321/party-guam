@@ -1,20 +1,20 @@
 import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn } from 'typeorm';
 
-import { User } from 'src/users/user/infra/db/entity/user.entity';
-import { PartyPost } from '../post/party-post.entity';
+import { UserEntity } from 'src/users/user/infra/db/entity/user.entity';
+import { PartyEntity } from '../post/party.entity';
 
 @Entity()
-export class PartyProposal {
+export class PartyProposalEntity {
   @PrimaryGeneratedColumn()
-  party_proposal_id: number;
+  id: number;
 
-  @ManyToOne(() => User, (user) => user.partyProposals)
+  @ManyToOne(() => UserEntity, (user) => user.partyProposals)
   @JoinColumn({ name: 'user_id' })
-  user: User;
+  user: UserEntity;
 
-  @ManyToOne(() => PartyPost, (post) => post.partyProposals)
+  @ManyToOne(() => PartyEntity, (post) => post.partyProposals)
   @JoinColumn({ name: 'party_post_id' })
-  partyPost: PartyPost;
+  party: PartyEntity;
 
   @Column({ nullable: true })
   message: string;

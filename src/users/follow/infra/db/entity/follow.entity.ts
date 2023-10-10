@@ -1,16 +1,16 @@
-import { User } from 'src/users/user/infra/db/entity/user.entity';
+import { UserEntity } from 'src/users/user/infra/db/entity/user.entity';
 import { Entity, PrimaryGeneratedColumn, ManyToOne, JoinColumn } from 'typeorm';
 
 @Entity()
-export class Follow {
+export class FollowEntity {
   @PrimaryGeneratedColumn()
-  follow_id: number;
+  id: number;
 
-  @ManyToOne(() => User, (user) => user.follows)
+  @ManyToOne(() => UserEntity, (user) => user.follows)
   @JoinColumn({ name: 'follwer_id' })
-  user: User;
+  user: UserEntity;
 
-  @ManyToOne(() => User, (user) => user.follows)
+  @ManyToOne(() => UserEntity, (user) => user.follows)
   @JoinColumn({ name: 'following_id' })
-  following: User;
+  following: UserEntity;
 }

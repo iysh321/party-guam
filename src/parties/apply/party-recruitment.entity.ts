@@ -1,19 +1,19 @@
-import { User } from 'src/users/user/infra/db/entity/user.entity';
+import { UserEntity } from 'src/users/user/infra/db/entity/user.entity';
 import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn } from 'typeorm';
-import { PartyPost } from '../post/party-post.entity';
+import { PartyEntity } from '../post/party.entity';
 
 @Entity()
-export class PartyRecruitment {
+export class PartyRecruitmentEntity {
   @PrimaryGeneratedColumn()
-  party_recruitment_id: number;
+  id: number;
 
-  @ManyToOne(() => User, (user) => user.partyRecruitments)
+  @ManyToOne(() => UserEntity, (user) => user.partyRecruitments)
   @JoinColumn({ name: 'user_id' })
-  user: User;
+  user: UserEntity;
 
-  @ManyToOne(() => PartyPost, (post) => post.partyRecruitments)
+  @ManyToOne(() => PartyEntity, (post) => post.partyRecruitments)
   @JoinColumn({ name: 'party_post_id' })
-  partyPost: PartyPost;
+  party: PartyEntity;
 
   @Column({ nullable: true })
   message: string;

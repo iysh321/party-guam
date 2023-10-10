@@ -1,17 +1,17 @@
 import { Entity, PrimaryGeneratedColumn, ManyToOne, JoinColumn } from 'typeorm';
 import { UserEntity } from './user.entity';
-import { Skill } from 'src/common/skill.entity';
+import { SkillEntity } from 'src/common/skill.entity';
 
-@Entity()
-export class UserSkill {
+@Entity('user_skill')
+export class UserSkillEntity {
   @PrimaryGeneratedColumn()
-  user_skill_id: number;
+  id: number;
 
   @ManyToOne(() => UserEntity, (user) => user.userSkills)
   @JoinColumn({ name: 'user_id' })
   user: UserEntity;
 
-  @ManyToOne(() => Skill, (skill) => skill.userSkills)
+  @ManyToOne(() => SkillEntity, (skill) => skill.userSkills)
   @JoinColumn({ name: 'skill_id' })
-  skill: Skill;
+  skill: SkillEntity;
 }
