@@ -1,7 +1,7 @@
 export class User {
   constructor(
     private id: string,
-    private name: string,
+    private nickname: string,
     private email: string,
     private password: string,
     private signupVerifyToken: string,
@@ -12,7 +12,7 @@ export class User {
   }
 
   getName(): Readonly<string> {
-    return this.name;
+    return this.nickname;
   }
 
   getEmail(): Readonly<string> {

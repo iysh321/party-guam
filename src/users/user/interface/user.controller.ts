@@ -1,5 +1,5 @@
 import { CommandBus, QueryBus } from '@nestjs/cqrs';
-import { Body, Controller, Post } from '@nestjs/common';
+import { Body, Controller, Get, Patch, Post } from '@nestjs/common';
 
 import { LoginCommand } from '../application/command/login.command';
 import { CreateUserCommand } from '../application/command/create-user.command';
@@ -16,7 +16,7 @@ export class UserController {
     private queryBus: QueryBus,
   ) {}
 
-  @Post()
+  @Post('')
   @ApiOperation({ summary: '회원가입' })
   async createUser(@Body() dto: CreateUserDto): Promise<void> {
     const { nickname, email } = dto;
@@ -35,4 +35,16 @@ export class UserController {
 
     return this.commandBus.execute(command);
   }
+
+  @Get('')
+  @ApiOperation({ summary: '유저 리스트 조회' })
+  async getUsers() {}
+
+  @Get(':nickname')
+  @ApiOperation({ summary: '닉네임으로 유저 조회' })
+  async getUser() {}
+
+  @Patch('')
+  @ApiOperation({ summary: '내정보 수정' })
+  async update() {}
 }

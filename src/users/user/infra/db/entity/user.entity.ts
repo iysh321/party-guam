@@ -7,18 +7,39 @@ import { FollowEntity } from 'src/users/follow/infra/db/entity/follow.entity';
 import { PartyProposalEntity } from 'src/parties/apply/party-proposal.entity';
 import { PartyRecruitmentEntity } from 'src/parties/apply/party-recruitment.entity';
 
+enum MeetingType {
+  ANY = '상관없음',
+  ONLINE = '온라인',
+  OFFLINE = '오프라인',
+}
+
+enum MeetingWeekType {
+  ANY = '상관없음',
+  WEEKDAY = '주중',
+  WEEKEND = '주말',
+}
+
+enum MeetingTimeType {
+  ANY = '상관없음',
+  AM = '오전',
+  PM = '오후',
+}
+
 @Entity('user')
 export class UserEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({ nullable: true })
+  @Column({ unique: true })
   account: string;
+
+  @Column({ length: 30 })
+  password: string;
 
   @Column({ nullable: true, unique: true })
   email: string;
 
-  @Column({ length: 15 })
+  @Column({ length: 15, unique: true })
   nickname: string;
 
   @Column({ nullable: true })
@@ -27,11 +48,26 @@ export class UserEntity {
   @Column({ nullable: true })
   is_party: boolean;
 
-  @Column({ nullable: true })
-  is_online: boolean;
+  @Column({
+    type: 'enum',
+    enum: MeetingType,
+    default: MeetingType.ANY,
+  })
+  meeting_type: MeetingType;
 
-  @Column({ nullable: true, type: 'json' })
-  meeting_time: any;
+  @Column({
+    type: 'enum',
+    enum: MeetingWeekType,
+    default: MeetingWeekType.ANY,
+  })
+  day_type: MeetingWeekType;
+
+  @Column({
+    type: 'enum',
+    enum: MeetingTimeType,
+    default: MeetingTimeType.ANY,
+  })
+  meeting_time: MeetingTimeType;
 
   @Column({ nullable: true, length: 4 })
   mbti: string;
