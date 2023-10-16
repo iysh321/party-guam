@@ -7,6 +7,8 @@ import { CreateUserCommand } from '../application/command/create-user.command';
 import { CreateUserDto } from './dto/create-user.dto';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import { UserLoginDto } from './dto/user-login.dto';
+import { UpdateUserDto } from './dto/update-user.dto';
+import { UpdateUserCommand } from '../application/command/update-user.command';
 
 @ApiTags('users')
 @Controller('users')
@@ -19,9 +21,19 @@ export class UserController {
   @Post('')
   @ApiOperation({ summary: '회원가입' })
   async createUser(@Body() dto: CreateUserDto): Promise<void> {
-    const { nickname, email } = dto;
+    const { account, nickname, email } = dto;
 
-    const command = new CreateUserCommand(nickname, email);
+    const command = new CreateUserCommand(account, nickname, email);
+
+    return this.commandBus.execute(command);
+  }
+
+  @Post('')
+  @ApiOperation({ summary: '추가 정보 기입' })
+  async updateUser(@Body() dto: UpdateUserDto): Promise<void> {
+    const { is_party, meeting_type, meeting_week, meeting_time, mbti } = dto;
+
+    const command = new UpdateUserCommand(is_party, meeting_type, meeting_week, meeting_time, mbti);
 
     return this.commandBus.execute(command);
   }
@@ -29,9 +41,9 @@ export class UserController {
   @Post('/login')
   @ApiOperation({ summary: '로그인' })
   async login(@Body() dto: UserLoginDto): Promise<string> {
-    const { account, password } = dto;
+    const { account } = dto;
 
-    const command = new LoginCommand(account, password);
+    const command = new LoginCommand(account);
 
     return this.commandBus.execute(command);
   }

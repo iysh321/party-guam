@@ -1,4 +1,4 @@
-import { Connection, Repository } from 'typeorm';
+import { DataSource, Repository } from 'typeorm';
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { UserEntity } from '../entity/user.entity';
@@ -10,10 +10,38 @@ import { IUserRepository } from 'src/users/user/domain/repository/iuser.reposito
 @Injectable()
 export class UserRepository implements IUserRepository {
   constructor(
-    private connection: Connection,
+    readonly dataSource: DataSource,
     @InjectRepository(UserEntity) private userRepository: Repository<UserEntity>,
     private userFactory: UserFactory,
   ) {}
+
+  async findByAccount(account: string): Promise<User | null> {
+    const userEntity = await this.userRepository.findOne({
+      where: { account },
+    });
+    if (!userEntity) {
+      return null;
+    }
+
+    const { nickname, email } = userEntity;
+
+    this.userFactory.reconstitute(account, nickname, email);
+
+    return;
+  }
+
+  async findByNcikname(nickname: string): Promise<User | null> {
+    const userEntity = await this.userRepository.findOne({
+      where: { nickname },
+    });
+    if (!userEntity) {
+      return null;
+    }
+
+    const { account, email } = userEntity;
+
+    return this.userFactory.reconstitute(account, nickname, email);
+  }
 
   async findByEmail(email: string): Promise<User | null> {
     const userEntity = await this.userRepository.findOne({
@@ -23,45 +51,20 @@ export class UserRepository implements IUserRepository {
       return null;
     }
 
-    const { id, nickname, password } = userEntity;
+    const { account, nickname } = userEntity;
 
-    return this.userFactory.reconstitute(id, nickname, password);
+    return this.userFactory.reconstitute(account, nickname, email);
   }
 
-  async findByEmailAndPassword(email: string, password: string): Promise<User | null> {
-    const userEntity = await this.userRepository.findOne({
-      where: { email, password },
-    });
-    if (!userEntity) {
-      return null;
-    }
+  async save(account: string, nickname: string, email: string): Promise<UserEntity> {
+    const user = await this.userRepository.save({ account, nickname, email });
 
-    const { id, nickname } = userEntity;
-
-    return this.userFactory.reconstitute(id, nickname, email, signupVerifyToken, password);
+    return user;
   }
 
-  async findBySignupVerifyToken(signupVerifyToken: string): Promise<User | null> {
-    const userEntity = await this.userRepository.findOne({
-      where: { signupVerifyToken },
-    });
-    if (!userEntity) {
-      return null;
-    }
-
-    const { id, nickname, email, password } = userEntity;
-
-    return this.userFactory.reconstitute(id, nickname, email, signupVerifyToken, password);
-  }
-
-  async save(id: string, nickname: string, email: string, password: string, signupVerifyToken: string): Promise<void> {
-    await this.connection.transaction(async (manager) => {
-      const user = new UserEntity();
-      user.id = id;
-      user.nickname = nickname;
-      user.email = email;
-      user.password = password;
-      user.signupVerifyToken = signupVerifyToken;
+  async update(is_party, meeting_type, meeting_week, meeting_time, mbti): Promise<void> {
+    await this.dataSource.transaction(async (manager) => {
+      const user = await this.userRepository.save({ is_party, meeting_type, meeting_week, meeting_time, mbti });
 
       await manager.save(user);
     });

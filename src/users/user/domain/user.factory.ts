@@ -1,21 +1,21 @@
 import { Injectable } from '@nestjs/common';
 import { EventBus } from '@nestjs/cqrs';
-import { UserCreatedEvent } from './user-created.event';
+
 import { User } from './user';
 
 @Injectable()
 export class UserFactory {
   constructor(private eventBus: EventBus) {}
 
-  create(id: string, nickname: string, email: string, signupVerifyToken: string, password: string): User {
-    const user = new User(id, nickname, email, password, signupVerifyToken);
+  create(account: string, nickname: string, email: string): User {
+    const user = new User(account, nickname, email);
 
-    this.eventBus.publish(new UserCreatedEvent(email, signupVerifyToken));
+    // this.eventBus.publish(new UserCreatedEvent(email));
 
     return user;
   }
 
-  reconstitute(id: string, nickname: string, email: string, signupVerifyToken: string, password: string): User {
-    return new User(id, nickname, email, password, signupVerifyToken);
+  reconstitute(account: string, nickname: string, email: string): User {
+    return new User(account, nickname, email);
   }
 }

@@ -1,4 +1,4 @@
-import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, OneToMany, CreateDateColumn } from 'typeorm';
 
 import { UserSkillEntity } from './user-skill.entity';
 import { ExperienceEntity } from './experience.entity';
@@ -30,22 +30,19 @@ export class UserEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({ unique: true })
+  @Column('varchar', { unique: true })
   account: string;
 
-  @Column({ length: 30 })
-  password: string;
-
-  @Column({ nullable: true, unique: true })
-  email: string;
-
-  @Column({ length: 15, unique: true })
+  @Column('varchar', { length: 15, unique: true })
   nickname: string;
 
-  @Column({ nullable: true })
+  @Column('varchar', { nullable: true, unique: true })
+  email: string;
+
+  @Column('varchar', { nullable: true })
   image: string;
 
-  @Column({ nullable: true })
+  @Column('boolean', { nullable: true })
   is_party: boolean;
 
   @Column({
@@ -60,7 +57,7 @@ export class UserEntity {
     enum: MeetingWeekType,
     default: MeetingWeekType.ANY,
   })
-  day_type: MeetingWeekType;
+  meeting_week: MeetingWeekType;
 
   @Column({
     type: 'enum',
@@ -78,8 +75,8 @@ export class UserEntity {
   @Column({ nullable: true })
   mp: number;
 
-  @Column({ nullable: true, type: 'date' })
-  created_at: Date;
+  @CreateDateColumn({ type: 'timestamp' })
+  createdAt: Date;
 
   @Column()
   status: string;

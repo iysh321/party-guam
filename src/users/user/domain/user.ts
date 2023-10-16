@@ -1,17 +1,15 @@
 export class User {
   constructor(
-    private id: string,
+    private account: string,
     private nickname: string,
     private email: string,
-    private password: string,
-    private signupVerifyToken: string,
   ) {}
 
-  getId(): Readonly<string> {
-    return this.id;
+  getAccount(): Readonly<string> {
+    return this.account;
   }
 
-  getName(): Readonly<string> {
+  getNickname(): Readonly<string> {
     return this.nickname;
   }
 

@@ -1,6 +1,6 @@
 import { Entity, PrimaryGeneratedColumn, ManyToOne, JoinColumn } from 'typeorm';
 import { UserEntity } from './user.entity';
-import { SkillEntity } from 'src/common/skill.entity';
+import { SkillEntity } from 'src/common/entity/skill.entity';
 
 @Entity('user_skill')
 export class UserSkillEntity {

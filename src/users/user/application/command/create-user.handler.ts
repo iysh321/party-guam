@@ -1,4 +1,3 @@
-import * as uuid from 'uuid';
 import { Inject, Injectable, UnprocessableEntityException } from '@nestjs/common';
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 import { CreateUserCommand } from './create-user.command';
@@ -14,17 +13,15 @@ export class CreateUserHandler implements ICommandHandler<CreateUserCommand> {
   ) {}
 
   async execute(command: CreateUserCommand) {
-    const { name, email } = command;
+    const { account, nickname, email } = command;
 
-    const user = await this.userRepository.findByEmail(email);
-    if (user !== null) {
+    const verify = await this.userRepository.findByEmail(email);
+    if (verify !== null) {
       throw new UnprocessableEntityException('해당 이메일로는 가입할 수 없습니다.');
     }
 
-    const signupVerifyToken = uuid.v1();
-
-    await this.userRepository.save(id, name, email, signupVerifyToken);
-
-    this.userFactory.create(id, name, email, signupVerifyToken);
+    const user = await this.userRepository.save(account, nickname, email);
+    user.id;
+    this.userFactory.create(account, nickname, email);
   }
 }
