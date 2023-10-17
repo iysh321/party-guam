@@ -1,4 +1,4 @@
-import { Entity, PrimaryGeneratedColumn, Column, OneToMany, CreateDateColumn } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm';
 
 import { UserSkillEntity } from './user-skill.entity';
 import { ExperienceEntity } from './experience.entity';
@@ -6,27 +6,28 @@ import { PartyUserEntity } from 'src/parties/party/party-user.entity';
 import { FollowEntity } from 'src/users/follow/infra/db/entity/follow.entity';
 import { PartyProposalEntity } from 'src/parties/apply/party-proposal.entity';
 import { PartyRecruitmentEntity } from 'src/parties/apply/party-recruitment.entity';
+import { BaseEntity } from 'src/common/entity/base.entity';
 
-enum MeetingType {
+export enum MeetingType {
   ANY = '상관없음',
   ONLINE = '온라인',
   OFFLINE = '오프라인',
 }
 
-enum MeetingWeekType {
+export enum MeetingWeekType {
   ANY = '상관없음',
   WEEKDAY = '주중',
   WEEKEND = '주말',
 }
 
-enum MeetingTimeType {
+export enum MeetingTimeType {
   ANY = '상관없음',
   AM = '오전',
   PM = '오후',
 }
 
 @Entity('user')
-export class UserEntity {
+export class UserEntity extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
@@ -74,12 +75,6 @@ export class UserEntity {
 
   @Column({ nullable: true })
   mp: number;
-
-  @CreateDateColumn({ type: 'timestamp' })
-  createdAt: Date;
-
-  @Column()
-  status: string;
 
   @OneToMany(() => FollowEntity, (follow) => follow.user)
   follows: FollowEntity[];
