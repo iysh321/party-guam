@@ -19,11 +19,5 @@ export class LoginHandler implements ICommandHandler<LoginCommand> {
     if (user === null) {
       throw new NotFoundException('유저가 존재하지 않습니다');
     }
-
-    return this.authService.login({
-      id: user.getId(),
-      name: user.getName(),
-      email: user.getEmail(),
-    });
   }
 }

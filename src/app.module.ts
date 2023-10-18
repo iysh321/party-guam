@@ -13,7 +13,7 @@ import { PartiesModule } from './parties/parties.module';
       host: 'localhost',
       port: 3306,
       username: 'root',
-      password: '!qQ2w3e4r',
+      password: '!Q2w3e4r',
       database: 'party',
       entities: [__dirname + '/**/*.entity{.ts,.js}'],
       synchronize: true,

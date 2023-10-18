@@ -6,7 +6,7 @@ import { PartyUserEntity } from 'src/parties/party/party-user.entity';
 import { FollowEntity } from 'src/users/follow/infra/db/entity/follow.entity';
 import { PartyProposalEntity } from 'src/parties/apply/party-proposal.entity';
 import { PartyRecruitmentEntity } from 'src/parties/apply/party-recruitment.entity';
-import { BaseEntity } from 'src/common/entity/base.entity';
+import { BaseEntity } from 'src/common/entity/baseEntity';
 
 export enum MeetingType {
   ANY = '상관없음',

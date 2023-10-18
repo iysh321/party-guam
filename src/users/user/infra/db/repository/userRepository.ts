@@ -25,9 +25,7 @@ export class UserRepository implements IUserRepository {
 
     const { nickname, email } = userEntity;
 
-    this.userFactory.reconstitute(account, nickname, email);
-
-    return;
+    return this.userFactory.reconstitute(account, nickname, email);
   }
 
   async findByNcikname(nickname: string): Promise<User | null> {
