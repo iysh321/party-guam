@@ -1,23 +1,19 @@
-import { BadRequestException } from '@nestjs/common';
-import { Transform } from 'class-transformer';
-import { IsEmail, IsString, MaxLength, MinLength } from 'class-validator';
+// import { BadRequestException } from '@nestjs/common';
+// import { Transform } from 'class-transformer';
+import { IsEmail, IsNotEmpty, IsString, MaxLength, MinLength } from 'class-validator';
 
 export class CreateUserDto {
+  @IsNotEmpty()
   @IsString()
   readonly account: string;
 
-  @Transform((params) => params.value.trim())
+  @IsNotEmpty()
   @IsString()
   @MinLength(2)
   @MaxLength(30)
   readonly nickname: string;
 
-  @Transform(({ value, obj }) => {
-    if (obj.password.includes(value.trim())) {
-      throw new BadRequestException('password는 name과 같은 문자열을 포함할 수 없습니다.');
-    }
-    return value.trim();
-  })
+  @IsNotEmpty()
   @IsString()
   @IsEmail()
   @MaxLength(60)

@@ -10,8 +10,8 @@ export class AuthService {
     this.jwtService = jwtService;
   }
 
-  async login(account: string) {
-    const payload = { username: account };
+  async login(id: number, account: string) {
+    const payload = { id, account };
     return {
       access_token: await this.jwtService.signAsync(payload),
     };

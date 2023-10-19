@@ -1,4 +1,4 @@
-import { Entity, PrimaryGeneratedColumn, ManyToOne, JoinColumn } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, ManyToOne, JoinColumn, Column } from 'typeorm';
 import { UserEntity } from './user.entity';
 import { SkillEntity } from 'src/common/entity/skill.entity';
 
@@ -6,6 +6,9 @@ import { SkillEntity } from 'src/common/entity/skill.entity';
 export class UserSkillEntity {
   @PrimaryGeneratedColumn()
   id: number;
+
+  @Column()
+  level: number;
 
   @ManyToOne(() => UserEntity, (user) => user.userSkills)
   @JoinColumn({ name: 'user_id' })

@@ -20,8 +20,6 @@ export class CreateUserHandler implements ICommandHandler<CreateUserCommand> {
       throw new UnprocessableEntityException('해당 이메일로는 가입할 수 없습니다.');
     }
 
-    const user = await this.userRepository.save(account, nickname, email);
-    user.id;
-    this.userFactory.create(account, nickname, email);
+    await this.userRepository.save(account, nickname, email);
   }
 }

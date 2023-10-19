@@ -28,8 +28,8 @@ export class UserController {
     return this.commandBus.execute(command);
   }
 
-  @Post('')
-  @ApiOperation({ summary: '추가 정보 기입' })
+  @Patch('info')
+  @ApiOperation({ summary: '추가 정보 기입 또는 수정' })
   async updateUser(@Body() dto: UpdateUserDto): Promise<void> {
     const { is_party, meeting_type, meeting_week, meeting_time, mbti } = dto;
 
@@ -38,7 +38,7 @@ export class UserController {
     return this.commandBus.execute(command);
   }
 
-  @Post('/login')
+  @Post('login')
   @ApiOperation({ summary: '로그인' })
   async login(@Body() dto: UserLoginDto): Promise<string> {
     const { account } = dto;
@@ -47,6 +47,10 @@ export class UserController {
 
     return this.commandBus.execute(command);
   }
+
+  @Get('my')
+  @ApiOperation({ summary: '내정보 조회' })
+  async getMyInfo() {}
 
   @Get('')
   @ApiOperation({ summary: '유저 리스트 조회' })

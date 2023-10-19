@@ -7,15 +7,15 @@ import { User } from './user';
 export class UserFactory {
   constructor(private eventBus: EventBus) {}
 
-  create(account: string, nickname: string, email: string): User {
-    const user = new User(account, nickname, email);
+  create(id: number, account: string, nickname: string, email: string): User {
+    const user = new User(id, account, nickname, email);
 
     // this.eventBus.publish(new UserCreatedEvent(email));
 
     return user;
   }
 
-  reconstitute(account: string, nickname: string, email: string): User {
-    return new User(account, nickname, email);
+  reconstitute(id: number, account: string, nickname: string, email: string): User {
+    return new User(id, account, nickname, email);
   }
 }

@@ -3,7 +3,6 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { UserEntity } from '../entity/user.entity';
 
-import { User } from 'src/users/user/domain/user';
 import { UserFactory } from 'src/users/user/domain/user.factory';
 import { IUserRepository } from 'src/users/user/domain/repository/iuser.repository';
 
@@ -15,49 +14,34 @@ export class UserRepository implements IUserRepository {
     private userFactory: UserFactory,
   ) {}
 
-  async findByAccount(account: string): Promise<User | null> {
-    const userEntity = await this.userRepository.findOne({
+  async findByAccount(account: string) {
+    const result = await this.userRepository.findOne({
       where: { account },
     });
-    if (!userEntity) {
-      return null;
-    }
 
-    const { nickname, email } = userEntity;
-
-    return this.userFactory.reconstitute(account, nickname, email);
+    return result;
   }
 
-  async findByNcikname(nickname: string): Promise<User | null> {
-    const userEntity = await this.userRepository.findOne({
+  async findByNcikname(nickname: string) {
+    const result = await this.userRepository.findOne({
       where: { nickname },
     });
-    if (!userEntity) {
-      return null;
-    }
 
-    const { account, email } = userEntity;
-
-    return this.userFactory.reconstitute(account, nickname, email);
+    return result;
   }
 
-  async findByEmail(email: string): Promise<User | null> {
-    const userEntity = await this.userRepository.findOne({
+  async findByEmail(email: string) {
+    const result = await this.userRepository.findOne({
       where: { email },
     });
-    if (!userEntity) {
-      return null;
-    }
 
-    const { account, nickname } = userEntity;
-
-    return this.userFactory.reconstitute(account, nickname, email);
+    return result;
   }
 
   async save(account: string, nickname: string, email: string): Promise<UserEntity> {
-    const user = await this.userRepository.save({ account, nickname, email });
+    const result = await this.userRepository.save({ account, nickname, email });
 
-    return user;
+    return result;
   }
 
   async update(is_party, meeting_type, meeting_week, meeting_time, mbti): Promise<void> {
