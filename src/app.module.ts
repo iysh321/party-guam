@@ -3,9 +3,10 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { UsersModule } from './users/users.module';
+
 import { PartiesModule } from './parties/parties.module';
 import { LoggerMiddleware } from './common/middleware/logger.middleware';
+import { UserModule } from './user/user.module';
 
 @Module({
   imports: [
@@ -20,7 +21,7 @@ import { LoggerMiddleware } from './common/middleware/logger.middleware';
       synchronize: true,
       migrations: [__dirname + '/**/migrations/*.js'],
     }),
-    UsersModule,
+    UserModule,
     PartiesModule,
   ],
   controllers: [AppController],

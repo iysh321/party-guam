@@ -1,7 +1,8 @@
-import { UserEntity } from '../../infra/db/entity/user.entity';
+import { UserEntity } from 'src/user/infra/db/entity/user.entity';
+import { User } from '../user';
 
 export interface IUserRepository {
-  findByAccount: (account: string) => Promise<UserEntity>;
+  findByAccount: (account: string) => Promise<User>;
   findByNcikname: (nickname: string) => Promise<UserEntity>;
   findByEmail: (email: string) => Promise<UserEntity>;
   save: (account: string, nickname: string, email: string) => Promise<UserEntity>;

@@ -3,7 +3,7 @@ import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
-import { UserEntity } from 'src/users/user/infra/db/entity/user.entity';
+import { UserEntity } from 'src/user/infra/db/entity/user.entity';
 import { UserInfo } from '../../interface/UserInfo';
 import { GetUserInfoQuery } from './get-user-info.query';
 

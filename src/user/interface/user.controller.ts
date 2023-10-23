@@ -1,5 +1,5 @@
 import { CommandBus, QueryBus } from '@nestjs/cqrs';
-import { Body, Controller, Get, Patch, Post } from '@nestjs/common';
+import { Body, Controller, Get, Patch, Post, Req, UseGuards } from '@nestjs/common';
 
 import { LoginCommand } from '../application/command/login.command';
 import { CreateUserCommand } from '../application/command/create-user.command';
@@ -9,6 +9,7 @@ import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import { UserLoginDto } from './dto/user-login.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { UpdateUserCommand } from '../application/command/update-user.command';
+import { AuthGuard } from 'src/common/guard/auth.guard';
 
 @ApiTags('users')
 @Controller('users')
@@ -48,17 +49,20 @@ export class UserController {
     return this.commandBus.execute(command);
   }
 
+  @UseGuards(AuthGuard)
   @Get('my')
   @ApiOperation({ summary: '내정보 조회' })
-  async getMyInfo() {}
-
-  @Get('')
-  @ApiOperation({ summary: '유저 리스트 조회' })
-  async getUsers() {}
+  async getMyInfo(@Req() req: Request) {
+    console.log(req);
+  }
 
   @Get(':nickname')
   @ApiOperation({ summary: '닉네임으로 유저 조회' })
   async getUser() {}
+
+  @Get('')
+  @ApiOperation({ summary: '유저 리스트 조회' })
+  async getUsers() {}
 
   @Patch('')
   @ApiOperation({ summary: '내정보 수정' })

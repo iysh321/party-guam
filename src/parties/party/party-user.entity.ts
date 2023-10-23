@@ -1,4 +1,4 @@
-import { UserEntity } from 'src/users/user/infra/db/entity/user.entity';
+import { UserEntity } from 'src/user/infra/db/entity/user.entity';
 import { Entity, PrimaryGeneratedColumn, ManyToOne, JoinColumn } from 'typeorm';
 import { PartyEntity } from '../post/party.entity';
 

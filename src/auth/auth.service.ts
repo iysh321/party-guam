@@ -13,7 +13,7 @@ export class AuthService {
   async login(id: number, account: string) {
     const payload = { id, account };
     return {
-      access_token: await this.jwtService.signAsync(payload),
+      access_token: this.jwtService.sign(payload),
     };
   }
 }

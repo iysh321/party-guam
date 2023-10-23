@@ -10,7 +10,7 @@ export class UserFactory {
   create(id: number, account: string, nickname: string, email: string): User {
     const user = new User(id, account, nickname, email);
 
-    // this.eventBus.publish(new UserCreatedEvent(email));
+    // this.eventBus.publish(new UserCreatedEvent(email, signupVerifyToken));
 
     return user;
   }

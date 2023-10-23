@@ -6,10 +6,6 @@ export class ExperienceEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @ManyToOne(() => UserEntity, (user) => user.userExperiences)
-  @JoinColumn({ name: 'user_id' })
-  user: UserEntity;
-
   @Column({ nullable: true })
   position: string;
 
@@ -21,4 +17,8 @@ export class ExperienceEntity {
 
   @Column({ nullable: true, type: 'date' })
   end_date: Date;
+
+  @ManyToOne(() => UserEntity, (user) => user.userExperiences)
+  @JoinColumn({ name: 'user_id' })
+  user: UserEntity;
 }

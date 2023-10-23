@@ -31,3 +31,5 @@ export class AuthGuard implements CanActivate {
     return type === 'Bearer' ? token : undefined;
   }
 }
+
+export type AuthorizedHeader = Readonly<{ id: number; account: string }>;

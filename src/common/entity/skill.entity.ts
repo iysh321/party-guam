@@ -1,4 +1,4 @@
-import { UserSkillEntity } from 'src/users/user/infra/db/entity/user-skill.entity';
+import { UserSkillEntity } from 'src/user/infra/db/entity/user-skill.entity';
 import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm';
 
 @Entity('skill')

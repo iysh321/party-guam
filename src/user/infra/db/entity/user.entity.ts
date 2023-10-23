@@ -3,7 +3,7 @@ import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm';
 import { UserSkillEntity } from './user-skill.entity';
 import { ExperienceEntity } from './experience.entity';
 import { PartyUserEntity } from 'src/parties/party/party-user.entity';
-import { FollowEntity } from 'src/users/follow/infra/db/entity/follow.entity';
+import { FollowEntity } from 'src/user/infra/db/entity/follow.entity';
 import { PartyProposalEntity } from 'src/parties/apply/party-proposal.entity';
 import { PartyRecruitmentEntity } from 'src/parties/apply/party-recruitment.entity';
 import { BaseEntity } from 'src/common/entity/baseEntity';
@@ -37,7 +37,7 @@ export class UserEntity extends BaseEntity {
   @Column('varchar', { length: 15, unique: true })
   nickname: string;
 
-  @Column('varchar', { nullable: true, unique: true })
+  @Column('varchar', { nullable: false })
   email: string;
 
   @Column('varchar', { nullable: true })
@@ -49,21 +49,21 @@ export class UserEntity extends BaseEntity {
   @Column({
     type: 'enum',
     enum: MeetingType,
-    default: MeetingType.ANY,
+    nullable: true,
   })
   meeting_type: MeetingType;
 
   @Column({
     type: 'enum',
     enum: MeetingWeekType,
-    default: MeetingWeekType.ANY,
+    nullable: true,
   })
   meeting_week: MeetingWeekType;
 
   @Column({
     type: 'enum',
     enum: MeetingTimeType,
-    default: MeetingTimeType.ANY,
+    nullable: true,
   })
   meeting_time: MeetingTimeType;
 

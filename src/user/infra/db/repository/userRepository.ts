@@ -3,8 +3,9 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { UserEntity } from '../entity/user.entity';
 
-import { UserFactory } from 'src/users/user/domain/user.factory';
-import { IUserRepository } from 'src/users/user/domain/repository/iuser.repository';
+import { UserFactory } from 'src/user/domain/user/user.factory';
+import { IUserRepository } from 'src/user/domain/user/repository/iuser.repository';
+import { User } from 'src/user/domain/user/user';
 
 @Injectable()
 export class UserRepository implements IUserRepository {
@@ -14,12 +15,18 @@ export class UserRepository implements IUserRepository {
     private userFactory: UserFactory,
   ) {}
 
-  async findByAccount(account: string) {
-    const result = await this.userRepository.findOne({
+  async findByAccount(account: string): Promise<User> {
+    const userEntity = await this.userRepository.findOne({
       where: { account },
     });
 
-    return result;
+    if (!userEntity) {
+      return null;
+    }
+
+    const { id, nickname, email } = userEntity;
+
+    return this.userFactory.reconstitute(id, account, nickname, email);
   }
 
   async findByNcikname(nickname: string) {
