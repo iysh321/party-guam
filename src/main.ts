@@ -3,6 +3,7 @@ import { AppModule } from './app.module';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { HttpExceptionFilter } from './common/exception/http-exception.filter';
 import { ValidationPipe } from '@nestjs/common';
+import { CustomErrorExceptionFilter } from './common/exception/error.filter';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -23,6 +24,7 @@ async function bootstrap() {
     }),
   );
   app.useGlobalFilters(new HttpExceptionFilter());
+  app.useGlobalFilters(new CustomErrorExceptionFilter());
 
   app.use((req, res, next) => {
     res.header('Access-Control-Allow-Origin', req.headers.origin);

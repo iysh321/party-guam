@@ -9,7 +9,9 @@ import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import { UserLoginDto } from './dto/user-login.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { UpdateUserCommand } from '../application/command/update-user.command';
-import { AuthGuard } from 'src/common/guard/auth.guard';
+import { CurrentAccount } from 'src/common/decorators/auth.decorator';
+import { JwtAuthGuard } from 'src/common/guard/jwt.guard';
+import { Payload } from 'src/auth/jwt.payload';
 
 @ApiTags('users')
 @Controller('users')
@@ -49,12 +51,10 @@ export class UserController {
     return this.commandBus.execute(command);
   }
 
-  @UseGuards(AuthGuard)
+  @UseGuards(JwtAuthGuard)
   @Get('my')
   @ApiOperation({ summary: '내정보 조회' })
-  async getMyInfo(@Req() req: Request) {
-    console.log(req);
-  }
+  async getMyInfo(@CurrentAccount() account: Payload) {}
 
   @Get(':nickname')
   @ApiOperation({ summary: '닉네임으로 유저 조회' })

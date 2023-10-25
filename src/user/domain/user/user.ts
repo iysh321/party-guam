@@ -24,3 +24,14 @@ export class User {
     return this.id;
   }
 }
+
+export class UserSkill {
+  constructor(
+    public id: number,
+    public level: number,
+  ) {}
+
+  getId(): Readonly<number> {
+    return this.id;
+  }
+}
