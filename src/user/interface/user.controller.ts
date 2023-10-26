@@ -1,5 +1,5 @@
 import { CommandBus, QueryBus } from '@nestjs/cqrs';
-import { Body, Controller, Get, Patch, Post, Req, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, Patch, Post, UseGuards } from '@nestjs/common';
 
 import { LoginCommand } from '../application/command/login.command';
 import { CreateUserCommand } from '../application/command/create-user.command';
@@ -54,7 +54,9 @@ export class UserController {
   @UseGuards(JwtAuthGuard)
   @Get('my')
   @ApiOperation({ summary: '내정보 조회' })
-  async getMyInfo(@CurrentAccount() account: Payload) {}
+  async getMyInfo(@CurrentAccount() account: Payload) {
+    account.id;
+  }
 
   @Get(':nickname')
   @ApiOperation({ summary: '닉네임으로 유저 조회' })
