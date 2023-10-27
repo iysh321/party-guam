@@ -1,0 +1,27 @@
+import { DataSource, Repository } from 'typeorm';
+import { Injectable } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+
+import { AuthEntity } from '../entity/auth.entity';
+
+@Injectable()
+export class AuthRepository {
+  constructor(
+    readonly dataSource: DataSource,
+    @InjectRepository(AuthEntity) private authRepository: Repository<AuthEntity>,
+  ) {}
+
+  async findByAccount(userId: number) {
+    const result = await this.authRepository.findOne({
+      where: { userId },
+    });
+
+    return result;
+  }
+
+  async saveRefreshTokenById(userId: number, refreshToken: string) {
+    const result = await this.authRepository.save({ refreshToken, where: { userId } });
+
+    return result;
+  }
+}

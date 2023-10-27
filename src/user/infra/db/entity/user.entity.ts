@@ -1,4 +1,4 @@
-import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, OneToMany, OneToOne } from 'typeorm';
 
 import { UserSkillEntity } from './user-skill.entity';
 import { ExperienceEntity } from './experience.entity';
@@ -7,6 +7,7 @@ import { FollowEntity } from 'src/user/infra/db/entity/follow.entity';
 import { PartyProposalEntity } from 'src/parties/apply/party-proposal.entity';
 import { PartyRecruitmentEntity } from 'src/parties/apply/party-recruitment.entity';
 import { BaseEntity } from 'src/common/entity/baseEntity';
+import { AuthEntity } from 'src/auth/entity/auth.entity';
 
 export enum MeetingType {
   ANY = '상관없음',
@@ -75,6 +76,9 @@ export class UserEntity extends BaseEntity {
 
   @Column({ nullable: true })
   mp: number;
+
+  @OneToOne(() => AuthEntity, (auth) => auth.user)
+  auth: AuthEntity;
 
   @OneToMany(() => FollowEntity, (follow) => follow.user)
   follows: FollowEntity[];

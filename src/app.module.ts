@@ -7,6 +7,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { PartiesModule } from './parties/parties.module';
 import { LoggerMiddleware } from './common/middleware/logger.middleware';
 import { UserModule } from './user/user.module';
+import { SnakeNamingStrategy } from 'typeorm-naming-strategies';
 
 @Module({
   imports: [
@@ -20,6 +21,11 @@ import { UserModule } from './user/user.module';
       entities: [__dirname + '/**/*.entity{.ts,.js}'],
       synchronize: true,
       migrations: [__dirname + '/**/migrations/*.js'],
+      extra: {
+        decimalNumbers: true, //decimal number type
+      },
+      bigNumberStrings: false, // bigint number type
+      namingStrategy: new SnakeNamingStrategy(),
     }),
     UserModule,
     PartiesModule,

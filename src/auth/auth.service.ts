@@ -2,23 +2,34 @@ import { Injectable, Dependencies } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { Payload } from './jwt.payload';
 import * as crypto from 'crypto';
+import { AuthRepository } from './repository/auth.repository';
 
 @Dependencies(JwtService)
 @Injectable()
 export class AuthService {
-  jwtService: JwtService;
-  private readonly algorithm = 'aes-192-cbc';
-  private key = Buffer.from(process.env.CIPHERIV_KEY_SECRET, 'hex');
+  private jwtService: JwtService;
+  authRepository: AuthRepository;
+  private readonly algorithm: string = 'aes-192-cbc';
+  private key: Buffer = Buffer.from(process.env.CIPHERIV_KEY_SECRET, 'hex');
   private iv = Buffer.from(process.env.CIPHERIV_IV_SECRET, 'hex');
-  constructor(jwtService: JwtService) {
+  constructor(jwtService: JwtService, authRepository: AuthRepository) {
     this.jwtService = jwtService;
+    this.authRepository = authRepository;
   }
 
-  async login(id: string) {
+  async createAccessToken(id: string) {
     const payload: Payload = { id };
-    return {
-      access_token: await this.jwtService.signAsync(payload),
-    };
+    return this.jwtService.signAsync(payload, { secret: process.env.JWT_ACCESS_SECRET, expiresIn: '30d' });
+  }
+
+  async createRefreshToken(id: string) {
+    const payload: Payload = { id };
+    return this.jwtService.signAsync(payload, { secret: process.env.JWT_REFRESH_SECRET, expiresIn: '15m' });
+  }
+
+  async saveRefreshToken(id: number, token: string) {
+    this.authRepository.saveRefreshTokenById(id, token);
+    return;
   }
 
   async encrypt(data: string) {

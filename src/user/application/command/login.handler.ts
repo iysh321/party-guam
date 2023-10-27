@@ -20,8 +20,14 @@ export class LoginHandler implements ICommandHandler<LoginCommand> {
       throw new NotFoundException('유저가 존재하지 않습니다');
     }
 
-    const id = await this.authService.encrypt(user.getId().toString());
+    const userId = user.getId();
+    const encryptId = await this.authService.encrypt(userId.toString());
 
-    return await this.authService.login(id);
+    const accessToken = await this.authService.createAccessToken(encryptId);
+    const refreshToken = await this.authService.createRefreshToken(encryptId);
+
+    this.authService.saveRefreshToken(userId, refreshToken);
+
+    return { accessToken, refreshToken };
   }
 }

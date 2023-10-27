@@ -10,7 +10,8 @@ import { UserLoginDto } from './dto/user-login.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { UpdateUserCommand } from '../application/command/update-user.command';
 import { CurrentAccount } from 'src/common/decorators/auth.decorator';
-import { JwtAuthGuard } from 'src/common/guard/jwt.guard';
+import { AccessStrategy } from 'src/auth/access.strategy';
+
 import { Payload } from 'src/auth/jwt.payload';
 
 @ApiTags('users')
@@ -51,7 +52,7 @@ export class UserController {
     return this.commandBus.execute(command);
   }
 
-  @UseGuards(JwtAuthGuard)
+  @UseGuards(AccessStrategy)
   @Get('my')
   @ApiOperation({ summary: '내정보 조회' })
   async getMyInfo(@CurrentAccount() account: Payload) {

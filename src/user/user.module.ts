@@ -8,7 +8,7 @@ import { CreateUserHandler } from './application/command/create-user.handler';
 import { LoginHandler } from './application/command/login.handler';
 import { GetUserInfoQueryHandler } from './application/query/get-user-info.handler';
 import { UserFactory } from './domain/user/user.factory';
-import { UserRepository } from './infra/db/repository/userRepository';
+import { UserRepository } from './infra/db/repository/user.repository';
 import { AuthModule } from 'src/auth/auth.module';
 
 const commandHandlers = [CreateUserHandler, LoginHandler];
