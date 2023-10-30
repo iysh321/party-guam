@@ -1,7 +1,7 @@
 import { UserEntity } from 'src/user/infra/db/entity/user.entity';
 import { Entity, PrimaryGeneratedColumn, ManyToOne, JoinColumn } from 'typeorm';
 
-@Entity()
+@Entity('follow')
 export class FollowEntity {
   @PrimaryGeneratedColumn()
   id: number;

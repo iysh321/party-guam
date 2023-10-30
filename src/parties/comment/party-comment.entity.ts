@@ -2,7 +2,7 @@ import { Entity, PrimaryGeneratedColumn, ManyToOne, JoinColumn, Column } from 't
 
 import { PartyEntity } from '../post/party.entity';
 
-@Entity()
+@Entity('party_comment')
 export class PartyCommentEntity {
   @PrimaryGeneratedColumn()
   id: number;

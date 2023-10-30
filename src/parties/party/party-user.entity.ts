@@ -2,7 +2,7 @@ import { UserEntity } from 'src/user/infra/db/entity/user.entity';
 import { Entity, PrimaryGeneratedColumn, ManyToOne, JoinColumn } from 'typeorm';
 import { PartyEntity } from '../post/party.entity';
 
-@Entity()
+@Entity('party_user')
 export class PartyUserEntity {
   @PrimaryGeneratedColumn()
   id: number;

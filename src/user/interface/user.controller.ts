@@ -1,5 +1,5 @@
 import { CommandBus, QueryBus } from '@nestjs/cqrs';
-import { Body, Controller, Get, Patch, Post, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, Patch, Post, Res, UseGuards } from '@nestjs/common';
 
 import { LoginCommand } from '../application/command/login.command';
 import { CreateUserCommand } from '../application/command/create-user.command';
@@ -13,6 +13,8 @@ import { CurrentAccount } from 'src/common/decorators/auth.decorator';
 import { AccessStrategy } from 'src/auth/access.strategy';
 
 import { Payload } from 'src/auth/jwt.payload';
+import { Response } from 'express';
+import { RefreshStrategy } from 'src/auth/refresh.strategy';
 
 @ApiTags('users')
 @Controller('users')
@@ -42,14 +44,26 @@ export class UserController {
     return this.commandBus.execute(command);
   }
 
+  @UseGuards(RefreshStrategy)
+  @Post('refresh-token')
+  async refreshTokens() {}
+
   @Post('login')
   @ApiOperation({ summary: '로그인' })
-  async login(@Body() dto: UserLoginDto): Promise<string> {
+  async login(@Res() res: Response, @Body() dto: UserLoginDto) {
     const { account } = dto;
 
     const command = new LoginCommand(account);
 
-    return this.commandBus.execute(command);
+    const reuslt = await this.commandBus.execute(command);
+
+    res.cookie('refreshToken', reuslt.refreshToken, {
+      httpOnly: true,
+      secure: true,
+      sameSite: 'strict',
+    });
+
+    res.send({ accessToken: reuslt.accessToken });
   }
 
   @UseGuards(AccessStrategy)

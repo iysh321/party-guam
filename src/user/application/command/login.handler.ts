@@ -8,7 +8,8 @@ import { LoginCommand } from './login.command';
 @CommandHandler(LoginCommand)
 export class LoginHandler implements ICommandHandler<LoginCommand> {
   constructor(
-    @Inject('UserRepository') private userRepository: IUserRepository,
+    @Inject('UserRepository')
+    private userRepository: IUserRepository,
     private authService: AuthService,
   ) {}
 

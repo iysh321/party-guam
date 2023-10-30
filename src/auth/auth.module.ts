@@ -7,8 +7,11 @@ import { AuthEntity } from './entity/auth.entity';
 import { AccessStrategy } from './access.strategy';
 import { AuthRepository } from './repository/auth.repository';
 import { RefreshStrategy } from './refresh.strategy';
+import { AuthController } from './auth.controller';
 
 @Module({
+  controllers: [AuthController],
+  providers: [AccessStrategy, RefreshStrategy, AuthRepository, AuthService],
   imports: [
     ConfigModule.forRoot(),
     JwtModule.register({
@@ -18,7 +21,6 @@ import { RefreshStrategy } from './refresh.strategy';
     }),
     TypeOrmModule.forFeature([AuthEntity]),
   ],
-  providers: [AccessStrategy, RefreshStrategy, AuthRepository, AuthService],
   exports: [AuthService],
 })
 export class AuthModule {}

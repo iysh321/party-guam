@@ -3,18 +3,10 @@ import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn } from 't
 import { UserEntity } from 'src/user/infra/db/entity/user.entity';
 import { PartyEntity } from '../post/party.entity';
 
-@Entity()
+@Entity('party_proposal')
 export class PartyProposalEntity {
   @PrimaryGeneratedColumn()
   id: number;
-
-  @ManyToOne(() => UserEntity, (user) => user.partyProposals)
-  @JoinColumn({ name: 'user_id' })
-  user: UserEntity;
-
-  @ManyToOne(() => PartyEntity, (post) => post.partyProposals)
-  @JoinColumn({ name: 'party_post_id' })
-  party: PartyEntity;
 
   @Column({ nullable: true })
   message: string;
@@ -24,4 +16,12 @@ export class PartyProposalEntity {
 
   @Column({ nullable: true })
   status: string;
+
+  @ManyToOne(() => UserEntity, (user) => user.partyProposals)
+  @JoinColumn({ name: 'user_id' })
+  user: UserEntity;
+
+  @ManyToOne(() => PartyEntity, (post) => post.partyProposals)
+  @JoinColumn({ name: 'party_post_id' })
+  party: PartyEntity;
 }

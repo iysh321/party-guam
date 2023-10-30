@@ -8,7 +8,8 @@ import { AuthEntity } from '../entity/auth.entity';
 export class AuthRepository {
   constructor(
     readonly dataSource: DataSource,
-    @InjectRepository(AuthEntity) private authRepository: Repository<AuthEntity>,
+    @InjectRepository(AuthEntity)
+    private authRepository: Repository<AuthEntity>,
   ) {}
 
   async findByAccount(userId: number) {
@@ -19,8 +20,8 @@ export class AuthRepository {
     return result;
   }
 
-  async saveRefreshTokenById(userId: number, refreshToken: string) {
-    const result = await this.authRepository.save({ refreshToken, where: { userId } });
+  async saveRefreshToken(userId: number, refreshToken: string) {
+    const result = await this.authRepository.save({ userId, refreshToken });
 
     return result;
   }

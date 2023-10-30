@@ -1,21 +1,18 @@
-import { Injectable, Dependencies } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { Payload } from './jwt.payload';
 import * as crypto from 'crypto';
 import { AuthRepository } from './repository/auth.repository';
 
-@Dependencies(JwtService)
 @Injectable()
 export class AuthService {
-  private jwtService: JwtService;
-  authRepository: AuthRepository;
   private readonly algorithm: string = 'aes-192-cbc';
   private key: Buffer = Buffer.from(process.env.CIPHERIV_KEY_SECRET, 'hex');
   private iv = Buffer.from(process.env.CIPHERIV_IV_SECRET, 'hex');
-  constructor(jwtService: JwtService, authRepository: AuthRepository) {
-    this.jwtService = jwtService;
-    this.authRepository = authRepository;
-  }
+  constructor(
+    private jwtService: JwtService,
+    private authRepository: AuthRepository,
+  ) {}
 
   async createAccessToken(id: string) {
     const payload: Payload = { id };
@@ -28,8 +25,7 @@ export class AuthService {
   }
 
   async saveRefreshToken(id: number, token: string) {
-    this.authRepository.saveRefreshTokenById(id, token);
-    return;
+    this.authRepository.saveRefreshToken(id, token);
   }
 
   async encrypt(data: string) {

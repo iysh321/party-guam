@@ -11,7 +11,8 @@ import { User } from 'src/user/domain/user/user';
 export class UserRepository implements IUserRepository {
   constructor(
     readonly dataSource: DataSource,
-    @InjectRepository(UserEntity) private userRepository: Repository<UserEntity>,
+    @InjectRepository(UserEntity)
+    private userRepository: Repository<UserEntity>,
     private userFactory: UserFactory,
   ) {}
 
