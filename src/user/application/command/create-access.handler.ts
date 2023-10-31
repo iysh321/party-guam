@@ -19,7 +19,7 @@ export class CreateUserHandler implements ICommandHandler<CreateAccessCommand> {
   async execute(command: CreateAccessCommand) {
     const { refreshToken } = command;
 
-    const save = await this.userRepository.save(account, nickname, email);
+    const accessToken = await this.authService.createAccessToken(encryptId);
 
     return save;
   }

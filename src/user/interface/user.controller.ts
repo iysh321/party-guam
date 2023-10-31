@@ -46,7 +46,13 @@ export class UserController {
 
   @UseGuards(RefreshStrategy)
   @Post('refresh-token')
-  async refreshTokens() {}
+  async refreshTokens(@Res() res: Response, @CurrentAccount() account: Payload) {
+    const command = new LoginCommand(account.id);
+
+    const reuslt = await this.commandBus.execute(command);
+
+    res.send({ accessToken: reuslt.accessToken });
+  }
 
   @Post('login')
   @ApiOperation({ summary: '로그인' })
