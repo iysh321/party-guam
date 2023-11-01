@@ -1,5 +1,6 @@
 import { CommandBus, QueryBus } from '@nestjs/cqrs';
 import { Body, Controller, Get, Patch, Post, Res, UseGuards } from '@nestjs/common';
+import { Response } from 'express';
 
 import { LoginCommand } from '../application/command/login.command';
 import { CreateUserCommand } from '../application/command/create-user.command';
@@ -10,11 +11,8 @@ import { UserLoginDto } from './dto/user-login.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { UpdateUserCommand } from '../application/command/update-user.command';
 import { CurrentAccount } from 'src/common/decorators/auth.decorator';
-import { AccessStrategy } from 'src/auth/access.strategy';
 
-import { Payload } from 'src/auth/jwt.payload';
-import { Response } from 'express';
-import { RefreshStrategy } from 'src/auth/refresh.strategy';
+import { AccessJwtAuthGuard } from 'src/common/guard/jwt.guard';
 
 @ApiTags('users')
 @Controller('users')
@@ -44,16 +42,6 @@ export class UserController {
     return this.commandBus.execute(command);
   }
 
-  @UseGuards(RefreshStrategy)
-  @Post('refresh-token')
-  async refreshTokens(@Res() res: Response, @CurrentAccount() account: Payload) {
-    const command = new LoginCommand(account.id);
-
-    const reuslt = await this.commandBus.execute(command);
-
-    res.send({ accessToken: reuslt.accessToken });
-  }
-
   @Post('login')
   @ApiOperation({ summary: '로그인' })
   async login(@Res() res: Response, @Body() dto: UserLoginDto) {
@@ -72,10 +60,10 @@ export class UserController {
     res.send({ accessToken: reuslt.accessToken });
   }
 
-  @UseGuards(AccessStrategy)
+  @UseGuards(AccessJwtAuthGuard)
   @Get('my')
   @ApiOperation({ summary: '내정보 조회' })
-  async getMyInfo(@CurrentAccount() account: Payload) {
+  async getMyInfo(@CurrentAccount() account) {
     account.id;
   }
 

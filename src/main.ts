@@ -1,7 +1,7 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
-import { HttpExceptionFilter } from './common/exception/http-exception.filter';
+
 import { ValidationPipe } from '@nestjs/common';
 import { CustomErrorExceptionFilter } from './common/exception/error.filter';
 
@@ -23,7 +23,6 @@ async function bootstrap() {
       forbidNonWhitelisted: true,
     }),
   );
-  app.useGlobalFilters(new HttpExceptionFilter());
   app.useGlobalFilters(new CustomErrorExceptionFilter());
 
   app.use((req, res, next) => {

@@ -20,6 +20,12 @@ export class AuthRepository {
     return result;
   }
 
+  async findRefreshToken(userId: number, refreshToken: string) {
+    const result = this.authRepository.findOne({ where: { userId, refreshToken } });
+
+    return result;
+  }
+
   async saveRefreshToken(userId: number, refreshToken: string) {
     const result = await this.authRepository.save({ userId, refreshToken });
 

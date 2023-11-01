@@ -16,12 +16,18 @@ export class AuthService {
 
   async createAccessToken(id: string) {
     const payload: Payload = { id };
-    return this.jwtService.signAsync(payload, { secret: process.env.JWT_ACCESS_SECRET, expiresIn: '30d' });
+    return this.jwtService.signAsync(payload, { secret: process.env.JWT_ACCESS_SECRET, expiresIn: '15m' });
   }
 
   async createRefreshToken(id: string) {
     const payload: Payload = { id };
-    return this.jwtService.signAsync(payload, { secret: process.env.JWT_REFRESH_SECRET, expiresIn: '15m' });
+    return this.jwtService.signAsync(payload, { secret: process.env.JWT_REFRESH_SECRET, expiresIn: '30d' });
+  }
+
+  async findRefreshToken(userId: number, refreshToken: string) {
+    const result = this.authRepository.findRefreshToken(userId, refreshToken);
+
+    return result;
   }
 
   async saveRefreshToken(id: number, token: string) {

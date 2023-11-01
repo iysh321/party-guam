@@ -22,7 +22,7 @@ export class LoginHandler implements ICommandHandler<LoginCommand> {
     }
 
     const userId = user.getId();
-    const encryptId = await this.authService.encrypt(userId.toString());
+    const encryptId = await this.authService.encrypt(String(userId));
 
     const accessToken = await this.authService.createAccessToken(encryptId);
     const refreshToken = await this.authService.createRefreshToken(encryptId);
