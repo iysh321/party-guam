@@ -45,28 +45,28 @@ export class UserEntity extends BaseEntity {
   image: string;
 
   @Column('boolean', { nullable: true })
-  is_party: boolean;
+  isParty: boolean;
 
   @Column({
     type: 'enum',
     enum: MeetingType,
     nullable: true,
   })
-  meeting_type: MeetingType;
+  meetingType: MeetingType;
 
   @Column({
     type: 'enum',
     enum: MeetingWeekType,
     nullable: true,
   })
-  meeting_week: MeetingWeekType;
+  meetingWeek: MeetingWeekType;
 
   @Column({
     type: 'enum',
     enum: MeetingTimeType,
     nullable: true,
   })
-  meeting_time: MeetingTimeType;
+  meetingTime: MeetingTimeType;
 
   @Column({ nullable: true, length: 4 })
   mbti: string;

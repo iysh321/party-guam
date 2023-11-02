@@ -46,6 +46,14 @@ export class UserRepository implements IUserRepository {
     return result;
   }
 
+  async findOneById(id: number) {
+    const result = await this.userRepository.findOne({
+      where: { id },
+    });
+
+    return result;
+  }
+
   async save(account: string, nickname: string, email: string): Promise<UserEntity> {
     const result = await this.userRepository.save({ account, nickname, email });
 

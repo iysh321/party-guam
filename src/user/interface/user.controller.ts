@@ -5,14 +5,16 @@ import { Response } from 'express';
 import { LoginCommand } from '../application/command/login.command';
 import { CreateUserCommand } from '../application/command/create-user.command';
 
-import { CreateUserDto } from './dto/create-user.dto';
+import { CreateUserDto } from './dto/request/create-user.request.dto';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
-import { UserLoginDto } from './dto/user-login.dto';
-import { UpdateUserDto } from './dto/update-user.dto';
+import { UserLoginDto } from './dto/request/user-login.request.dto';
+import { UpdateUserDto } from './dto/request/update-user.request.dto';
 import { UpdateUserCommand } from '../application/command/update-user.command';
 import { CurrentAccount } from 'src/common/decorators/auth.decorator';
 
 import { AccessJwtAuthGuard } from 'src/common/guard/jwt.guard';
+import { DecodedPayload } from 'src/auth/jwt.payload';
+import { GetUserInfoQuery } from '../application/query/get-user-info.query';
 
 @ApiTags('users')
 @Controller('users')
@@ -63,8 +65,10 @@ export class UserController {
   @UseGuards(AccessJwtAuthGuard)
   @Get('my')
   @ApiOperation({ summary: '내정보 조회' })
-  async getMyInfo(@CurrentAccount() account) {
-    account.id;
+  async getMyInfo(@CurrentAccount() account: DecodedPayload) {
+    const getUserInfoQuery = new GetUserInfoQuery(account.id);
+
+    return this.queryBus.execute(getUserInfoQuery);
   }
 
   @Get(':nickname')
@@ -75,6 +79,7 @@ export class UserController {
   @ApiOperation({ summary: '유저 리스트 조회' })
   async getUsers() {}
 
+  @UseGuards(AccessJwtAuthGuard)
   @Patch('')
   @ApiOperation({ summary: '내정보 수정' })
   async update() {}

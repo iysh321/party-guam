@@ -1,32 +1,24 @@
-import { NotFoundException } from '@nestjs/common';
+import { Inject, NotFoundException } from '@nestjs/common';
 import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
-import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { plainToInstance } from 'class-transformer';
+import { IUserRepository } from 'src/user/domain/user/repository/iuser.repository';
 
-import { UserEntity } from 'src/user/infra/db/entity/user.entity';
-import { UserInfo } from '../../interface/UserInfo';
+import { UserResponseDto } from '../../interface/dto/response/userInfo';
 import { GetUserInfoQuery } from './get-user-info.query';
 
 @QueryHandler(GetUserInfoQuery)
 export class GetUserInfoQueryHandler implements IQueryHandler<GetUserInfoQuery> {
-  constructor(@InjectRepository(UserEntity) private usersRepository: Repository<UserEntity>) {}
+  constructor(@Inject('UserRepository') private userRepository: IUserRepository) {}
 
-  async execute(query: GetUserInfoQuery): Promise<UserInfo> {
+  async execute(query: GetUserInfoQuery): Promise<UserResponseDto> {
     const { userId } = query;
 
-    const user = await this.usersRepository.findOne({
-      where: { id: userId },
-    });
+    const user = await this.userRepository.findOneById(userId);
 
     if (!user) {
       throw new NotFoundException('유저가 존재하지 않습니다');
     }
 
-    return {
-      id: user.id,
-      account: user.account,
-      email: user.email,
-      nickname: user.nickname,
-    };
+    return plainToInstance(UserResponseDto, user);
   }
 }
