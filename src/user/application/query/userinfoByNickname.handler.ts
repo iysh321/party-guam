@@ -5,18 +5,19 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { UserEntity } from 'src/user/infra/db/entity/user.entity';
 import { Repository } from 'typeorm';
 
-import { GetUserInfoQuery } from './get-user-info.query';
+import { userInfoByNicknameQuery } from './userinfoByNickname.query';
 
-@QueryHandler(GetUserInfoQuery)
-export class GetUserInfoQueryHandler implements IQueryHandler<GetUserInfoQuery> {
+@QueryHandler(userInfoByNicknameQuery)
+export class userInfoByNicknameQueryHandler implements IQueryHandler<userInfoByNicknameQuery> {
   constructor(@InjectRepository(UserEntity) private userRepository: Repository<UserEntity>) {}
 
-  async execute(query: GetUserInfoQuery) {
-    const { userId } = query;
+  async execute(query: userInfoByNicknameQuery) {
+    const { nickname } = query;
 
     const user = await this.userRepository.findOne({
-      where: { id: userId },
+      where: { nickname },
     });
+
     if (!user) {
       throw new NotFoundException('유저가 존재하지 않습니다');
     }

@@ -15,6 +15,8 @@ import { CurrentAccount } from 'src/common/decorators/auth.decorator';
 import { AccessJwtAuthGuard } from 'src/common/guard/jwt.guard';
 import { DecodedPayload } from 'src/auth/jwt.payload';
 import { GetUserInfoQuery } from '../application/query/get-user-info.query';
+import { UserResponseDto } from './dto/response/userInfo';
+import { plainToInstance } from 'class-transformer';
 
 @ApiTags('users')
 @Controller('users')
@@ -65,10 +67,12 @@ export class UserController {
   @UseGuards(AccessJwtAuthGuard)
   @Get('my')
   @ApiOperation({ summary: '내정보 조회' })
-  async getMyInfo(@CurrentAccount() account: DecodedPayload) {
+  async getMyInfo(@CurrentAccount() account: DecodedPayload): Promise<UserResponseDto> {
     const getUserInfoQuery = new GetUserInfoQuery(account.id);
 
-    return this.queryBus.execute(getUserInfoQuery);
+    const result = this.queryBus.execute(getUserInfoQuery);
+
+    return plainToInstance(UserResponseDto, result);
   }
 
   @Get(':nickname')

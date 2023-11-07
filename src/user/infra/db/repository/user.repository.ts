@@ -30,14 +30,6 @@ export class UserRepository implements IUserRepository {
     return this.userFactory.reconstitute(id, account, nickname, email);
   }
 
-  async findByNcikname(nickname: string) {
-    const result = await this.userRepository.findOne({
-      where: { nickname },
-    });
-
-    return result;
-  }
-
   async findByEmail(email: string) {
     const result = await this.userRepository.findOne({
       where: { email },
