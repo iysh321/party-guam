@@ -8,6 +8,8 @@ import { PartiesModule } from './parties/parties.module';
 import { LoggerMiddleware } from './common/middleware/logger.middleware';
 import { UserModule } from './user/user.module';
 import { SnakeNamingStrategy } from 'typeorm-naming-strategies';
+import { APP_INTERCEPTOR } from '@nestjs/core';
+import { ResponseInterceptor } from './common/interceptor/response';
 
 @Module({
   imports: [
@@ -31,7 +33,13 @@ import { SnakeNamingStrategy } from 'typeorm-naming-strategies';
     PartiesModule,
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [
+    AppService,
+    {
+      provide: APP_INTERCEPTOR,
+      useClass: ResponseInterceptor,
+    },
+  ],
 })
 export class AppModule {
   constructor() {}

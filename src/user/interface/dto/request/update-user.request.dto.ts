@@ -1,6 +1,6 @@
 import { IsBoolean, IsOptional, IsString } from 'class-validator';
 
-export class UpdateUserDto {
+export class UpdateUserRequestDto {
   @IsOptional()
   @IsBoolean()
   readonly is_party: boolean;

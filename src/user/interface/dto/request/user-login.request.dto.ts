@@ -1,3 +1,3 @@
-export class UserLoginDto {
+export class UserLoginRequestDto {
   account: string;
 }

@@ -5,13 +5,13 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { UserEntity } from 'src/user/infra/db/entity/user.entity';
 import { Repository } from 'typeorm';
 
-import { userInfoByNicknameQuery } from './userinfoByNickname.query';
+import { UserByNicknameQuery } from './get-user-by-nickname.query';
 
-@QueryHandler(userInfoByNicknameQuery)
-export class userInfoByNicknameQueryHandler implements IQueryHandler<userInfoByNicknameQuery> {
+@QueryHandler(UserByNicknameQuery)
+export class UserByNicknameHandler implements IQueryHandler<UserByNicknameQuery> {
   constructor(@InjectRepository(UserEntity) private userRepository: Repository<UserEntity>) {}
 
-  async execute(query: userInfoByNicknameQuery) {
+  async execute(query: UserByNicknameQuery) {
     const { nickname } = query;
 
     const user = await this.userRepository.findOne({

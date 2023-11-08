@@ -1,5 +1,5 @@
 import { IQuery } from '@nestjs/cqrs';
 
-export class userInfoByNicknameQuery implements IQuery {
+export class UserByNicknameQuery implements IQuery {
   constructor(readonly nickname: string) {}
 }
