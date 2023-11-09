@@ -1,4 +1,4 @@
-import { Inject, Injectable, UnprocessableEntityException } from '@nestjs/common';
+import { ConflictException, Inject, Injectable } from '@nestjs/common';
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 import { CreateUserCommand } from './create-user.command';
 import { UserFactory } from '../../domain/user/user.factory';
@@ -15,12 +15,12 @@ export class CreateUserHandler implements ICommandHandler<CreateUserCommand> {
   async execute(command: CreateUserCommand) {
     const { account, nickname, email } = command;
 
-    const verify = await this.userRepository.findByEmail(email);
+    const verify = await this.userRepository.findByAccount(account);
     if (verify !== null) {
-      throw new UnprocessableEntityException('해당 이메일로는 가입할 수 없습니다.');
+      throw new ConflictException('유저가 이미 존재 합니다.');
     }
 
-    const save = await this.userRepository.save(account, nickname, email);
+    const save = await this.userRepository.create(account, nickname, email);
 
     this.userFactory.create(save.id, account, email, email);
 

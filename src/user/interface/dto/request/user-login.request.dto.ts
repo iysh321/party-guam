@@ -1,3 +1,6 @@
+import { IsNotEmpty } from 'class-validator';
+
 export class UserLoginRequestDto {
-  account: string;
+  @IsNotEmpty()
+  access_token: string;
 }

@@ -7,7 +7,7 @@ import { CurrentAccount } from 'src/common/decorators/auth.decorator';
 import { AccessJwtAuthGuard } from 'src/common/guard/jwt.guard';
 import { DecodedPayload } from 'src/auth/jwt.payload';
 
-import { LoginCommand } from '../application/command/login.command';
+import { KakaoLoginCommand } from '../application/command/kakao-login.command';
 import { CreateUserCommand } from '../application/command/create-user.command';
 import { UpdateUserCommand } from '../application/command/update-user.command';
 
@@ -21,7 +21,7 @@ import { UserQueryRequestDto } from './dto/request/user.query.request.dto';
 import { GetUserQuery } from '../application/query/get-user.query';
 import { GetUsersQuery } from '../application/query/get-users.query';
 
-import { UserResponseDto, UsersResponseDto } from './dto/response/UserResponseDto copy';
+import { UserResponseDto, UsersResponseDto } from './dto/response/UserResponseDto';
 
 @ApiTags('users')
 @Controller('users')
@@ -32,7 +32,7 @@ export class UserController {
   ) {}
 
   @Post('')
-  @ApiOperation({ summary: '회원가입' })
+  @ApiOperation({ summary: '회원가입 (일시적으로 구현)' })
   async createUser(@Body() dto: CreateUserRequestDto): Promise<void> {
     const { account, nickname, email } = dto;
 
@@ -41,12 +41,12 @@ export class UserController {
     return this.commandBus.execute(command);
   }
 
-  @Post('login')
-  @ApiOperation({ summary: '로그인' })
+  @Post('kakao/login')
+  @ApiOperation({ summary: 'Kakao 로그인 / 자동 회원가입' })
   async login(@Res() res: Response, @Body() dto: UserLoginRequestDto) {
-    const { account } = dto;
+    const { access_token } = dto;
 
-    const command = new LoginCommand(account);
+    const command = new KakaoLoginCommand(access_token);
 
     const reuslt = await this.commandBus.execute(command);
 
@@ -59,6 +59,7 @@ export class UserController {
     res.send({ accessToken: reuslt.accessToken });
   }
 
+  @UseGuards(AccessJwtAuthGuard)
   @Patch('info')
   @ApiOperation({ summary: '추가 정보 기입 또는 수정' })
   async updateUser(@Body() dto: UpdateUserRequestDto): Promise<void> {
@@ -68,11 +69,6 @@ export class UserController {
 
     return this.commandBus.execute(command);
   }
-
-  @UseGuards(AccessJwtAuthGuard)
-  @Patch('')
-  @ApiOperation({ summary: '내정보 수정' })
-  async update() {}
 
   @Get('')
   @ApiOperation({ summary: '유저 다수 조회' })

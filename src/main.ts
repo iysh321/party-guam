@@ -14,7 +14,7 @@ async function bootstrap() {
     .addTag('party-guam')
     .build();
   const document = SwaggerModule.createDocument(app, config);
-  SwaggerModule.setup('api', app, document);
+  SwaggerModule.setup('docs', app, document);
 
   app.useGlobalPipes(
     new ValidationPipe({
@@ -24,6 +24,8 @@ async function bootstrap() {
     }),
   );
   app.useGlobalFilters(new CustomErrorExceptionFilter());
+  // 전체 endpoint
+  app.setGlobalPrefix('api');
 
   app.use((req, res, next) => {
     res.header('Access-Control-Allow-Origin', req.headers.origin);
