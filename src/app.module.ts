@@ -28,6 +28,7 @@ import { ResponseInterceptor } from './common/interceptor/response';
       },
       bigNumberStrings: false, // bigint number type
       namingStrategy: new SnakeNamingStrategy(),
+      logging: process.env.MODE_ENV !== 'prod',
     }),
     UserModule,
     PartiesModule,
