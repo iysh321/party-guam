@@ -117,6 +117,11 @@ __decorate([
 __decorate([
     (0, common_1.Get)(':nickname'),
     (0, swagger_1.ApiOperation)({ summary: '닉네임으로 유저 조회' }),
+    (0, swagger_1.ApiResponse)({
+        status: 200,
+        description: '성공적으로 유저 목록을 가져왔습니다.',
+        type: UserResponseDto_1.UsersResponseDto,
+    }),
     __param(0, (0, common_1.Param)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [user_param_request_dto_1.UserParamRequestDto]),
@@ -126,6 +131,11 @@ __decorate([
     (0, common_1.UseGuards)(jwt_guard_1.AccessJwtAuthGuard),
     (0, common_1.Get)('my'),
     (0, swagger_1.ApiOperation)({ summary: '내정보 조회' }),
+    (0, swagger_1.ApiResponse)({
+        status: 200,
+        description: '성공적으로 내정보 목록을 가져왔습니다.',
+        type: UserResponseDto_1.UsersResponseDto,
+    }),
     __param(0, (0, auth_decorator_1.CurrentAccount)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object]),

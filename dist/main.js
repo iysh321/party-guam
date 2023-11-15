@@ -35,7 +35,7 @@ async function bootstrap() {
         .addTag('party-guam')
         .build();
     const document = swagger_1.SwaggerModule.createDocument(app, config);
-    swagger_1.SwaggerModule.setup('docs', app, document);
+    swagger_1.SwaggerModule.setup('api/docs', app, document);
     app.useGlobalPipes(new common_1.ValidationPipe({
         transform: true,
         transformOptions: { enableImplicitConversion: true },

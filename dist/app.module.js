@@ -45,6 +45,7 @@ exports.AppModule = AppModule = __decorate([
                 },
                 bigNumberStrings: false,
                 namingStrategy: new typeorm_naming_strategies_1.SnakeNamingStrategy(),
+                logging: process.env.MODE_ENV !== 'prod',
             }),
             user_module_1.UserModule,
             parties_module_1.PartiesModule,

@@ -18,6 +18,7 @@ exports.UserParamRequestDto = UserParamRequestDto;
 __decorate([
     (0, swagger_1.ApiProperty)({
         description: '닉네임',
+        example: 'nickname',
     }),
     (0, class_validator_1.IsString)(),
     __metadata("design:type", String)

@@ -10,16 +10,25 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.CreateUserRequestDto = void 0;
+const swagger_1 = require("@nestjs/swagger");
 const class_validator_1 = require("class-validator");
 class CreateUserRequestDto {
 }
 exports.CreateUserRequestDto = CreateUserRequestDto;
 __decorate([
+    (0, swagger_1.ApiProperty)({
+        example: 'account',
+        description: '계정',
+    }),
     (0, class_validator_1.IsNotEmpty)(),
     (0, class_validator_1.IsString)(),
     __metadata("design:type", String)
 ], CreateUserRequestDto.prototype, "account", void 0);
 __decorate([
+    (0, swagger_1.ApiProperty)({
+        example: 'nickname',
+        description: '닉네임 2자 이상 30자 이하',
+    }),
     (0, class_validator_1.IsNotEmpty)(),
     (0, class_validator_1.IsString)(),
     (0, class_validator_1.MinLength)(2),
@@ -27,6 +36,10 @@ __decorate([
     __metadata("design:type", String)
 ], CreateUserRequestDto.prototype, "nickname", void 0);
 __decorate([
+    (0, swagger_1.ApiProperty)({
+        example: 'email@party.com',
+        description: '이메일 길이 최대 60',
+    }),
     (0, class_validator_1.IsNotEmpty)(),
     (0, class_validator_1.IsString)(),
     (0, class_validator_1.IsEmail)(),

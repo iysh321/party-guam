@@ -89,6 +89,11 @@ export class UserController {
 
   @Get(':nickname')
   @ApiOperation({ summary: '닉네임으로 유저 조회' })
+  @ApiResponse({
+    status: 200,
+    description: '성공적으로 유저 목록을 가져왔습니다.',
+    type: UsersResponseDto,
+  })
   async getUser(@Param() param: UserParamRequestDto) {
     const userInfoByNickname = new UserByNicknameQuery(param.nickname);
 
@@ -100,6 +105,11 @@ export class UserController {
   @UseGuards(AccessJwtAuthGuard)
   @Get('my')
   @ApiOperation({ summary: '내정보 조회' })
+  @ApiResponse({
+    status: 200,
+    description: '성공적으로 내정보 목록을 가져왔습니다.',
+    type: UsersResponseDto,
+  })
   async getMyInfo(@CurrentAccount() account: DecodedPayload): Promise<UserResponseDto> {
     const getUserInfoQuery = new GetUserQuery(account.id);
 

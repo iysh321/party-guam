@@ -10,11 +10,16 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.UserLoginRequestDto = void 0;
+const swagger_1 = require("@nestjs/swagger");
 const class_validator_1 = require("class-validator");
 class UserLoginRequestDto {
 }
 exports.UserLoginRequestDto = UserLoginRequestDto;
 __decorate([
+    (0, swagger_1.ApiProperty)({
+        example: 'accesstokencode',
+        description: '서버에서 제공한 access token',
+    }),
     (0, class_validator_1.IsNotEmpty)(),
     __metadata("design:type", String)
 ], UserLoginRequestDto.prototype, "access_token", void 0);
