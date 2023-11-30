@@ -4,7 +4,7 @@ import { AppService } from './app.service';
 
 import { TypeOrmModule } from '@nestjs/typeorm';
 
-import { PartiesModule } from './parties/parties.module';
+import { PartyModule } from './party/party.module';
 import { LoggerMiddleware } from './common/middleware/logger.middleware';
 import { UserModule } from './user/user.module';
 import { SnakeNamingStrategy } from 'typeorm-naming-strategies';
@@ -31,7 +31,7 @@ import { ResponseInterceptor } from './common/interceptor/response';
       logging: process.env.MODE_ENV !== 'prod',
     }),
     UserModule,
-    PartiesModule,
+    PartyModule,
   ],
   controllers: [AppController],
   providers: [

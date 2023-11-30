@@ -26,8 +26,8 @@ const create_user_request_dto_1 = require("./dto/request/create-user.request.dto
 const user_login_request_dto_1 = require("./dto/request/user-login.request.dto");
 const update_user_request_dto_1 = require("./dto/request/update-user.request.dto");
 const user_param_request_dto_1 = require("./dto/request/user.param.request.dto");
-const get_user_by_nickname_query_1 = require("../application/query/get-user-by-nickname.query");
 const user_query_request_dto_1 = require("./dto/request/user.query.request.dto");
+const get_user_by_nickname_query_1 = require("../application/query/get-user-by-nickname.query");
 const get_user_query_1 = require("../application/query/get-user.query");
 const get_users_query_1 = require("../application/query/get-users.query");
 const UserResponseDto_1 = require("./dto/response/UserResponseDto");
@@ -72,6 +72,14 @@ let UserController = class UserController {
         const getUserInfoQuery = new get_user_query_1.GetUserQuery(account.id);
         const result = this.queryBus.execute(getUserInfoQuery);
         return (0, class_transformer_1.plainToInstance)(UserResponseDto_1.UserResponseDto, result);
+    }
+    async follow(account, nickname) {
+        account;
+        nickname;
+    }
+    async unfollow(account, nickname) {
+        account;
+        nickname;
     }
 };
 exports.UserController = UserController;
@@ -141,6 +149,26 @@ __decorate([
     __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", Promise)
 ], UserController.prototype, "getMyInfo", null);
+__decorate([
+    (0, common_1.UseGuards)(jwt_guard_1.AccessJwtAuthGuard),
+    (0, common_1.Post)('follow/:nickname'),
+    (0, swagger_1.ApiOperation)({ summary: '팔로우' }),
+    __param(0, (0, auth_decorator_1.CurrentAccount)()),
+    __param(1, (0, common_1.Param)('nickname')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object, user_param_request_dto_1.UserParamRequestDto]),
+    __metadata("design:returntype", Promise)
+], UserController.prototype, "follow", null);
+__decorate([
+    (0, common_1.UseGuards)(jwt_guard_1.AccessJwtAuthGuard),
+    (0, common_1.Post)('unfollow/:nickname'),
+    (0, swagger_1.ApiOperation)({ summary: '팔로우 취소' }),
+    __param(0, (0, auth_decorator_1.CurrentAccount)()),
+    __param(1, (0, common_1.Param)('nickname')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object, user_param_request_dto_1.UserParamRequestDto]),
+    __metadata("design:returntype", Promise)
+], UserController.prototype, "unfollow", null);
 exports.UserController = UserController = __decorate([
     (0, swagger_1.ApiTags)('users'),
     (0, common_1.Controller)('users'),

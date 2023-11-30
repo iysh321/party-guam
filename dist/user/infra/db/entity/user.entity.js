@@ -13,10 +13,10 @@ exports.UserEntity = exports.MeetingTimeType = exports.MeetingWeekType = exports
 const typeorm_1 = require("typeorm");
 const user_skill_entity_1 = require("./user-skill.entity");
 const experience_entity_1 = require("./experience.entity");
-const party_user_entity_1 = require("../../../../parties/party/party-user.entity");
+const party_user_entity_1 = require("../../../../party/infra/db/entity/party/party-user.entity");
 const follow_entity_1 = require("./follow.entity");
-const party_proposal_entity_1 = require("../../../../parties/apply/party-proposal.entity");
-const party_recruitment_entity_1 = require("../../../../parties/apply/party-recruitment.entity");
+const party_request_entity_1 = require("../../../../party/infra/db/entity/apply/party-request.entity");
+const party_invite_entity_1 = require("../../../../party/infra/db/entity/apply/party-invite.entity");
 const baseEntity_1 = require("../../../../common/entity/baseEntity");
 const auth_entity_1 = require("../../../../auth/entity/auth.entity");
 var MeetingType;
@@ -121,13 +121,13 @@ __decorate([
     __metadata("design:type", Array)
 ], UserEntity.prototype, "userExperiences", void 0);
 __decorate([
-    (0, typeorm_1.OneToMany)(() => party_proposal_entity_1.PartyProposalEntity, (userExperience) => userExperience.user),
+    (0, typeorm_1.OneToMany)(() => party_request_entity_1.PartyRequestEntity, (userExperience) => userExperience.user),
     __metadata("design:type", Array)
-], UserEntity.prototype, "partyProposals", void 0);
+], UserEntity.prototype, "partyRequests", void 0);
 __decorate([
-    (0, typeorm_1.OneToMany)(() => party_recruitment_entity_1.PartyRecruitmentEntity, (userExperience) => userExperience.user),
+    (0, typeorm_1.OneToMany)(() => party_invite_entity_1.PartyInviteEntity, (userExperience) => userExperience.user),
     __metadata("design:type", Array)
-], UserEntity.prototype, "partyRecruitments", void 0);
+], UserEntity.prototype, "partyInvites", void 0);
 exports.UserEntity = UserEntity = __decorate([
     (0, typeorm_1.Entity)('user')
 ], UserEntity);

@@ -14,7 +14,7 @@ const common_1 = require("@nestjs/common");
 const app_controller_1 = require("./app.controller");
 const app_service_1 = require("./app.service");
 const typeorm_1 = require("@nestjs/typeorm");
-const parties_module_1 = require("./parties/parties.module");
+const party_module_1 = require("./party/party.module");
 const logger_middleware_1 = require("./common/middleware/logger.middleware");
 const user_module_1 = require("./user/user.module");
 const typeorm_naming_strategies_1 = require("typeorm-naming-strategies");
@@ -48,7 +48,7 @@ exports.AppModule = AppModule = __decorate([
                 logging: process.env.MODE_ENV !== 'prod',
             }),
             user_module_1.UserModule,
-            parties_module_1.PartiesModule,
+            party_module_1.PartyModule,
         ],
         controllers: [app_controller_1.AppController],
         providers: [

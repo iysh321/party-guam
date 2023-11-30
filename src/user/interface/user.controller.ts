@@ -15,9 +15,9 @@ import { CreateUserRequestDto } from './dto/request/create-user.request.dto';
 import { UserLoginRequestDto } from './dto/request/user-login.request.dto';
 import { UpdateUserRequestDto } from './dto/request/update-user.request.dto';
 import { UserParamRequestDto } from './dto/request/user.param.request.dto';
+import { UserQueryRequestDto } from './dto/request/user.query.request.dto';
 
 import { UserByNicknameQuery } from '../application/query/get-user-by-nickname.query';
-import { UserQueryRequestDto } from './dto/request/user.query.request.dto';
 import { GetUserQuery } from '../application/query/get-user.query';
 import { GetUsersQuery } from '../application/query/get-users.query';
 
@@ -116,5 +116,27 @@ export class UserController {
     const result = this.queryBus.execute(getUserInfoQuery);
 
     return plainToInstance(UserResponseDto, result);
+  }
+
+  @UseGuards(AccessJwtAuthGuard)
+  @Post('follow/:nickname')
+  @ApiOperation({ summary: '팔로우' })
+  async follow(
+    @CurrentAccount() account: DecodedPayload,
+    @Param('nickname') nickname: UserParamRequestDto,
+  ): Promise<void> {
+    account;
+    nickname;
+  }
+
+  @UseGuards(AccessJwtAuthGuard)
+  @Post('unfollow/:nickname')
+  @ApiOperation({ summary: '팔로우 취소' })
+  async unfollow(
+    @CurrentAccount() account: DecodedPayload,
+    @Param('nickname') nickname: UserParamRequestDto,
+  ): Promise<void> {
+    account;
+    nickname;
   }
 }

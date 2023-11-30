@@ -17,10 +17,13 @@ class UserParamRequestDto {
 exports.UserParamRequestDto = UserParamRequestDto;
 __decorate([
     (0, swagger_1.ApiProperty)({
-        description: '닉네임',
         example: 'nickname',
+        description: '닉네임 2자 이상 30자 이하',
     }),
+    (0, class_validator_1.IsNotEmpty)(),
     (0, class_validator_1.IsString)(),
+    (0, class_validator_1.MinLength)(2),
+    (0, class_validator_1.MaxLength)(30),
     __metadata("design:type", String)
 ], UserParamRequestDto.prototype, "nickname", void 0);
 //# sourceMappingURL=user.param.request.dto.js.map

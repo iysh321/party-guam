@@ -1,9 +1,9 @@
 import { UserSkillEntity } from './user-skill.entity';
 import { ExperienceEntity } from './experience.entity';
-import { PartyUserEntity } from 'src/parties/party/party-user.entity';
+import { PartyUserEntity } from 'src/party/infra/db/entity/party/party-user.entity';
 import { FollowEntity } from 'src/user/infra/db/entity/follow.entity';
-import { PartyProposalEntity } from 'src/parties/apply/party-proposal.entity';
-import { PartyRecruitmentEntity } from 'src/parties/apply/party-recruitment.entity';
+import { PartyRequestEntity } from 'src/party/infra/db/entity/apply/party-request.entity';
+import { PartyInviteEntity } from 'src/party/infra/db/entity/apply/party-invite.entity';
 import { BaseEntity } from 'src/common/entity/baseEntity';
 import { AuthEntity } from 'src/auth/entity/auth.entity';
 export declare enum MeetingType {
@@ -39,6 +39,6 @@ export declare class UserEntity extends BaseEntity {
     parties: PartyUserEntity[];
     userSkills: UserSkillEntity[];
     userExperiences: ExperienceEntity[];
-    partyProposals: PartyProposalEntity[];
-    partyRecruitments: PartyRecruitmentEntity[];
+    partyRequests: PartyRequestEntity[];
+    partyInvites: PartyInviteEntity[];
 }

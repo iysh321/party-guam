@@ -2,10 +2,10 @@ import { Entity, PrimaryGeneratedColumn, Column, OneToMany, OneToOne } from 'typ
 
 import { UserSkillEntity } from './user-skill.entity';
 import { ExperienceEntity } from './experience.entity';
-import { PartyUserEntity } from 'src/parties/party/party-user.entity';
+import { PartyUserEntity } from 'src/party/infra/db/entity/party/party-user.entity';
 import { FollowEntity } from 'src/user/infra/db/entity/follow.entity';
-import { PartyProposalEntity } from 'src/parties/apply/party-proposal.entity';
-import { PartyRecruitmentEntity } from 'src/parties/apply/party-recruitment.entity';
+import { PartyRequestEntity } from 'src/party/infra/db/entity/apply/party-request.entity';
+import { PartyInviteEntity } from 'src/party/infra/db/entity/apply/party-invite.entity';
 import { BaseEntity } from 'src/common/entity/baseEntity';
 import { AuthEntity } from 'src/auth/entity/auth.entity';
 
@@ -92,9 +92,9 @@ export class UserEntity extends BaseEntity {
   @OneToMany(() => ExperienceEntity, (userExperience) => userExperience.user)
   userExperiences: ExperienceEntity[];
 
-  @OneToMany(() => PartyProposalEntity, (userExperience) => userExperience.user)
-  partyProposals: PartyProposalEntity[];
+  @OneToMany(() => PartyRequestEntity, (userExperience) => userExperience.user)
+  partyRequests: PartyRequestEntity[];
 
-  @OneToMany(() => PartyRecruitmentEntity, (userExperience) => userExperience.user)
-  partyRecruitments: PartyRecruitmentEntity[];
+  @OneToMany(() => PartyInviteEntity, (userExperience) => userExperience.user)
+  partyInvites: PartyInviteEntity[];
 }

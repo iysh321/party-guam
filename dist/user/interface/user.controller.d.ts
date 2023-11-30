@@ -17,4 +17,6 @@ export declare class UserController {
     getUsers(query: UserQueryRequestDto): Promise<UserResponseDto>;
     getUser(param: UserParamRequestDto): Promise<UserResponseDto>;
     getMyInfo(account: DecodedPayload): Promise<UserResponseDto>;
+    follow(account: DecodedPayload, nickname: UserParamRequestDto): Promise<void>;
+    unfollow(account: DecodedPayload, nickname: UserParamRequestDto): Promise<void>;
 }
