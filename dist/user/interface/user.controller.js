@@ -85,7 +85,7 @@ let UserController = class UserController {
 exports.UserController = UserController;
 __decorate([
     (0, common_1.Post)(''),
-    (0, swagger_1.ApiOperation)({ summary: '회원가입 (일시적으로 구현)' }),
+    (0, swagger_1.ApiOperation)({ summary: '일반 회원가입 (일시적으로 구현)' }),
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [create_user_request_dto_1.CreateUserRequestDto]),

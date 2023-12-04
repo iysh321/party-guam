@@ -27,6 +27,11 @@ let PartyController = class PartyController {
         this.commandBus = commandBus;
         this.queryBus = queryBus;
     }
+    async getParty(query, param) {
+        query;
+        param;
+    }
+    async getParties() { }
     async createParty(dto) {
         const { title, content } = dto;
         const command = new create_party_comand_1.CreatePartyCommand(title, content);
@@ -38,6 +43,7 @@ let PartyController = class PartyController {
     async deleteParty(dto) {
         dto;
     }
+    async getlikes() { }
     async createPartyToLike(partyId) {
         partyId;
     }
@@ -53,10 +59,22 @@ let PartyController = class PartyController {
     async deletePartyComment(commentId, dto) {
         dto;
     }
+    async getPartyRequestList(partyId, dto) {
+        dto;
+    }
     async sendPartyRequest(commentId) {
         commentId;
     }
+    async deletePartyRequest(commentId) {
+        commentId;
+    }
+    async getPartyInviteList(partyId, dto) {
+        dto;
+    }
     async sendPartyInvite(commentId, nickname, dto) {
+        dto;
+    }
+    async deletePartyInvite(commentId, nickname, dto) {
         dto;
     }
     async transferPartyLeadership(commentId, dto) {
@@ -64,6 +82,22 @@ let PartyController = class PartyController {
     }
 };
 exports.PartyController = PartyController;
+__decorate([
+    (0, common_1.Get)(':partyId'),
+    (0, swagger_1.ApiOperation)({ summary: '파티(게시물) 조회' }),
+    __param(0, (0, common_1.Query)()),
+    __param(1, (0, common_1.Param)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object, Object]),
+    __metadata("design:returntype", Promise)
+], PartyController.prototype, "getParty", null);
+__decorate([
+    (0, common_1.Get)(''),
+    (0, swagger_1.ApiOperation)({ summary: '파티(게시물) 목록 조회' }),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", Promise)
+], PartyController.prototype, "getParties", null);
 __decorate([
     (0, common_1.Post)(''),
     (0, swagger_1.ApiOperation)({ summary: '파티(게시물) 생성' }),
@@ -88,6 +122,13 @@ __decorate([
     __metadata("design:paramtypes", [party_request_dto_1.PartyRequestDto]),
     __metadata("design:returntype", Promise)
 ], PartyController.prototype, "deleteParty", null);
+__decorate([
+    (0, common_1.Get)(''),
+    (0, swagger_1.ApiOperation)({ summary: '파티(게시물) 좋아요 목록 조회' }),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", Promise)
+], PartyController.prototype, "getlikes", null);
 __decorate([
     (0, common_1.Post)('like/:partyId'),
     (0, swagger_1.ApiOperation)({ summary: '파티(게시물) 좋아요' }),
@@ -132,6 +173,15 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], PartyController.prototype, "deletePartyComment", null);
 __decorate([
+    (0, common_1.Get)(':partyId/request'),
+    (0, swagger_1.ApiOperation)({ summary: '파티 신청 조회' }),
+    __param(0, (0, common_1.Param)('partyId')),
+    __param(1, (0, common_1.Body)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Number, party_comment_request_dto_1.PartyCommentRequestDto]),
+    __metadata("design:returntype", Promise)
+], PartyController.prototype, "getPartyRequestList", null);
+__decorate([
     (0, common_1.Post)(':partyId/request'),
     (0, swagger_1.ApiOperation)({ summary: '파티 신청' }),
     __param(0, (0, common_1.Param)('commentId')),
@@ -139,6 +189,23 @@ __decorate([
     __metadata("design:paramtypes", [Number]),
     __metadata("design:returntype", Promise)
 ], PartyController.prototype, "sendPartyRequest", null);
+__decorate([
+    (0, common_1.Post)(':partyId/request'),
+    (0, swagger_1.ApiOperation)({ summary: '파티 신청 취소' }),
+    __param(0, (0, common_1.Param)('commentId')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Number]),
+    __metadata("design:returntype", Promise)
+], PartyController.prototype, "deletePartyRequest", null);
+__decorate([
+    (0, common_1.Get)(':partyId/invite'),
+    (0, swagger_1.ApiOperation)({ summary: '파티 초대 조회' }),
+    __param(0, (0, common_1.Param)('partyId')),
+    __param(1, (0, common_1.Body)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Number, party_comment_request_dto_1.PartyCommentRequestDto]),
+    __metadata("design:returntype", Promise)
+], PartyController.prototype, "getPartyInviteList", null);
 __decorate([
     (0, common_1.Post)(':partyId/invite/:nickname'),
     (0, swagger_1.ApiOperation)({ summary: '파티 초대' }),
@@ -149,6 +216,16 @@ __decorate([
     __metadata("design:paramtypes", [Number, String, party_request_dto_1.PartyRequestDto]),
     __metadata("design:returntype", Promise)
 ], PartyController.prototype, "sendPartyInvite", null);
+__decorate([
+    (0, common_1.Delete)(':partyId/invite/:nickname'),
+    (0, swagger_1.ApiOperation)({ summary: '파티 초대 취소' }),
+    __param(0, (0, common_1.Param)('commentId')),
+    __param(1, (0, common_1.Param)('nickname')),
+    __param(2, (0, common_1.Body)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Number, String, party_request_dto_1.PartyRequestDto]),
+    __metadata("design:returntype", Promise)
+], PartyController.prototype, "deletePartyInvite", null);
 __decorate([
     (0, common_1.Post)(':partyId/transfer'),
     (0, swagger_1.ApiOperation)({ summary: '파티장 위임' }),
