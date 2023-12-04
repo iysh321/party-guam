@@ -32,7 +32,7 @@ export class UserController {
   ) {}
 
   @Post('')
-  @ApiOperation({ summary: '회원가입 (일시적으로 구현)' })
+  @ApiOperation({ summary: '일반 회원가입 (일시적으로 구현)' })
   async createUser(@Body() dto: CreateUserRequestDto): Promise<void> {
     const { account, nickname, email } = dto;
 

@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Param, Post, Put, UseGuards } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post, Put, Query, UseGuards } from '@nestjs/common';
 import { CommandBus, QueryBus } from '@nestjs/cqrs';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import { CreatePartyRequestDto } from './dto/create-party.request.dto';
@@ -16,6 +16,17 @@ export class PartyController {
     private commandBus: CommandBus,
     private queryBus: QueryBus,
   ) {}
+
+  @Get(':partyId')
+  @ApiOperation({ summary: '파티(게시물) 조회' })
+  async getParty(@Query() query, @Param() param): Promise<void> {
+    query;
+    param;
+  }
+
+  @Get('')
+  @ApiOperation({ summary: '파티(게시물) 목록 조회' })
+  async getParties(): Promise<void> {}
 
   @Post('')
   @ApiOperation({ summary: '파티(게시물) 생성' })
@@ -39,6 +50,11 @@ export class PartyController {
     dto;
   }
 
+  // 좋아요
+  @Get('')
+  @ApiOperation({ summary: '파티(게시물) 좋아요 목록 조회' })
+  async getlikes(): Promise<void> {}
+
   @Post('like/:partyId')
   @ApiOperation({ summary: '파티(게시물) 좋아요' })
   async createPartyToLike(@Param('partyId') partyId: number): Promise<void> {
@@ -51,6 +67,7 @@ export class PartyController {
     partyId;
   }
 
+  // 댓글
   @Post(':partyId/comments')
   @ApiOperation({ summary: '파티(게시물) 댓글 생성' })
   async createPartyComment(@Param('partyId') partyId: number, @Body() dto: PartyCommentRequestDto): Promise<void> {
@@ -69,10 +86,30 @@ export class PartyController {
     dto;
   }
 
+  // 신청
+  @Get(':partyId/request')
+  @ApiOperation({ summary: '파티 신청 조회' })
+  async getPartyRequestList(@Param('partyId') partyId: number, @Body() dto: PartyCommentRequestDto): Promise<void> {
+    dto;
+  }
+
   @Post(':partyId/request')
   @ApiOperation({ summary: '파티 신청' })
   async sendPartyRequest(@Param('commentId') commentId: number): Promise<void> {
     commentId;
+  }
+
+  @Post(':partyId/request')
+  @ApiOperation({ summary: '파티 신청 취소' })
+  async deletePartyRequest(@Param('commentId') commentId: number): Promise<void> {
+    commentId;
+  }
+
+  // 초대
+  @Get(':partyId/invite')
+  @ApiOperation({ summary: '파티 초대 조회' })
+  async getPartyInviteList(@Param('partyId') partyId: number, @Body() dto: PartyCommentRequestDto): Promise<void> {
+    dto;
   }
 
   @Post(':partyId/invite/:nickname')
@@ -85,6 +122,17 @@ export class PartyController {
     dto;
   }
 
+  @Delete(':partyId/invite/:nickname')
+  @ApiOperation({ summary: '파티 초대 취소' })
+  async deletePartyInvite(
+    @Param('commentId') commentId: number,
+    @Param('nickname') nickname: string,
+    @Body() dto: PartyRequestDto,
+  ): Promise<void> {
+    dto;
+  }
+
+  // 권한
   @Post(':partyId/transfer')
   @ApiOperation({ summary: '파티장 위임' })
   async transferPartyLeadership(
