@@ -105,9 +105,13 @@ __decorate([
     __metadata("design:type", auth_entity_1.AuthEntity)
 ], UserEntity.prototype, "auth", void 0);
 __decorate([
-    (0, typeorm_1.OneToMany)(() => follow_entity_1.FollowEntity, (follow) => follow.user),
+    (0, typeorm_1.OneToMany)(() => follow_entity_1.FollowEntity, (follow) => follow.follower),
     __metadata("design:type", Array)
-], UserEntity.prototype, "follows", void 0);
+], UserEntity.prototype, "followers", void 0);
+__decorate([
+    (0, typeorm_1.OneToMany)(() => follow_entity_1.FollowEntity, (follow) => follow.following),
+    __metadata("design:type", Array)
+], UserEntity.prototype, "followings", void 0);
 __decorate([
     (0, typeorm_1.OneToMany)(() => party_user_entity_1.PartyUserEntity, (party) => party.user),
     __metadata("design:type", Array)

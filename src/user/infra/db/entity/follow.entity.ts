@@ -1,16 +1,29 @@
 import { UserEntity } from 'src/user/infra/db/entity/user.entity';
-import { Entity, PrimaryGeneratedColumn, ManyToOne, JoinColumn } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, ManyToOne, JoinColumn, Index, Column } from 'typeorm';
 
 @Entity('follow')
+@Index('unique_follower_following', ['followerId', 'followingId'], { unique: true })
 export class FollowEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @ManyToOne(() => UserEntity, (user) => user.follows)
-  @JoinColumn({ name: 'follwer_id' })
-  user: UserEntity;
+  @Column()
+  followerId: number;
 
-  @ManyToOne(() => UserEntity, (user) => user.follows)
-  @JoinColumn({ name: 'following_id' })
+  @Column()
+  followingId: number;
+
+  @ManyToOne(() => UserEntity, (user) => user.followers, {
+    onUpdate: 'CASCADE',
+    onDelete: 'CASCADE',
+  })
+  @JoinColumn({ name: 'follower_id', referencedColumnName: 'id' })
+  follower: UserEntity;
+
+  @ManyToOne(() => UserEntity, (users) => users.followings, {
+    onUpdate: 'CASCADE',
+    onDelete: 'CASCADE',
+  })
+  @JoinColumn({ name: 'following_id', referencedColumnName: 'id' })
   following: UserEntity;
 }

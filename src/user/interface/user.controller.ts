@@ -22,6 +22,7 @@ import { GetUserQuery } from '../application/query/get-user.query';
 import { GetUsersQuery } from '../application/query/get-users.query';
 
 import { UserResponseDto, UsersResponseDto } from './dto/response/UserResponseDto';
+import { CreateFollowCommand } from '../application/command/create-follow.command';
 
 @ApiTags('users')
 @Controller('users')
@@ -118,15 +119,22 @@ export class UserController {
     return plainToInstance(UserResponseDto, result);
   }
 
+  // 팔로우
+  @UseGuards(AccessJwtAuthGuard)
+  @Get('follow')
+  @ApiOperation({ summary: '팔로우 목록 조회' })
+  async getFollow(@CurrentAccount() account: DecodedPayload, @Query() query: UserQueryRequestDto): Promise<void> {
+    account;
+    query;
+  }
+
   @UseGuards(AccessJwtAuthGuard)
   @Post('follow/:nickname')
   @ApiOperation({ summary: '팔로우' })
-  async follow(
-    @CurrentAccount() account: DecodedPayload,
-    @Param('nickname') nickname: UserParamRequestDto,
-  ): Promise<void> {
-    account;
-    nickname;
+  async follow(@CurrentAccount() payload: DecodedPayload, @Param() param: UserParamRequestDto): Promise<void> {
+    const command = new CreateFollowCommand(param.nickname, payload.id);
+
+    return this.commandBus.execute(command);
   }
 
   @UseGuards(AccessJwtAuthGuard)

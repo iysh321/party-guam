@@ -80,8 +80,11 @@ export class UserEntity extends BaseEntity {
   @OneToOne(() => AuthEntity, (auth) => auth.user)
   auth: AuthEntity;
 
-  @OneToMany(() => FollowEntity, (follow) => follow.user)
-  follows: FollowEntity[];
+  @OneToMany(() => FollowEntity, (follow) => follow.follower)
+  followers: FollowEntity[];
+
+  @OneToMany(() => FollowEntity, (follow) => follow.following)
+  followings: FollowEntity[];
 
   @OneToMany(() => PartyUserEntity, (party) => party.user)
   parties: PartyUserEntity[];

@@ -1,0 +1,45 @@
+"use strict";
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+var __param = (this && this.__param) || function (paramIndex, decorator) {
+    return function (target, key) { decorator(target, key, paramIndex); }
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.FollowRepository = void 0;
+const typeorm_1 = require("typeorm");
+const common_1 = require("@nestjs/common");
+const typeorm_2 = require("@nestjs/typeorm");
+const follow_entity_1 = require("../entity/follow.entity");
+const follow_factory_1 = require("../../../domain/follow/follow.factory");
+const user_entity_1 = require("../entity/user.entity");
+let FollowRepository = class FollowRepository {
+    constructor(dataSource, followRepository, userRepository, followFactory) {
+        this.dataSource = dataSource;
+        this.followRepository = followRepository;
+        this.userRepository = userRepository;
+        this.followFactory = followFactory;
+    }
+    async create(nickname, followingId) {
+        const follower = await this.userRepository.findOne({ where: { nickname } });
+        const result = await this.followRepository.save({ follower, followingId });
+        return this.followFactory.reconstitute(result.id, follower.id, followingId);
+    }
+};
+exports.FollowRepository = FollowRepository;
+exports.FollowRepository = FollowRepository = __decorate([
+    (0, common_1.Injectable)(),
+    __param(1, (0, typeorm_2.InjectRepository)(follow_entity_1.FollowEntity)),
+    __param(2, (0, typeorm_2.InjectRepository)(user_entity_1.UserEntity)),
+    __metadata("design:paramtypes", [typeorm_1.DataSource,
+        typeorm_1.Repository,
+        typeorm_1.Repository,
+        follow_factory_1.FollowFactory])
+], FollowRepository);
+//# sourceMappingURL=follow.repository.js.map

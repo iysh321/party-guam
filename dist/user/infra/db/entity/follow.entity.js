@@ -20,16 +20,31 @@ __decorate([
     __metadata("design:type", Number)
 ], FollowEntity.prototype, "id", void 0);
 __decorate([
-    (0, typeorm_1.ManyToOne)(() => user_entity_1.UserEntity, (user) => user.follows),
-    (0, typeorm_1.JoinColumn)({ name: 'follwer_id' }),
-    __metadata("design:type", user_entity_1.UserEntity)
-], FollowEntity.prototype, "user", void 0);
+    (0, typeorm_1.Column)(),
+    __metadata("design:type", Number)
+], FollowEntity.prototype, "followerId", void 0);
 __decorate([
-    (0, typeorm_1.ManyToOne)(() => user_entity_1.UserEntity, (user) => user.follows),
-    (0, typeorm_1.JoinColumn)({ name: 'following_id' }),
+    (0, typeorm_1.Column)(),
+    __metadata("design:type", Number)
+], FollowEntity.prototype, "followingId", void 0);
+__decorate([
+    (0, typeorm_1.ManyToOne)(() => user_entity_1.UserEntity, (user) => user.followers, {
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE',
+    }),
+    (0, typeorm_1.JoinColumn)({ name: 'follower_id', referencedColumnName: 'id' }),
+    __metadata("design:type", user_entity_1.UserEntity)
+], FollowEntity.prototype, "follower", void 0);
+__decorate([
+    (0, typeorm_1.ManyToOne)(() => user_entity_1.UserEntity, (users) => users.followings, {
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE',
+    }),
+    (0, typeorm_1.JoinColumn)({ name: 'following_id', referencedColumnName: 'id' }),
     __metadata("design:type", user_entity_1.UserEntity)
 ], FollowEntity.prototype, "following", void 0);
 exports.FollowEntity = FollowEntity = __decorate([
-    (0, typeorm_1.Entity)('follow')
+    (0, typeorm_1.Entity)('follow'),
+    (0, typeorm_1.Index)('unique_follower_following', ['followerId', 'followingId'], { unique: true })
 ], FollowEntity);
 //# sourceMappingURL=follow.entity.js.map

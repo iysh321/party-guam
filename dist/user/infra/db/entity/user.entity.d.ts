@@ -35,7 +35,8 @@ export declare class UserEntity extends BaseEntity {
     hp: number;
     mp: number;
     auth: AuthEntity;
-    follows: FollowEntity[];
+    followers: FollowEntity[];
+    followings: FollowEntity[];
     parties: PartyUserEntity[];
     userSkills: UserSkillEntity[];
     userExperiences: ExperienceEntity[];

@@ -31,6 +31,7 @@ const get_user_by_nickname_query_1 = require("../application/query/get-user-by-n
 const get_user_query_1 = require("../application/query/get-user.query");
 const get_users_query_1 = require("../application/query/get-users.query");
 const UserResponseDto_1 = require("./dto/response/UserResponseDto");
+const create_follow_command_1 = require("../application/command/create-follow.command");
 let UserController = class UserController {
     constructor(commandBus, queryBus) {
         this.commandBus = commandBus;
@@ -73,9 +74,13 @@ let UserController = class UserController {
         const result = this.queryBus.execute(getUserInfoQuery);
         return (0, class_transformer_1.plainToInstance)(UserResponseDto_1.UserResponseDto, result);
     }
-    async follow(account, nickname) {
+    async getFollow(account, query) {
         account;
-        nickname;
+        query;
+    }
+    async follow(payload, param) {
+        const command = new create_follow_command_1.CreateFollowCommand(param.nickname, payload.id);
+        return this.commandBus.execute(command);
     }
     async unfollow(account, nickname) {
         account;
@@ -151,10 +156,20 @@ __decorate([
 ], UserController.prototype, "getMyInfo", null);
 __decorate([
     (0, common_1.UseGuards)(jwt_guard_1.AccessJwtAuthGuard),
+    (0, common_1.Get)('follow'),
+    (0, swagger_1.ApiOperation)({ summary: '팔로우 목록 조회' }),
+    __param(0, (0, auth_decorator_1.CurrentAccount)()),
+    __param(1, (0, common_1.Query)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object, user_query_request_dto_1.UserQueryRequestDto]),
+    __metadata("design:returntype", Promise)
+], UserController.prototype, "getFollow", null);
+__decorate([
+    (0, common_1.UseGuards)(jwt_guard_1.AccessJwtAuthGuard),
     (0, common_1.Post)('follow/:nickname'),
     (0, swagger_1.ApiOperation)({ summary: '팔로우' }),
     __param(0, (0, auth_decorator_1.CurrentAccount)()),
-    __param(1, (0, common_1.Param)('nickname')),
+    __param(1, (0, common_1.Param)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object, user_param_request_dto_1.UserParamRequestDto]),
     __metadata("design:returntype", Promise)

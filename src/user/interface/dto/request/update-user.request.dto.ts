@@ -41,6 +41,24 @@ export class UpdateUserRequestDto {
   @ApiPropertyOptional({
     example: 'intp',
     description: 'mbti',
+    enum: [
+      'entp',
+      'enfp',
+      'entj',
+      'enfj',
+      'estp',
+      'esfp',
+      'estj',
+      'esfj',
+      'intp',
+      'infp',
+      'intj',
+      'infj',
+      'istp',
+      'isfp',
+      'istj',
+      'isfj',
+    ],
   })
   @IsOptional()
   @IsString()
