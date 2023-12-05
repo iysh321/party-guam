@@ -17,12 +17,12 @@ let FollowFactory = class FollowFactory {
     constructor(eventBus) {
         this.eventBus = eventBus;
     }
-    create(id, followerId, followingId) {
-        const follow = new follow_1.Follow(id, followerId, followingId);
+    create(userId, followId) {
+        const follow = new follow_1.Follow(userId, followId);
         return follow;
     }
-    reconstitute(id, followerId, followingId) {
-        return new follow_1.Follow(id, followerId, followingId);
+    reconstitute(userId, followId) {
+        return new follow_1.Follow(userId, followId);
     }
 };
 exports.FollowFactory = FollowFactory;

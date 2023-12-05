@@ -9,6 +9,7 @@ export declare class UserRepository implements IUserRepository {
     private userFactory;
     constructor(dataSource: DataSource, userRepository: Repository<UserEntity>, userFactory: UserFactory);
     findByAccount(account: string): Promise<User>;
+    findByNickname(nickname: string): Promise<User | null>;
     create(account: string, nickname: string, email: string): Promise<UserEntity>;
     update(is_party: any, meeting_type: any, meeting_week: any, meeting_time: any, mbti: any): Promise<void>;
 }

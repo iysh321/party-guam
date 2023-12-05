@@ -34,6 +34,16 @@ let UserRepository = class UserRepository {
         const { id, nickname, email } = userEntity;
         return this.userFactory.reconstitute(id, account, nickname, email);
     }
+    async findByNickname(nickname) {
+        const userEntity = await this.userRepository.findOne({
+            where: { nickname },
+        });
+        if (!userEntity) {
+            return null;
+        }
+        const { id, account, email } = userEntity;
+        return this.userFactory.reconstitute(id, account, nickname, email);
+    }
     async create(account, nickname, email) {
         const result = await this.userRepository.save({ account, nickname, email });
         return result;

@@ -18,14 +18,16 @@ const cqrs_1 = require("@nestjs/cqrs");
 const user_factory_1 = require("../../domain/user/user.factory");
 const create_follow_command_1 = require("./create-follow.command");
 let CreateFollowHandler = class CreateFollowHandler {
-    constructor(userFactory, followRepository) {
+    constructor(userFactory, followRepository, userRepository) {
         this.userFactory = userFactory;
         this.followRepository = followRepository;
+        this.userRepository = userRepository;
     }
     async execute(command) {
-        const { nickname, followingId } = command;
-        this.followRepository.create(nickname, followingId);
-        const save = await this.followRepository.create(nickname, followingId);
+        const { userId, nickname } = command;
+        const followUser = await this.userRepository.findByAccount(nickname);
+        await this.followRepository.create(userId, followUser.id);
+        const save = await this.followRepository.create(userId, followUser.id);
         return save;
     }
 };
@@ -34,6 +36,7 @@ exports.CreateFollowHandler = CreateFollowHandler = __decorate([
     (0, common_1.Injectable)(),
     (0, cqrs_1.CommandHandler)(create_follow_command_1.CreateFollowCommand),
     __param(1, (0, common_1.Inject)('FollowRepository')),
-    __metadata("design:paramtypes", [user_factory_1.UserFactory, Object])
+    __param(2, (0, common_1.Inject)('UserRepository')),
+    __metadata("design:paramtypes", [user_factory_1.UserFactory, Object, Object])
 ], CreateFollowHandler);
 //# sourceMappingURL=create-follow.handler.js.map

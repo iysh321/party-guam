@@ -18,27 +18,22 @@ const common_1 = require("@nestjs/common");
 const typeorm_2 = require("@nestjs/typeorm");
 const follow_entity_1 = require("../entity/follow.entity");
 const follow_factory_1 = require("../../../domain/follow/follow.factory");
-const user_entity_1 = require("../entity/user.entity");
 let FollowRepository = class FollowRepository {
-    constructor(dataSource, followRepository, userRepository, followFactory) {
+    constructor(dataSource, followRepository, followFactory) {
         this.dataSource = dataSource;
         this.followRepository = followRepository;
-        this.userRepository = userRepository;
         this.followFactory = followFactory;
     }
-    async create(nickname, followingId) {
-        const follower = await this.userRepository.findOne({ where: { nickname } });
-        const result = await this.followRepository.save({ follower, followingId });
-        return this.followFactory.reconstitute(result.id, follower.id, followingId);
+    async create(userId, followingId) {
+        await this.followRepository.save({ userId, followingId });
+        return this.followFactory.reconstitute(userId, followingId);
     }
 };
 exports.FollowRepository = FollowRepository;
 exports.FollowRepository = FollowRepository = __decorate([
     (0, common_1.Injectable)(),
     __param(1, (0, typeorm_2.InjectRepository)(follow_entity_1.FollowEntity)),
-    __param(2, (0, typeorm_2.InjectRepository)(user_entity_1.UserEntity)),
     __metadata("design:paramtypes", [typeorm_1.DataSource,
-        typeorm_1.Repository,
         typeorm_1.Repository,
         follow_factory_1.FollowFactory])
 ], FollowRepository);

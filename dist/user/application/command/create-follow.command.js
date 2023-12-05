@@ -2,9 +2,9 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.CreateFollowCommand = void 0;
 class CreateFollowCommand {
-    constructor(nickname, followingId) {
+    constructor(userId, nickname) {
+        this.userId = userId;
         this.nickname = nickname;
-        this.followingId = followingId;
     }
 }
 exports.CreateFollowCommand = CreateFollowCommand;

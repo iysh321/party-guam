@@ -12,15 +12,15 @@ import { Follow } from './follow';
 export class FollowFactory {
   constructor(private eventBus: EventBus) {}
 
-  create(id: number, followerId: number, followingId: number): Follow {
-    const follow = new Follow(id, followerId, followingId);
+  create(userId: number, followId: number): Follow {
+    const follow = new Follow(userId, followId);
 
     // this.eventBus.publish(new FollowCreatedEvent(email, signupVerifyToken));
 
     return follow;
   }
 
-  reconstitute(id: number, followerId: number, followingId: number): Follow {
-    return new Follow(id, followerId, followingId);
+  reconstitute(userId: number, followId: number): Follow {
+    return new Follow(userId, followId);
   }
 }

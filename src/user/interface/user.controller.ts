@@ -132,7 +132,7 @@ export class UserController {
   @Post('follow/:nickname')
   @ApiOperation({ summary: '팔로우' })
   async follow(@CurrentAccount() payload: DecodedPayload, @Param() param: UserParamRequestDto): Promise<void> {
-    const command = new CreateFollowCommand(param.nickname, payload.id);
+    const command = new CreateFollowCommand(payload.id, param.nickname);
 
     return this.commandBus.execute(command);
   }

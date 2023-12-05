@@ -79,7 +79,7 @@ let UserController = class UserController {
         query;
     }
     async follow(payload, param) {
-        const command = new create_follow_command_1.CreateFollowCommand(param.nickname, payload.id);
+        const command = new create_follow_command_1.CreateFollowCommand(payload.id, param.nickname);
         return this.commandBus.execute(command);
     }
     async unfollow(account, nickname) {
