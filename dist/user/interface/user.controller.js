@@ -22,6 +22,8 @@ const jwt_guard_1 = require("../../common/guard/jwt.guard");
 const kakao_login_command_1 = require("../application/command/kakao-login.command");
 const create_user_command_1 = require("../application/command/create-user.command");
 const update_user_command_1 = require("../application/command/update-user.command");
+const follow_command_1 = require("../application/command/follow.command");
+const unfollow_command_1 = require("../application/command/unfollow.command");
 const create_user_request_dto_1 = require("./dto/request/create-user.request.dto");
 const user_login_request_dto_1 = require("./dto/request/user-login.request.dto");
 const update_user_request_dto_1 = require("./dto/request/update-user.request.dto");
@@ -31,16 +33,23 @@ const get_user_by_nickname_query_1 = require("../application/query/get-user-by-n
 const get_user_query_1 = require("../application/query/get-user.query");
 const get_users_query_1 = require("../application/query/get-users.query");
 const UserResponseDto_1 = require("./dto/response/UserResponseDto");
-const create_follow_command_1 = require("../application/command/create-follow.command");
+const follow_user_request_dto_1 = require("./dto/request/follow.user.request.dto");
+const get_follow_query_1 = require("../application/query/get-follow.query");
 let UserController = class UserController {
     constructor(commandBus, queryBus) {
         this.commandBus = commandBus;
         this.queryBus = queryBus;
     }
-    async createUser(dto) {
+    async createUser(res, dto) {
         const { account, nickname, email } = dto;
         const command = new create_user_command_1.CreateUserCommand(account, nickname, email);
-        return this.commandBus.execute(command);
+        const reuslt = await this.commandBus.execute(command);
+        res.cookie('refreshToken', reuslt.refreshToken, {
+            httpOnly: true,
+            secure: true,
+            sameSite: 'strict',
+        });
+        res.send({ accessToken: reuslt.accessToken });
     }
     async login(res, dto) {
         const { access_token } = dto;
@@ -64,36 +73,38 @@ let UserController = class UserController {
         const result = this.queryBus.execute(userInfoByNickname);
         return (0, class_transformer_1.plainToInstance)(UserResponseDto_1.UserResponseDto, result);
     }
-    async getUser(param) {
-        const userInfoByNickname = new get_user_by_nickname_query_1.UserByNicknameQuery(param.nickname);
-        const result = this.queryBus.execute(userInfoByNickname);
-        return (0, class_transformer_1.plainToInstance)(UserResponseDto_1.UserResponseDto, result);
-    }
     async getMyInfo(account) {
         const getUserInfoQuery = new get_user_query_1.GetUserQuery(account.id);
         const result = this.queryBus.execute(getUserInfoQuery);
         return (0, class_transformer_1.plainToInstance)(UserResponseDto_1.UserResponseDto, result);
     }
-    async getFollow(account, query) {
-        account;
-        query;
+    async getUser(param) {
+        const userInfoByNickname = new get_user_by_nickname_query_1.UserByNicknameQuery(param.nickname);
+        const result = this.queryBus.execute(userInfoByNickname);
+        return (0, class_transformer_1.plainToInstance)(UserResponseDto_1.UserResponseDto, result);
+    }
+    async getFollow(payload, query) {
+        const { page, limit, sort, order } = query;
+        const userInfoByNickname = new get_follow_query_1.GetFollowQuery(payload.id, page, limit, sort, order);
+        return await this.queryBus.execute(userInfoByNickname);
     }
     async follow(payload, param) {
-        const command = new create_follow_command_1.CreateFollowCommand(payload.id, param.nickname);
-        return this.commandBus.execute(command);
+        const command = new follow_command_1.FollowCommand(payload.id, param.nickname);
+        await this.commandBus.execute(command);
     }
-    async unfollow(account, nickname) {
-        account;
-        nickname;
+    async unfollow(payload, param) {
+        const command = new unfollow_command_1.UnfollowCommand(payload.id, param.nickname);
+        await this.commandBus.execute(command);
     }
 };
 exports.UserController = UserController;
 __decorate([
     (0, common_1.Post)(''),
-    (0, swagger_1.ApiOperation)({ summary: '일반 회원가입 (일시적으로 구현)' }),
-    __param(0, (0, common_1.Body)()),
+    (0, swagger_1.ApiOperation)({ summary: '일반 회원가입 (카카오 로그인 안될 시 테스트용 구현, 카카오 완료시 삭제)' }),
+    __param(0, (0, common_1.Res)()),
+    __param(1, (0, common_1.Body)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [create_user_request_dto_1.CreateUserRequestDto]),
+    __metadata("design:paramtypes", [Object, create_user_request_dto_1.CreateUserRequestDto]),
     __metadata("design:returntype", Promise)
 ], UserController.prototype, "createUser", null);
 __decorate([
@@ -128,12 +139,26 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], UserController.prototype, "getUsers", null);
 __decorate([
-    (0, common_1.Get)(':nickname'),
+    (0, common_1.UseGuards)(jwt_guard_1.AccessJwtAuthGuard),
+    (0, common_1.Get)('info'),
+    (0, swagger_1.ApiOperation)({ summary: '내정보 조회' }),
+    (0, swagger_1.ApiResponse)({
+        status: 200,
+        description: '성공적으로 내정보 목록을 가져왔습니다.',
+        type: UserResponseDto_1.UserResponseDto,
+    }),
+    __param(0, (0, auth_decorator_1.CurrentAccount)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object]),
+    __metadata("design:returntype", Promise)
+], UserController.prototype, "getMyInfo", null);
+__decorate([
+    (0, common_1.Get)('info/:nickname'),
     (0, swagger_1.ApiOperation)({ summary: '닉네임으로 유저 조회' }),
     (0, swagger_1.ApiResponse)({
         status: 200,
         description: '성공적으로 유저 목록을 가져왔습니다.',
-        type: UserResponseDto_1.UsersResponseDto,
+        type: UserResponseDto_1.UserResponseDto,
     }),
     __param(0, (0, common_1.Param)()),
     __metadata("design:type", Function),
@@ -142,32 +167,22 @@ __decorate([
 ], UserController.prototype, "getUser", null);
 __decorate([
     (0, common_1.UseGuards)(jwt_guard_1.AccessJwtAuthGuard),
-    (0, common_1.Get)('my'),
-    (0, swagger_1.ApiOperation)({ summary: '내정보 조회' }),
-    (0, swagger_1.ApiResponse)({
-        status: 200,
-        description: '성공적으로 내정보 목록을 가져왔습니다.',
-        type: UserResponseDto_1.UsersResponseDto,
-    }),
-    __param(0, (0, auth_decorator_1.CurrentAccount)()),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object]),
-    __metadata("design:returntype", Promise)
-], UserController.prototype, "getMyInfo", null);
-__decorate([
-    (0, common_1.UseGuards)(jwt_guard_1.AccessJwtAuthGuard),
     (0, common_1.Get)('follow'),
-    (0, swagger_1.ApiOperation)({ summary: '팔로우 목록 조회' }),
+    (0, swagger_1.ApiOperation)({ summary: '팔로워, 팔로잉 목록 조회' }),
     __param(0, (0, auth_decorator_1.CurrentAccount)()),
     __param(1, (0, common_1.Query)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object, user_query_request_dto_1.UserQueryRequestDto]),
+    __metadata("design:paramtypes", [Object, follow_user_request_dto_1.FollowQueryRequestDto]),
     __metadata("design:returntype", Promise)
 ], UserController.prototype, "getFollow", null);
 __decorate([
     (0, common_1.UseGuards)(jwt_guard_1.AccessJwtAuthGuard),
     (0, common_1.Post)('follow/:nickname'),
     (0, swagger_1.ApiOperation)({ summary: '팔로우' }),
+    (0, swagger_1.ApiResponse)({
+        status: 204,
+        description: '성공적으로 팔로우 되었습니다.',
+    }),
     __param(0, (0, auth_decorator_1.CurrentAccount)()),
     __param(1, (0, common_1.Param)()),
     __metadata("design:type", Function),
@@ -176,10 +191,14 @@ __decorate([
 ], UserController.prototype, "follow", null);
 __decorate([
     (0, common_1.UseGuards)(jwt_guard_1.AccessJwtAuthGuard),
-    (0, common_1.Post)('unfollow/:nickname'),
-    (0, swagger_1.ApiOperation)({ summary: '팔로우 취소' }),
+    (0, common_1.Delete)('unfollow/:nickname'),
+    (0, swagger_1.ApiOperation)({ summary: '언팔로우' }),
+    (0, swagger_1.ApiResponse)({
+        status: 204,
+        description: '성공적으로 언팔로우 되었습니다.',
+    }),
     __param(0, (0, auth_decorator_1.CurrentAccount)()),
-    __param(1, (0, common_1.Param)('nickname')),
+    __param(1, (0, common_1.Param)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object, user_param_request_dto_1.UserParamRequestDto]),
     __metadata("design:returntype", Promise)

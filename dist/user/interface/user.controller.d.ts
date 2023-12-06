@@ -7,17 +7,18 @@ import { UpdateUserRequestDto } from './dto/request/update-user.request.dto';
 import { UserParamRequestDto } from './dto/request/user.param.request.dto';
 import { UserQueryRequestDto } from './dto/request/user.query.request.dto';
 import { UserResponseDto } from './dto/response/UserResponseDto';
+import { FollowQueryRequestDto } from './dto/request/follow.user.request.dto';
 export declare class UserController {
     private commandBus;
     private queryBus;
     constructor(commandBus: CommandBus, queryBus: QueryBus);
-    createUser(dto: CreateUserRequestDto): Promise<void>;
+    createUser(res: Response, dto: CreateUserRequestDto): Promise<void>;
     login(res: Response, dto: UserLoginRequestDto): Promise<void>;
     updateUser(dto: UpdateUserRequestDto): Promise<void>;
     getUsers(query: UserQueryRequestDto): Promise<UserResponseDto>;
-    getUser(param: UserParamRequestDto): Promise<UserResponseDto>;
     getMyInfo(account: DecodedPayload): Promise<UserResponseDto>;
-    getFollow(account: DecodedPayload, query: UserQueryRequestDto): Promise<void>;
+    getUser(param: UserParamRequestDto): Promise<UserResponseDto>;
+    getFollow(payload: DecodedPayload, query: FollowQueryRequestDto): Promise<void>;
     follow(payload: DecodedPayload, param: UserParamRequestDto): Promise<void>;
-    unfollow(account: DecodedPayload, nickname: UserParamRequestDto): Promise<void>;
+    unfollow(payload: DecodedPayload, param: UserParamRequestDto): Promise<void>;
 }

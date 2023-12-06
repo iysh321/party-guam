@@ -7,8 +7,8 @@ import { AuthRepository } from './repository/auth.repository';
 @Injectable()
 export class AuthService {
   private readonly algorithm: string = 'aes-192-cbc';
-  private key: Buffer = Buffer.from(process.env.CIPHERIV_KEY_SECRET, 'hex');
-  private iv = Buffer.from(process.env.CIPHERIV_IV_SECRET, 'hex');
+  private key = process.env.CIPHERIV_KEY_SECRET;
+  private iv = process.env.CIPHERIV_IV_SECRET;
   constructor(
     private jwtService: JwtService,
     private authRepository: AuthRepository,
@@ -41,7 +41,7 @@ export class AuthService {
     return result;
   }
 
-  public decrypt(encryptedData: string): string {
+  public decrypt(encryptedData: string) {
     const decipher = crypto.createDecipheriv(this.algorithm, this.key, this.iv);
     let decryptedData = decipher.update(encryptedData, 'base64', 'utf-8');
     decryptedData += decipher.final('utf-8');

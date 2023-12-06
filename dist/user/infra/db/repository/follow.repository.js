@@ -24,9 +24,14 @@ let FollowRepository = class FollowRepository {
         this.followRepository = followRepository;
         this.followFactory = followFactory;
     }
-    async create(userId, followingId) {
-        await this.followRepository.save({ userId, followingId });
-        return this.followFactory.reconstitute(userId, followingId);
+    async create(userId, followId) {
+        await this.followRepository.save({ userId, followId });
+        return this.followFactory.reconstitute(userId, followId);
+    }
+    async delete(userId, followId) {
+        const result = await this.followRepository.delete({ userId, followId });
+        console.log(result);
+        return result.affected ? true : false;
     }
 };
 exports.FollowRepository = FollowRepository;

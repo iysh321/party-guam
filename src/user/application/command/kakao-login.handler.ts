@@ -23,7 +23,6 @@ export class KakaoLoginHandler implements ICommandHandler<KakaoLoginCommand> {
         'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8',
       },
     });
-    console.log('kakao userInfo', kakaoUserInfo);
 
     const user = await this.userRepository.findByAccount(kakaoUserInfo.data.id);
     if (!user) {
@@ -37,10 +36,10 @@ export class KakaoLoginHandler implements ICommandHandler<KakaoLoginCommand> {
       userId = user.getId();
     }
 
-    const encryptId = await this.authService.encrypt(String(userId));
+    const encryptUserId = await this.authService.encrypt(String(userId));
 
-    const accessToken = await this.authService.createAccessToken(encryptId);
-    const refreshToken = await this.authService.createRefreshToken(encryptId);
+    const accessToken = await this.authService.createAccessToken(encryptUserId);
+    const refreshToken = await this.authService.createRefreshToken(encryptUserId);
 
     this.authService.saveRefreshToken(userId, refreshToken);
 

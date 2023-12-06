@@ -19,8 +19,8 @@ let AuthService = class AuthService {
         this.jwtService = jwtService;
         this.authRepository = authRepository;
         this.algorithm = 'aes-192-cbc';
-        this.key = Buffer.from(process.env.CIPHERIV_KEY_SECRET, 'hex');
-        this.iv = Buffer.from(process.env.CIPHERIV_IV_SECRET, 'hex');
+        this.key = process.env.CIPHERIV_KEY_SECRET;
+        this.iv = process.env.CIPHERIV_IV_SECRET;
     }
     async createAccessToken(id) {
         const payload = { id };

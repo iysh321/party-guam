@@ -1,6 +1,6 @@
 export declare class Follow {
-    followerId: number;
-    followingId: number;
-    constructor(followerId: number, followingId: number);
-    getId(): Readonly<number>;
+    userId: number;
+    followId: number;
+    constructor(userId: number, followId: number);
+    getFollowId(): Readonly<number>;
 }

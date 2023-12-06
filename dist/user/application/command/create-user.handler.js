@@ -17,20 +17,26 @@ const common_1 = require("@nestjs/common");
 const cqrs_1 = require("@nestjs/cqrs");
 const create_user_command_1 = require("./create-user.command");
 const user_factory_1 = require("../../domain/user/user.factory");
+const auth_service_1 = require("../../../auth/auth.service");
 let CreateUserHandler = class CreateUserHandler {
-    constructor(userFactory, userRepository) {
+    constructor(userFactory, userRepository, authService) {
         this.userFactory = userFactory;
         this.userRepository = userRepository;
+        this.authService = authService;
     }
     async execute(command) {
         const { account, nickname, email } = command;
-        const verify = await this.userRepository.findByAccount(account);
+        const verify = await this.userRepository.findByNickname(account);
         if (verify !== null) {
             throw new common_1.ConflictException('유저가 이미 존재 합니다.');
         }
-        const save = await this.userRepository.create(account, nickname, email);
-        this.userFactory.create(save.id, account, email, email);
-        return save;
+        const user = await this.userRepository.create(account, nickname, email);
+        const userId = user.id;
+        const encryptUserId = await this.authService.encrypt(String(userId));
+        const accessToken = await this.authService.createAccessToken(encryptUserId);
+        const refreshToken = await this.authService.createRefreshToken(encryptUserId);
+        this.authService.saveRefreshToken(userId, refreshToken);
+        return { accessToken, refreshToken };
     }
 };
 exports.CreateUserHandler = CreateUserHandler;
@@ -38,6 +44,6 @@ exports.CreateUserHandler = CreateUserHandler = __decorate([
     (0, common_1.Injectable)(),
     (0, cqrs_1.CommandHandler)(create_user_command_1.CreateUserCommand),
     __param(1, (0, common_1.Inject)('UserRepository')),
-    __metadata("design:paramtypes", [user_factory_1.UserFactory, Object])
+    __metadata("design:paramtypes", [user_factory_1.UserFactory, Object, auth_service_1.AuthService])
 ], CreateUserHandler);
 //# sourceMappingURL=create-user.handler.js.map

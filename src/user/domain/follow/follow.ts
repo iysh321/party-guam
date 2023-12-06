@@ -1,10 +1,10 @@
 export class Follow {
   constructor(
-    public followerId: number,
-    public followingId: number,
+    public userId: number,
+    public followId: number,
   ) {}
 
-  getId(): Readonly<number> {
-    return this.followerId;
+  getFollowId(): Readonly<number> {
+    return this.followId;
   }
 }

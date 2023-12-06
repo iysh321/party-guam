@@ -12,20 +12,29 @@ import { UserRepository } from './infra/db/repository/user.repository';
 import { AuthModule } from 'src/auth/auth.module';
 import { GetUsersHandler } from './application/query/get-users.handler';
 import { UserByNicknameHandler } from './application/query/get-user-by-nickname.handler';
+import { FollowHandler } from './application/command/follow.handler';
+import { UnFollowHandler } from './application/command/unfollow.handler';
+import { FollowRepository } from './infra/db/repository/follow.repository';
+import { FollowEntity } from './infra/db/entity/follow.entity';
+import { FollowFactory } from './domain/follow/follow.factory';
+import { GetFollowHandler } from './application/query/get-follow.handler';
 
-const commandHandlers = [CreateUserHandler, KakaoLoginHandler];
+const commandHandlers = [CreateUserHandler, KakaoLoginHandler, FollowHandler, UnFollowHandler];
 
-const queryHandlers = [UserByNicknameHandler, GetUserHandler, GetUsersHandler];
+const queryHandlers = [UserByNicknameHandler, GetUserHandler, GetUsersHandler, GetFollowHandler];
 
 const eventHandlers = [];
 
-const factories = [UserFactory];
+const factories = [UserFactory, FollowFactory];
 
-const repositories = [{ provide: 'UserRepository', useClass: UserRepository }];
+const repositories = [
+  { provide: 'UserRepository', useClass: UserRepository },
+  { provide: 'FollowRepository', useClass: FollowRepository },
+];
 
 @Module({
   controllers: [UserController],
   providers: [UserService, ...commandHandlers, ...queryHandlers, ...eventHandlers, ...factories, ...repositories],
-  imports: [CqrsModule, AuthModule, TypeOrmModule.forFeature([UserEntity])],
+  imports: [CqrsModule, AuthModule, TypeOrmModule.forFeature([UserEntity, FollowEntity])],
 })
 export class UserModule {}

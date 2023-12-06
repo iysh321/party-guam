@@ -31,7 +31,6 @@ let KakaoLoginHandler = class KakaoLoginHandler {
                 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8',
             },
         });
-        console.log('kakao userInfo', kakaoUserInfo);
         const user = await this.userRepository.findByAccount(kakaoUserInfo.data.id);
         if (!user) {
             const save = await this.userRepository.create(kakaoUserInfo.data.id, kakaoUserInfo.data.kakao_account.name, kakaoUserInfo.data.kakao_account.email);
@@ -40,9 +39,9 @@ let KakaoLoginHandler = class KakaoLoginHandler {
         else {
             userId = user.getId();
         }
-        const encryptId = await this.authService.encrypt(String(userId));
-        const accessToken = await this.authService.createAccessToken(encryptId);
-        const refreshToken = await this.authService.createRefreshToken(encryptId);
+        const encryptUserId = await this.authService.encrypt(String(userId));
+        const accessToken = await this.authService.createAccessToken(encryptUserId);
+        const refreshToken = await this.authService.createRefreshToken(encryptUserId);
         this.authService.saveRefreshToken(userId, refreshToken);
         return { accessToken, refreshToken };
     }

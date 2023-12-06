@@ -12,12 +12,12 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.CreateFollowHandler = void 0;
+exports.FollowHandler = void 0;
 const common_1 = require("@nestjs/common");
 const cqrs_1 = require("@nestjs/cqrs");
 const user_factory_1 = require("../../domain/user/user.factory");
-const create_follow_command_1 = require("./create-follow.command");
-let CreateFollowHandler = class CreateFollowHandler {
+const follow_command_1 = require("./follow.command");
+let FollowHandler = class FollowHandler {
     constructor(userFactory, followRepository, userRepository) {
         this.userFactory = userFactory;
         this.followRepository = followRepository;
@@ -25,18 +25,20 @@ let CreateFollowHandler = class CreateFollowHandler {
     }
     async execute(command) {
         const { userId, nickname } = command;
-        const followUser = await this.userRepository.findByAccount(nickname);
-        await this.followRepository.create(userId, followUser.id);
-        const save = await this.followRepository.create(userId, followUser.id);
-        return save;
+        const followUser = await this.userRepository.findByNickname(nickname);
+        if (!followUser) {
+            throw new common_1.BadRequestException('유효하지 않는 유저 입니다.');
+        }
+        const result = await this.followRepository.create(userId, followUser.id);
+        return result;
     }
 };
-exports.CreateFollowHandler = CreateFollowHandler;
-exports.CreateFollowHandler = CreateFollowHandler = __decorate([
+exports.FollowHandler = FollowHandler;
+exports.FollowHandler = FollowHandler = __decorate([
     (0, common_1.Injectable)(),
-    (0, cqrs_1.CommandHandler)(create_follow_command_1.CreateFollowCommand),
+    (0, cqrs_1.CommandHandler)(follow_command_1.FollowCommand),
     __param(1, (0, common_1.Inject)('FollowRepository')),
     __param(2, (0, common_1.Inject)('UserRepository')),
     __metadata("design:paramtypes", [user_factory_1.UserFactory, Object, Object])
-], CreateFollowHandler);
-//# sourceMappingURL=create-follow.handler.js.map
+], FollowHandler);
+//# sourceMappingURL=follow.handler.js.map

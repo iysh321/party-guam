@@ -8,5 +8,6 @@ export declare class FollowRepository implements IFollowRepository {
     private followRepository;
     private followFactory;
     constructor(dataSource: DataSource, followRepository: Repository<FollowEntity>, followFactory: FollowFactory);
-    create(userId: number, followingId: number): Promise<Follow>;
+    create(userId: number, followId: number): Promise<Follow>;
+    delete(userId: number, followId: number): Promise<boolean>;
 }

@@ -2,12 +2,12 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Follow = void 0;
 class Follow {
-    constructor(followerId, followingId) {
-        this.followerId = followerId;
-        this.followingId = followingId;
+    constructor(userId, followId) {
+        this.userId = userId;
+        this.followId = followId;
     }
-    getId() {
-        return this.followerId;
+    getFollowId() {
+        return this.followId;
     }
 }
 exports.Follow = Follow;

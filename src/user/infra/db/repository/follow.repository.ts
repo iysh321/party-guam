@@ -16,9 +16,15 @@ export class FollowRepository implements IFollowRepository {
     private followFactory: FollowFactory,
   ) {}
 
-  async create(userId: number, followingId: number): Promise<Follow> {
-    await this.followRepository.save({ userId, followingId });
+  async create(userId: number, followId: number): Promise<Follow> {
+    await this.followRepository.save({ userId, followId });
 
-    return this.followFactory.reconstitute(userId, followingId);
+    return this.followFactory.reconstitute(userId, followId);
+  }
+
+  async delete(userId: number, followId: number): Promise<boolean> {
+    const result = await this.followRepository.delete({ userId, followId });
+    console.log(result);
+    return result.affected ? true : false;
   }
 }
