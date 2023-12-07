@@ -33,12 +33,18 @@ __decorate([
     __metadata("design:type", String)
 ], PartyRequestEntity.prototype, "status", void 0);
 __decorate([
-    (0, typeorm_1.ManyToOne)(() => user_entity_1.UserEntity, (user) => user.partyRequests),
+    (0, typeorm_1.ManyToOne)(() => user_entity_1.UserEntity, (user) => user.partyRequests, {
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE',
+    }),
     (0, typeorm_1.JoinColumn)({ name: 'user_id' }),
     __metadata("design:type", user_entity_1.UserEntity)
 ], PartyRequestEntity.prototype, "user", void 0);
 __decorate([
-    (0, typeorm_1.ManyToOne)(() => party_entity_1.PartyEntity, (post) => post.partyRequests),
+    (0, typeorm_1.ManyToOne)(() => party_entity_1.PartyEntity, (post) => post.partyRequests, {
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE',
+    }),
     (0, typeorm_1.JoinColumn)({ name: 'party_post_id' }),
     __metadata("design:type", party_entity_1.PartyEntity)
 ], PartyRequestEntity.prototype, "party", void 0);

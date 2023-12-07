@@ -35,6 +35,6 @@ __decorate([
     __metadata("design:type", party_entity_1.PartyEntity)
 ], PartyLike.prototype, "party", void 0);
 exports.PartyLike = PartyLike = __decorate([
-    (0, typeorm_1.Entity)()
+    (0, typeorm_1.Entity)('party_like')
 ], PartyLike);
 //# sourceMappingURL=party-like.entity.js.map

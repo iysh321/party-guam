@@ -17,12 +17,12 @@ let PartyFactory = class PartyFactory {
     constructor(eventBus) {
         this.eventBus = eventBus;
     }
-    create(id, title, contents) {
-        const party = new party_1.Party(id, title, contents);
+    create(id, title, content) {
+        const party = new party_1.Party(id, title, content);
         return party;
     }
-    reconstitute(id, title, contents) {
-        return new party_1.Party(id, title, contents);
+    reconstitute(id, title, content) {
+        return new party_1.Party(id, title, content);
     }
 };
 exports.PartyFactory = PartyFactory;

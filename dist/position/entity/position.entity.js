@@ -10,6 +10,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.PositionEntity = void 0;
+const party_user_entity_1 = require("../../party/infra/db/entity/party/party-user.entity");
 const typeorm_1 = require("typeorm");
 let PositionEntity = class PositionEntity {
 };
@@ -23,13 +24,9 @@ __decorate([
     __metadata("design:type", String)
 ], PositionEntity.prototype, "position", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ default: 1 }),
-    __metadata("design:type", Number)
-], PositionEntity.prototype, "total_positions", void 0);
-__decorate([
-    (0, typeorm_1.Column)(),
-    __metadata("design:type", Boolean)
-], PositionEntity.prototype, "status", void 0);
+    (0, typeorm_1.OneToMany)(() => party_user_entity_1.PartyUserEntity, (position) => position.position),
+    __metadata("design:type", Array)
+], PositionEntity.prototype, "partyUsers", void 0);
 exports.PositionEntity = PositionEntity = __decorate([
     (0, typeorm_1.Entity)('postion')
 ], PositionEntity);

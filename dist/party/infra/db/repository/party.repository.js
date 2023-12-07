@@ -12,28 +12,29 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.CreatePartyHandler = void 0;
+exports.PartyRepository = void 0;
+const typeorm_1 = require("typeorm");
 const common_1 = require("@nestjs/common");
-const cqrs_1 = require("@nestjs/cqrs");
-const create_party_comand_1 = require("./create-party.comand");
-const party_factory_1 = require("../../domain/party/party.factory");
-let CreatePartyHandler = class CreatePartyHandler {
-    constructor(partyFactory, partyRepository) {
-        this.partyFactory = partyFactory;
+const typeorm_2 = require("@nestjs/typeorm");
+const party_entity_1 = require("../entity/party/party.entity");
+const party_factory_1 = require("../../../domain/party/party.factory");
+let PartyRepository = class PartyRepository {
+    constructor(dataSource, partyRepository, partyFactory) {
+        this.dataSource = dataSource;
         this.partyRepository = partyRepository;
+        this.partyFactory = partyFactory;
     }
-    async execute(command) {
-        const { userId, title, content } = command;
-        const save = await this.partyRepository.create(userId, title, content);
-        this.partyFactory.create(save.id, title, content);
-        return save;
+    async create(userId, title, contents) {
+        await this.partyRepository.save({ userId, title, contents });
+        return this.partyFactory.reconstitute(userId, title, contents);
     }
 };
-exports.CreatePartyHandler = CreatePartyHandler;
-exports.CreatePartyHandler = CreatePartyHandler = __decorate([
+exports.PartyRepository = PartyRepository;
+exports.PartyRepository = PartyRepository = __decorate([
     (0, common_1.Injectable)(),
-    (0, cqrs_1.CommandHandler)(create_party_comand_1.CreatePartyCommand),
-    __param(1, (0, common_1.Inject)('PartyRepository')),
-    __metadata("design:paramtypes", [party_factory_1.PartyFactory, Object])
-], CreatePartyHandler);
-//# sourceMappingURL=create-party.handler.js.map
+    __param(1, (0, typeorm_2.InjectRepository)(party_entity_1.PartyEntity)),
+    __metadata("design:paramtypes", [typeorm_1.DataSource,
+        typeorm_1.Repository,
+        party_factory_1.PartyFactory])
+], PartyRepository);
+//# sourceMappingURL=party.repository.js.map

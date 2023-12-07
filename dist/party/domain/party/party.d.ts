@@ -1,7 +1,7 @@
 export declare class Party {
     id: number;
     title: string;
-    contents: string;
-    constructor(id: number, title: string, contents: string);
+    content: string;
+    constructor(id: number, title: string, content: string);
     getId(): Readonly<number>;
 }

@@ -17,11 +17,17 @@ export class PartyRequestEntity {
   @Column({ nullable: true })
   status: string;
 
-  @ManyToOne(() => UserEntity, (user) => user.partyRequests)
+  @ManyToOne(() => UserEntity, (user) => user.partyRequests, {
+    onUpdate: 'CASCADE',
+    onDelete: 'CASCADE',
+  })
   @JoinColumn({ name: 'user_id' })
   user: UserEntity;
 
-  @ManyToOne(() => PartyEntity, (post) => post.partyRequests)
+  @ManyToOne(() => PartyEntity, (post) => post.partyRequests, {
+    onUpdate: 'CASCADE',
+    onDelete: 'CASCADE',
+  })
   @JoinColumn({ name: 'party_post_id' })
   party: PartyEntity;
 }

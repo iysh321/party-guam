@@ -7,6 +7,8 @@ import { CreatePartyCommand } from '../application/command/create-party.comand';
 import { AccessJwtAuthGuard } from 'src/common/guard/jwt.guard';
 import { PartyRequestDto } from './dto/party.request.dto';
 import { PartyCommentRequestDto } from './dto/party-comment.request.dto';
+import { CurrentAccount } from 'src/common/decorators/auth.decorator';
+import { DecodedPayload } from 'src/auth/jwt.payload';
 
 @UseGuards(AccessJwtAuthGuard)
 @Controller('parties')
@@ -30,10 +32,10 @@ export class PartyController {
 
   @Post('')
   @ApiOperation({ summary: '파티(게시물) 생성' })
-  async createParty(@Body() dto: CreatePartyRequestDto): Promise<void> {
+  async createParty(@CurrentAccount() payload: DecodedPayload, @Body() dto: CreatePartyRequestDto): Promise<void> {
     const { title, content } = dto;
 
-    const command = new CreatePartyCommand(title, content);
+    const command = new CreatePartyCommand(payload.id, title, content);
 
     return this.commandBus.execute(command);
   }

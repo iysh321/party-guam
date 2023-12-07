@@ -22,6 +22,7 @@ const create_party_comand_1 = require("../application/command/create-party.coman
 const jwt_guard_1 = require("../../common/guard/jwt.guard");
 const party_request_dto_1 = require("./dto/party.request.dto");
 const party_comment_request_dto_1 = require("./dto/party-comment.request.dto");
+const auth_decorator_1 = require("../../common/decorators/auth.decorator");
 let PartyController = class PartyController {
     constructor(commandBus, queryBus) {
         this.commandBus = commandBus;
@@ -32,9 +33,9 @@ let PartyController = class PartyController {
         param;
     }
     async getParties() { }
-    async createParty(dto) {
+    async createParty(payload, dto) {
         const { title, content } = dto;
-        const command = new create_party_comand_1.CreatePartyCommand(title, content);
+        const command = new create_party_comand_1.CreatePartyCommand(payload.id, title, content);
         return this.commandBus.execute(command);
     }
     async updateParty(dto) {
@@ -101,9 +102,10 @@ __decorate([
 __decorate([
     (0, common_1.Post)(''),
     (0, swagger_1.ApiOperation)({ summary: '파티(게시물) 생성' }),
-    __param(0, (0, common_1.Body)()),
+    __param(0, (0, auth_decorator_1.CurrentAccount)()),
+    __param(1, (0, common_1.Body)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [create_party_request_dto_1.CreatePartyRequestDto]),
+    __metadata("design:paramtypes", [Object, create_party_request_dto_1.CreatePartyRequestDto]),
     __metadata("design:returntype", Promise)
 ], PartyController.prototype, "createParty", null);
 __decorate([

@@ -2,10 +2,10 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Party = void 0;
 class Party {
-    constructor(id, title, contents) {
+    constructor(id, title, content) {
         this.id = id;
         this.title = title;
-        this.contents = contents;
+        this.content = content;
     }
     getId() {
         return this.id;

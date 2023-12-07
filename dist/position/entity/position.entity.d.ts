@@ -1,6 +1,6 @@
+import { PartyUserEntity } from 'src/party/infra/db/entity/party/party-user.entity';
 export declare class PositionEntity {
     id: number;
     position: string;
-    total_positions: number;
-    status: boolean;
+    partyUsers: PartyUserEntity[];
 }

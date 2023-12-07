@@ -2,9 +2,10 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.CreatePartyCommand = void 0;
 class CreatePartyCommand {
-    constructor(title, contents) {
+    constructor(userId, title, content) {
+        this.userId = userId;
         this.title = title;
-        this.contents = contents;
+        this.content = content;
     }
 }
 exports.CreatePartyCommand = CreatePartyCommand;

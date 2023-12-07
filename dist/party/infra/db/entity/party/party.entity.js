@@ -16,7 +16,8 @@ const party_comment_entity_1 = require("../comment/party-comment.entity");
 const party_like_entity_1 = require("./party-like.entity");
 const party_invite_entity_1 = require("../apply/party-invite.entity");
 const party_request_entity_1 = require("../apply/party-request.entity");
-let PartyEntity = class PartyEntity {
+const baseEntity_1 = require("../../../../../common/entity/baseEntity");
+let PartyEntity = class PartyEntity extends baseEntity_1.BaseEntity {
 };
 exports.PartyEntity = PartyEntity;
 __decorate([
@@ -40,10 +41,6 @@ __decorate([
     __metadata("design:type", String)
 ], PartyEntity.prototype, "content", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ nullable: true }),
-    __metadata("design:type", String)
-], PartyEntity.prototype, "status", void 0);
-__decorate([
     (0, typeorm_1.OneToMany)(() => party_user_entity_1.PartyUserEntity, (party) => party.party),
     __metadata("design:type", Array)
 ], PartyEntity.prototype, "partyUser", void 0);
@@ -64,6 +61,6 @@ __decorate([
     __metadata("design:type", Array)
 ], PartyEntity.prototype, "partyInvites", void 0);
 exports.PartyEntity = PartyEntity = __decorate([
-    (0, typeorm_1.Entity)()
+    (0, typeorm_1.Entity)('party')
 ], PartyEntity);
 //# sourceMappingURL=party.entity.js.map

@@ -1,4 +1,5 @@
-import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
+import { PartyUserEntity } from 'src/party/infra/db/entity/party/party-user.entity';
+import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm';
 
 @Entity('postion')
 export class PositionEntity {
@@ -8,9 +9,6 @@ export class PositionEntity {
   @Column()
   position: string;
 
-  @Column({ default: 1 })
-  total_positions: number;
-
-  @Column()
-  status: boolean;
+  @OneToMany(() => PartyUserEntity, (position) => position.position)
+  partyUsers: PartyUserEntity[];
 }

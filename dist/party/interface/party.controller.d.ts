@@ -3,13 +3,14 @@ import { CreatePartyRequestDto } from './dto/create-party.request.dto';
 import { UpdatePartyRequestDto } from './dto/update-party.request.dto';
 import { PartyRequestDto } from './dto/party.request.dto';
 import { PartyCommentRequestDto } from './dto/party-comment.request.dto';
+import { DecodedPayload } from 'src/auth/jwt.payload';
 export declare class PartyController {
     private commandBus;
     private queryBus;
     constructor(commandBus: CommandBus, queryBus: QueryBus);
     getParty(query: any, param: any): Promise<void>;
     getParties(): Promise<void>;
-    createParty(dto: CreatePartyRequestDto): Promise<void>;
+    createParty(payload: DecodedPayload, dto: CreatePartyRequestDto): Promise<void>;
     updateParty(dto: UpdatePartyRequestDto): Promise<void>;
     deleteParty(dto: PartyRequestDto): Promise<void>;
     getlikes(): Promise<void>;
