@@ -20,7 +20,7 @@ export class FollowQueryRequestDto {
 
   @ApiProperty({
     enum: ['follower', 'following'],
-    description: '팔로워, 팔로잉',
+    description: '팔로워, 팔로잉 선택하면 해당 리스트를 보여주게 됨',
   })
   @IsNotEmpty()
   @IsString()

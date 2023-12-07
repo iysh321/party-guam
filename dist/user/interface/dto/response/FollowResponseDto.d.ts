@@ -1,6 +1,12 @@
-export declare class UserResponseDto {
+export declare class FollowCountsResponseDto {
     followerCount: number;
     followingCount: number;
-    nickname: string;
+}
+export declare class FollowUserResponseDto {
+    nickname: number;
     image: string;
+}
+export declare class FollowResponseDto {
+    counts: FollowCountsResponseDto;
+    users: FollowUserResponseDto;
 }

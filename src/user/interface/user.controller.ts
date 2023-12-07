@@ -26,6 +26,7 @@ import { GetUsersQuery } from '../application/query/get-users.query';
 import { UserResponseDto, UsersResponseDto } from './dto/response/UserResponseDto';
 import { FollowQueryRequestDto } from './dto/request/follow.user.request.dto';
 import { GetFollowQuery } from '../application/query/get-follow.query';
+import { FollowResponseDto } from './dto/response/FollowResponseDto';
 
 @ApiTags('users')
 @Controller('users')
@@ -134,12 +135,22 @@ export class UserController {
   @UseGuards(AccessJwtAuthGuard)
   @Get('follow')
   @ApiOperation({ summary: '팔로워, 팔로잉 목록 조회' })
-  async getFollow(@CurrentAccount() payload: DecodedPayload, @Query() query: FollowQueryRequestDto): Promise<void> {
+  @ApiResponse({
+    status: 200,
+    description: '성공적으로 팔로우 or 팔로잉이 조회 되었습니다.',
+    type: FollowResponseDto,
+  })
+  async getFollow(
+    @CurrentAccount() payload: DecodedPayload,
+    @Query() query: FollowQueryRequestDto,
+  ): Promise<FollowResponseDto> {
     const { page, limit, sort, order } = query;
 
     const userInfoByNickname = new GetFollowQuery(payload.id, page, limit, sort, order);
 
-    return await this.queryBus.execute(userInfoByNickname);
+    const result = await this.queryBus.execute(userInfoByNickname);
+
+    return plainToInstance(FollowResponseDto, result);
   }
 
   @UseGuards(AccessJwtAuthGuard)

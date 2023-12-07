@@ -8,6 +8,7 @@ import { UserParamRequestDto } from './dto/request/user.param.request.dto';
 import { UserQueryRequestDto } from './dto/request/user.query.request.dto';
 import { UserResponseDto } from './dto/response/UserResponseDto';
 import { FollowQueryRequestDto } from './dto/request/follow.user.request.dto';
+import { FollowResponseDto } from './dto/response/FollowResponseDto';
 export declare class UserController {
     private commandBus;
     private queryBus;
@@ -18,7 +19,7 @@ export declare class UserController {
     getUsers(query: UserQueryRequestDto): Promise<UserResponseDto>;
     getMyInfo(account: DecodedPayload): Promise<UserResponseDto>;
     getUser(param: UserParamRequestDto): Promise<UserResponseDto>;
-    getFollow(payload: DecodedPayload, query: FollowQueryRequestDto): Promise<void>;
+    getFollow(payload: DecodedPayload, query: FollowQueryRequestDto): Promise<FollowResponseDto>;
     follow(payload: DecodedPayload, param: UserParamRequestDto): Promise<void>;
     unfollow(payload: DecodedPayload, param: UserParamRequestDto): Promise<void>;
 }

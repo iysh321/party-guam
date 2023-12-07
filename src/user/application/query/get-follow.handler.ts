@@ -17,31 +17,31 @@ export class GetFollowHandler implements IQueryHandler<GetFollowQuery> {
     const { userId, page, limit, sort, order } = query;
     const offset = (page - 1) * limit || 0;
 
-    const followerCount = await this.followRepository
+    const followUsersQueryBuilder = this.followRepository
       .createQueryBuilder('follow')
-      .select('COUNT(follow.followId)', 'total')
-      .where('follow.followId = :followId', { followId: userId })
-      .getRawOne();
-
-    const followingCount = await this.followRepository
-      .createQueryBuilder('follow')
-      .select('COUNT(follow.userId)', 'total')
-      .where('follow.userId = :userId', { userId })
-      .getRawOne();
-
-    // follow = userId -> followId
-    const target = sort === 'follower' ? 'followId' : 'userId';
-
-    const user = await this.followRepository
-      .createQueryBuilder('follow')
-      .leftJoin(`follow.${sort}`, `${sort}`)
+      .leftJoinAndSelect(`follow.${sort}`, `${sort}`)
       .select([`${sort}.nickname AS nickname`, `${sort}.image AS image`])
       .limit(limit)
       .offset(offset)
       .orderBy(`follow.createdAt`, order)
-      .where(`follow.${target} = :userId`, { userId })
-      .getRawMany();
+      .where(sort === 'follower' ? `follow.followId = :followId` : `follow.userId = :userId`, {
+        followId: userId,
+        userId,
+      });
 
-    return { followerCount: followerCount.total, followingCount: followingCount.total, [sort]: user };
+    const followCountsQueryBuilder = this.followRepository
+      .createQueryBuilder('follow')
+      .select([
+        'COUNT(CASE WHEN follow.followId = :followId THEN 1 END) AS followerCount',
+        'COUNT(CASE WHEN follow.userId = :userId THEN 1 END) AS followingCount',
+      ])
+      .setParameters({ followId: userId, userId });
+
+    const [counts, user] = await Promise.all([
+      followCountsQueryBuilder.getRawOne(),
+      followUsersQueryBuilder.getRawMany(),
+    ]);
+
+    return { counts, user };
   }
 }

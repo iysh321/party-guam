@@ -8,8 +8,7 @@ export declare class GetFollowHandler implements IQueryHandler<GetFollowQuery> {
     private followRepository;
     constructor(userRepository: Repository<UserEntity>, followRepository: Repository<FollowEntity>);
     execute(query: GetFollowQuery): Promise<{
-        [x: string]: any;
-        followerCount: any;
-        followingCount: any;
+        counts: any;
+        user: any[];
     }>;
 }

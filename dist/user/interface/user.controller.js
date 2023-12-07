@@ -35,6 +35,7 @@ const get_users_query_1 = require("../application/query/get-users.query");
 const UserResponseDto_1 = require("./dto/response/UserResponseDto");
 const follow_user_request_dto_1 = require("./dto/request/follow.user.request.dto");
 const get_follow_query_1 = require("../application/query/get-follow.query");
+const FollowResponseDto_1 = require("./dto/response/FollowResponseDto");
 let UserController = class UserController {
     constructor(commandBus, queryBus) {
         this.commandBus = commandBus;
@@ -86,7 +87,8 @@ let UserController = class UserController {
     async getFollow(payload, query) {
         const { page, limit, sort, order } = query;
         const userInfoByNickname = new get_follow_query_1.GetFollowQuery(payload.id, page, limit, sort, order);
-        return await this.queryBus.execute(userInfoByNickname);
+        const result = await this.queryBus.execute(userInfoByNickname);
+        return (0, class_transformer_1.plainToInstance)(FollowResponseDto_1.FollowResponseDto, result);
     }
     async follow(payload, param) {
         const command = new follow_command_1.FollowCommand(payload.id, param.nickname);
@@ -169,6 +171,11 @@ __decorate([
     (0, common_1.UseGuards)(jwt_guard_1.AccessJwtAuthGuard),
     (0, common_1.Get)('follow'),
     (0, swagger_1.ApiOperation)({ summary: '팔로워, 팔로잉 목록 조회' }),
+    (0, swagger_1.ApiResponse)({
+        status: 200,
+        description: '성공적으로 팔로우 or 팔로잉이 조회 되었습니다.',
+        type: FollowResponseDto_1.FollowResponseDto,
+    }),
     __param(0, (0, auth_decorator_1.CurrentAccount)()),
     __param(1, (0, common_1.Query)()),
     __metadata("design:type", Function),

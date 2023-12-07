@@ -9,33 +9,54 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.UserResponseDto = void 0;
+exports.FollowResponseDto = exports.FollowUserResponseDto = exports.FollowCountsResponseDto = void 0;
 const swagger_1 = require("@nestjs/swagger");
 const class_transformer_1 = require("class-transformer");
-let UserResponseDto = class UserResponseDto {
+let FollowCountsResponseDto = class FollowCountsResponseDto {
 };
-exports.UserResponseDto = UserResponseDto;
+exports.FollowCountsResponseDto = FollowCountsResponseDto;
 __decorate([
     (0, class_transformer_1.Expose)(),
     (0, swagger_1.ApiProperty)(),
     __metadata("design:type", Number)
-], UserResponseDto.prototype, "followerCount", void 0);
+], FollowCountsResponseDto.prototype, "followerCount", void 0);
 __decorate([
     (0, class_transformer_1.Expose)(),
     (0, swagger_1.ApiProperty)(),
     __metadata("design:type", Number)
-], UserResponseDto.prototype, "followingCount", void 0);
-__decorate([
-    (0, class_transformer_1.Expose)(),
-    (0, swagger_1.ApiProperty)(),
-    __metadata("design:type", String)
-], UserResponseDto.prototype, "nickname", void 0);
-__decorate([
-    (0, class_transformer_1.Expose)(),
-    (0, swagger_1.ApiProperty)(),
-    __metadata("design:type", String)
-], UserResponseDto.prototype, "image", void 0);
-exports.UserResponseDto = UserResponseDto = __decorate([
+], FollowCountsResponseDto.prototype, "followingCount", void 0);
+exports.FollowCountsResponseDto = FollowCountsResponseDto = __decorate([
     (0, class_transformer_1.Exclude)()
-], UserResponseDto);
+], FollowCountsResponseDto);
+let FollowUserResponseDto = class FollowUserResponseDto {
+};
+exports.FollowUserResponseDto = FollowUserResponseDto;
+__decorate([
+    (0, class_transformer_1.Expose)(),
+    (0, swagger_1.ApiProperty)({
+        example: '닉네임넣는자리',
+    }),
+    __metadata("design:type", Number)
+], FollowUserResponseDto.prototype, "nickname", void 0);
+__decorate([
+    (0, class_transformer_1.Expose)(),
+    (0, swagger_1.ApiProperty)({
+        example: 'image url',
+    }),
+    __metadata("design:type", String)
+], FollowUserResponseDto.prototype, "image", void 0);
+exports.FollowUserResponseDto = FollowUserResponseDto = __decorate([
+    (0, class_transformer_1.Exclude)()
+], FollowUserResponseDto);
+class FollowResponseDto {
+}
+exports.FollowResponseDto = FollowResponseDto;
+__decorate([
+    (0, swagger_1.ApiProperty)(),
+    __metadata("design:type", FollowCountsResponseDto)
+], FollowResponseDto.prototype, "counts", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)(),
+    __metadata("design:type", FollowUserResponseDto)
+], FollowResponseDto.prototype, "users", void 0);
 //# sourceMappingURL=FollowResponseDto.js.map

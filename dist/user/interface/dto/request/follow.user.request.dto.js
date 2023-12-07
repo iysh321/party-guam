@@ -36,7 +36,7 @@ __decorate([
 __decorate([
     (0, swagger_1.ApiProperty)({
         enum: ['follower', 'following'],
-        description: '팔로워, 팔로잉',
+        description: '팔로워, 팔로잉 선택하면 해당 리스트를 보여주게 됨',
     }),
     (0, class_validator_1.IsNotEmpty)(),
     (0, class_validator_1.IsString)(),
