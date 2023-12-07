@@ -20,6 +20,8 @@ const user_module_1 = require("./user/user.module");
 const typeorm_naming_strategies_1 = require("typeorm-naming-strategies");
 const core_1 = require("@nestjs/core");
 const response_1 = require("./common/interceptor/response");
+const skill_module_1 = require("./skill/skill.module");
+const position_module_1 = require("./position/position.module");
 let AppModule = class AppModule {
     constructor() { }
     configure(consumer) {
@@ -49,6 +51,8 @@ exports.AppModule = AppModule = __decorate([
             }),
             user_module_1.UserModule,
             party_module_1.PartyModule,
+            skill_module_1.SkillModule,
+            position_module_1.PositionModule,
         ],
         controllers: [app_controller_1.AppController],
         providers: [

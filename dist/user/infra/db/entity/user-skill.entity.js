@@ -12,7 +12,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.UserSkillEntity = void 0;
 const typeorm_1 = require("typeorm");
 const user_entity_1 = require("./user.entity");
-const skill_entity_1 = require("../../../../common/entity/skill.entity");
+const skill_entity_1 = require("../../../../skill/entity/skill.entity");
 let UserSkillEntity = class UserSkillEntity {
 };
 exports.UserSkillEntity = UserSkillEntity;

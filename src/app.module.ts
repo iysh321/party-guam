@@ -10,6 +10,8 @@ import { UserModule } from './user/user.module';
 import { SnakeNamingStrategy } from 'typeorm-naming-strategies';
 import { APP_INTERCEPTOR } from '@nestjs/core';
 import { ResponseInterceptor } from './common/interceptor/response';
+import { SkillModule } from './skill/skill.module';
+import { PositionModule } from './position/position.module';
 
 @Module({
   imports: [
@@ -32,6 +34,8 @@ import { ResponseInterceptor } from './common/interceptor/response';
     }),
     UserModule,
     PartyModule,
+    SkillModule,
+    PositionModule,
   ],
   controllers: [AppController],
   providers: [
