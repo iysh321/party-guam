@@ -1,14 +1,18 @@
-import { Entity, PrimaryGeneratedColumn, ManyToOne, JoinColumn, Column } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, ManyToOne, JoinColumn, Column, Unique } from 'typeorm';
 import { UserEntity } from './user.entity';
 import { SkillEntity } from 'src/skill/entity/skill.entity';
 
 @Entity('user_skill')
+@Unique(['userId', 'skillId'])
 export class UserSkillEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
   @Column()
-  level: number;
+  userId: number;
+
+  @Column()
+  skillId: number;
 
   @ManyToOne(() => UserEntity, (user) => user.userSkills)
   @JoinColumn({ name: 'user_id' })

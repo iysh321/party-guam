@@ -6,6 +6,9 @@ class Follow {
         this.userId = userId;
         this.followId = followId;
     }
+    getUserId() {
+        return this.userId;
+    }
     getFollowId() {
         return this.followId;
     }

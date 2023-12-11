@@ -16,7 +16,7 @@ exports.PositionModule = PositionModule;
 exports.PositionModule = PositionModule = __decorate([
     (0, common_1.Module)({
         controllers: [position_controller_1.PositionController],
-        providers: [position_service_1.PositionService]
+        providers: [position_service_1.PositionService],
     })
 ], PositionModule);
 //# sourceMappingURL=position.module.js.map

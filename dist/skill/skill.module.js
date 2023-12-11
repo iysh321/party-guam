@@ -16,7 +16,7 @@ exports.SkillModule = SkillModule;
 exports.SkillModule = SkillModule = __decorate([
     (0, common_1.Module)({
         controllers: [skill_controller_1.SkillController],
-        providers: [skill_service_1.SkillService]
+        providers: [skill_service_1.SkillService],
     })
 ], SkillModule);
 //# sourceMappingURL=skill.module.js.map

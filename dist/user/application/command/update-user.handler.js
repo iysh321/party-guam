@@ -18,13 +18,15 @@ const cqrs_1 = require("@nestjs/cqrs");
 const user_factory_1 = require("../../domain/user/user.factory");
 const update_user_command_1 = require("./update-user.command");
 let UpdateUserHandler = class UpdateUserHandler {
-    constructor(userFactory, userRepository) {
+    constructor(userFactory, userRepository, userSkillRepository) {
         this.userFactory = userFactory;
         this.userRepository = userRepository;
+        this.userSkillRepository = userSkillRepository;
     }
     async execute(command) {
-        const { is_party, meeting_type, meeting_week, meeting_time, mbti } = command;
-        await this.userRepository.update(is_party, meeting_type, meeting_week, meeting_time, mbti);
+        const { id, is_party, meeting_type, meeting_week, meeting_time, mbti, skills } = command;
+        this.userRepository.update(is_party, meeting_type, meeting_week, meeting_time, mbti);
+        this.userSkillRepository.create(id, skills);
     }
 };
 exports.UpdateUserHandler = UpdateUserHandler;
@@ -32,6 +34,7 @@ exports.UpdateUserHandler = UpdateUserHandler = __decorate([
     (0, common_1.Injectable)(),
     (0, cqrs_1.CommandHandler)(update_user_command_1.UpdateUserCommand),
     __param(1, (0, common_1.Inject)('UserRepository')),
-    __metadata("design:paramtypes", [user_factory_1.UserFactory, Object])
+    __param(2, (0, common_1.Inject)('UserSkillRepository')),
+    __metadata("design:paramtypes", [user_factory_1.UserFactory, Object, Object])
 ], UpdateUserHandler);
 //# sourceMappingURL=update-user.handler.js.map

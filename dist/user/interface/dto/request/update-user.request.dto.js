@@ -82,4 +82,13 @@ __decorate([
     (0, class_validator_1.IsString)(),
     __metadata("design:type", String)
 ], UpdateUserRequestDto.prototype, "mbti", void 0);
+__decorate([
+    (0, swagger_1.ApiPropertyOptional)({
+        example: [1, 2],
+        description: 'skill id(pk)',
+    }),
+    (0, class_validator_1.IsOptional)(),
+    (0, class_validator_1.IsInt)(),
+    __metadata("design:type", Array)
+], UpdateUserRequestDto.prototype, "skills", void 0);
 //# sourceMappingURL=update-user.request.dto.js.map

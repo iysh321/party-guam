@@ -23,7 +23,11 @@ __decorate([
 __decorate([
     (0, typeorm_1.Column)(),
     __metadata("design:type", Number)
-], UserSkillEntity.prototype, "level", void 0);
+], UserSkillEntity.prototype, "userId", void 0);
+__decorate([
+    (0, typeorm_1.Column)(),
+    __metadata("design:type", Number)
+], UserSkillEntity.prototype, "skillId", void 0);
 __decorate([
     (0, typeorm_1.ManyToOne)(() => user_entity_1.UserEntity, (user) => user.userSkills),
     (0, typeorm_1.JoinColumn)({ name: 'user_id' }),
@@ -35,6 +39,7 @@ __decorate([
     __metadata("design:type", skill_entity_1.SkillEntity)
 ], UserSkillEntity.prototype, "skill", void 0);
 exports.UserSkillEntity = UserSkillEntity = __decorate([
-    (0, typeorm_1.Entity)('user_skill')
+    (0, typeorm_1.Entity)('user_skill'),
+    (0, typeorm_1.Unique)(['userId', 'skillId'])
 ], UserSkillEntity);
 //# sourceMappingURL=user-skill.entity.js.map

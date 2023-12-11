@@ -1,13 +1,16 @@
 import { UserEntity } from 'src/user/infra/db/entity/user.entity';
-import { Entity, ManyToOne, JoinColumn, Index, PrimaryColumn, CreateDateColumn } from 'typeorm';
+import { Entity, ManyToOne, JoinColumn, Unique, CreateDateColumn, Column, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity('follow')
-@Index('unique_follower_following', ['userId', 'followId'], { unique: true })
+@Unique(['userId', 'followId'])
 export class FollowEntity {
-  @PrimaryColumn()
+  @PrimaryGeneratedColumn()
+  id: number;
+
+  @Column()
   userId: number;
 
-  @PrimaryColumn()
+  @Column()
   followId: number;
 
   @CreateDateColumn()

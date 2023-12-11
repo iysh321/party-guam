@@ -37,7 +37,7 @@ export class UserController {
   ) {}
 
   @Post('')
-  @ApiOperation({ summary: '일반 회원가입 (카카오 로그인 안될 시 테스트용 구현, 카카오 완료시 삭제)' })
+  @ApiOperation({ summary: '일반 회원가입 - 카카오 로그인 안될 시 테스트용 구현, 카카오 완료시 해당 api 삭제' })
   async createUser(@Res() res: Response, @Body() dto: CreateUserRequestDto): Promise<void> {
     const { account, nickname, email } = dto;
 
@@ -75,10 +75,10 @@ export class UserController {
   @UseGuards(AccessJwtAuthGuard)
   @Patch('info')
   @ApiOperation({ summary: '추가 정보 기입 또는 수정' })
-  async updateUser(@Body() dto: UpdateUserRequestDto): Promise<void> {
-    const { is_party, meeting_type, meeting_week, meeting_time, mbti } = dto;
+  async updateUser(@CurrentAccount() payload: DecodedPayload, @Body() dto: UpdateUserRequestDto): Promise<void> {
+    const { is_party, meeting_type, meeting_week, meeting_time, mbti, skills } = dto;
 
-    const command = new UpdateUserCommand(is_party, meeting_type, meeting_week, meeting_time, mbti);
+    const command = new UpdateUserCommand(payload.id, is_party, meeting_type, meeting_week, meeting_time, mbti, skills);
 
     return this.commandBus.execute(command);
   }

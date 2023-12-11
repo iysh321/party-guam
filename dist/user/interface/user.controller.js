@@ -63,9 +63,9 @@ let UserController = class UserController {
         });
         res.send({ accessToken: reuslt.accessToken });
     }
-    async updateUser(dto) {
-        const { is_party, meeting_type, meeting_week, meeting_time, mbti } = dto;
-        const command = new update_user_command_1.UpdateUserCommand(is_party, meeting_type, meeting_week, meeting_time, mbti);
+    async updateUser(payload, dto) {
+        const { is_party, meeting_type, meeting_week, meeting_time, mbti, skills } = dto;
+        const command = new update_user_command_1.UpdateUserCommand(payload.id, is_party, meeting_type, meeting_week, meeting_time, mbti, skills);
         return this.commandBus.execute(command);
     }
     async getUsers(query) {
@@ -102,7 +102,7 @@ let UserController = class UserController {
 exports.UserController = UserController;
 __decorate([
     (0, common_1.Post)(''),
-    (0, swagger_1.ApiOperation)({ summary: '일반 회원가입 (카카오 로그인 안될 시 테스트용 구현, 카카오 완료시 삭제)' }),
+    (0, swagger_1.ApiOperation)({ summary: '일반 회원가입 - 카카오 로그인 안될 시 테스트용 구현, 카카오 완료시 해당 api 삭제' }),
     __param(0, (0, common_1.Res)()),
     __param(1, (0, common_1.Body)()),
     __metadata("design:type", Function),
@@ -122,9 +122,10 @@ __decorate([
     (0, common_1.UseGuards)(jwt_guard_1.AccessJwtAuthGuard),
     (0, common_1.Patch)('info'),
     (0, swagger_1.ApiOperation)({ summary: '추가 정보 기입 또는 수정' }),
-    __param(0, (0, common_1.Body)()),
+    __param(0, (0, auth_decorator_1.CurrentAccount)()),
+    __param(1, (0, common_1.Body)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [update_user_request_dto_1.UpdateUserRequestDto]),
+    __metadata("design:paramtypes", [Object, update_user_request_dto_1.UpdateUserRequestDto]),
     __metadata("design:returntype", Promise)
 ], UserController.prototype, "updateUser", null);
 __decorate([

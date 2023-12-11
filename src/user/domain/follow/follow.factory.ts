@@ -9,7 +9,7 @@ export class FollowFactory {
   create(userId: number, followId: number): Follow {
     const follow = new Follow(userId, followId);
 
-    // this.eventBus.publish(new FollowCreatedEvent(email, signupVerifyToken));
+    // this.eventBus
 
     return follow;
   }

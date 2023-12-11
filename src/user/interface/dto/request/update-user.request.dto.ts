@@ -1,5 +1,5 @@
 import { ApiPropertyOptional } from '@nestjs/swagger';
-import { IsBoolean, IsOptional, IsString } from 'class-validator';
+import { IsBoolean, IsInt, IsOptional, IsString } from 'class-validator';
 import { MeetingTimeType, MeetingType, MeetingWeekType } from 'src/user/infra/db/entity/user.entity';
 
 export class UpdateUserRequestDto {
@@ -63,4 +63,12 @@ export class UpdateUserRequestDto {
   @IsOptional()
   @IsString()
   readonly mbti: string;
+
+  @ApiPropertyOptional({
+    example: [1, 2],
+    description: 'skill id(pk)',
+  })
+  @IsOptional()
+  @IsInt()
+  readonly skills: number[];
 }

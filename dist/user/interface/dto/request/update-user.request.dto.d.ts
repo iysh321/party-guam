@@ -4,4 +4,5 @@ export declare class UpdateUserRequestDto {
     readonly meeting_week: string;
     readonly meeting_time: string;
     readonly mbti: string;
+    readonly skills: number[];
 }

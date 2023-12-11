@@ -4,6 +4,10 @@ export class Follow {
     public followId: number,
   ) {}
 
+  getUserId(): Readonly<number> {
+    return this.userId;
+  }
+
   getFollowId(): Readonly<number> {
     return this.followId;
   }

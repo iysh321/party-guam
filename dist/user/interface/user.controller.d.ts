@@ -15,7 +15,7 @@ export declare class UserController {
     constructor(commandBus: CommandBus, queryBus: QueryBus);
     createUser(res: Response, dto: CreateUserRequestDto): Promise<void>;
     login(res: Response, dto: UserLoginRequestDto): Promise<void>;
-    updateUser(dto: UpdateUserRequestDto): Promise<void>;
+    updateUser(payload: DecodedPayload, dto: UpdateUserRequestDto): Promise<void>;
     getUsers(query: UserQueryRequestDto): Promise<UserResponseDto>;
     getMyInfo(account: DecodedPayload): Promise<UserResponseDto>;
     getUser(param: UserParamRequestDto): Promise<UserResponseDto>;

@@ -16,11 +16,15 @@ let FollowEntity = class FollowEntity {
 };
 exports.FollowEntity = FollowEntity;
 __decorate([
-    (0, typeorm_1.PrimaryColumn)(),
+    (0, typeorm_1.PrimaryGeneratedColumn)(),
+    __metadata("design:type", Number)
+], FollowEntity.prototype, "id", void 0);
+__decorate([
+    (0, typeorm_1.Column)(),
     __metadata("design:type", Number)
 ], FollowEntity.prototype, "userId", void 0);
 __decorate([
-    (0, typeorm_1.PrimaryColumn)(),
+    (0, typeorm_1.Column)(),
     __metadata("design:type", Number)
 ], FollowEntity.prototype, "followId", void 0);
 __decorate([
@@ -45,6 +49,6 @@ __decorate([
 ], FollowEntity.prototype, "following", void 0);
 exports.FollowEntity = FollowEntity = __decorate([
     (0, typeorm_1.Entity)('follow'),
-    (0, typeorm_1.Index)('unique_follower_following', ['userId', 'followId'], { unique: true })
+    (0, typeorm_1.Unique)(['userId', 'followId'])
 ], FollowEntity);
 //# sourceMappingURL=follow.entity.js.map

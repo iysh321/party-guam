@@ -18,6 +18,8 @@ import { FollowRepository } from './infra/db/repository/follow.repository';
 import { FollowEntity } from './infra/db/entity/follow.entity';
 import { FollowFactory } from './domain/follow/follow.factory';
 import { GetFollowHandler } from './application/query/get-follow.handler';
+import { UserSkillRepository } from './infra/db/repository/user-skill.repository';
+import { UserSkillEntity } from './infra/db/entity/user-skill.entity';
 
 const commandHandlers = [CreateUserHandler, KakaoLoginHandler, FollowHandler, UnFollowHandler];
 
@@ -30,11 +32,12 @@ const factories = [UserFactory, FollowFactory];
 const repositories = [
   { provide: 'UserRepository', useClass: UserRepository },
   { provide: 'FollowRepository', useClass: FollowRepository },
+  { provide: 'UserSkillRepository', useClass: UserSkillRepository },
 ];
 
 @Module({
   controllers: [UserController],
   providers: [UserService, ...commandHandlers, ...queryHandlers, ...eventHandlers, ...factories, ...repositories],
-  imports: [CqrsModule, AuthModule, TypeOrmModule.forFeature([UserEntity, FollowEntity])],
+  imports: [CqrsModule, AuthModule, TypeOrmModule.forFeature([UserEntity, FollowEntity, UserSkillEntity])],
 })
 export class UserModule {}
