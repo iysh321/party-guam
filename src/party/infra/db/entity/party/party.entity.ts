@@ -12,10 +12,10 @@ export class PartyEntity extends BaseEntity {
   id: number;
 
   @Column({ nullable: true })
-  party_status: string;
+  partyStatus: string;
 
   @Column({ nullable: true })
-  project_status: string;
+  projectStatus: string;
 
   @Column({ nullable: true })
   title: string;

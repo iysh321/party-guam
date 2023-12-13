@@ -9,13 +9,13 @@ export class PartyLike {
   id: number;
 
   @PrimaryColumn()
-  party_post_id: number;
+  partyId: number;
 
   @ManyToOne(() => UserEntity)
-  @JoinColumn({ name: 'user_id' })
+  @JoinColumn({ name: 'user_id', referencedColumnName: 'id' })
   user: UserEntity;
 
   @ManyToOne(() => PartyEntity, (post) => post.partyLikes)
-  @JoinColumn({ name: 'party_post_id' })
+  @JoinColumn({ name: 'party_id', referencedColumnName: 'id' })
   party: PartyEntity;
 }

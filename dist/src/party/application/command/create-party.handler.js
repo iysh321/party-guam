@@ -18,15 +18,16 @@ const cqrs_1 = require("@nestjs/cqrs");
 const create_party_comand_1 = require("./create-party.comand");
 const party_factory_1 = require("../../domain/party/party.factory");
 let CreatePartyHandler = class CreatePartyHandler {
-    constructor(partyFactory, partyRepository) {
+    constructor(partyFactory, partyRepository, partyUserRepository) {
         this.partyFactory = partyFactory;
         this.partyRepository = partyRepository;
+        this.partyUserRepository = partyUserRepository;
     }
     async execute(command) {
-        const { userId, title, content } = command;
-        const save = await this.partyRepository.create(userId, title, content);
-        this.partyFactory.create(save.id, title, content);
-        return save;
+        const { userId, title, content, positionId } = command;
+        const party = await this.partyRepository.create(userId, title, content);
+        await this.partyUserRepository.create(userId, party.getId(), positionId);
+        return party;
     }
 };
 exports.CreatePartyHandler = CreatePartyHandler;
@@ -34,6 +35,7 @@ exports.CreatePartyHandler = CreatePartyHandler = __decorate([
     (0, common_1.Injectable)(),
     (0, cqrs_1.CommandHandler)(create_party_comand_1.CreatePartyCommand),
     __param(1, (0, common_1.Inject)('PartyRepository')),
-    __metadata("design:paramtypes", [party_factory_1.PartyFactory, Object])
+    __param(2, (0, common_1.Inject)('PartyUserRepository')),
+    __metadata("design:paramtypes", [party_factory_1.PartyFactory, Object, Object])
 ], CreatePartyHandler);
 //# sourceMappingURL=create-party.handler.js.map

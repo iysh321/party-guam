@@ -3,7 +3,7 @@ import { UserEntity } from 'src/user/infra/db/entity/user.entity';
 import { Entity, PrimaryGeneratedColumn, ManyToOne, JoinColumn, Column } from 'typeorm';
 import { PartyEntity } from './party.entity';
 
-enum Permission {
+export enum Permission {
   MASTER = 'master',
   EDITOR = 'editor',
 }

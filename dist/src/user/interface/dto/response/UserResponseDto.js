@@ -53,15 +53,20 @@ __decorate([
 exports.UserResponseDto = UserResponseDto = __decorate([
     (0, class_transformer_1.Exclude)()
 ], UserResponseDto);
-class UsersResponseDto {
-}
+let UsersResponseDto = class UsersResponseDto {
+};
 exports.UsersResponseDto = UsersResponseDto;
 __decorate([
+    (0, class_transformer_1.Expose)(),
     (0, swagger_1.ApiProperty)(),
-    __metadata("design:type", UserResponseDto)
+    __metadata("design:type", Array)
 ], UsersResponseDto.prototype, "data", void 0);
 __decorate([
+    (0, class_transformer_1.Expose)(),
     (0, swagger_1.ApiProperty)(),
     __metadata("design:type", Number)
 ], UsersResponseDto.prototype, "count", void 0);
+exports.UsersResponseDto = UsersResponseDto = __decorate([
+    (0, class_transformer_1.Exclude)()
+], UsersResponseDto);
 //# sourceMappingURL=UserResponseDto.js.map

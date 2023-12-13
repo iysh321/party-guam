@@ -23,5 +23,5 @@ __decorate([
     (0, class_validator_1.IsNotEmpty)(),
     (0, class_validator_1.IsInt)(),
     __metadata("design:type", Number)
-], PartyRequestDto.prototype, "id", void 0);
-//# sourceMappingURL=party.request.dto.js.map
+], PartyRequestDto.prototype, "partyId", void 0);
+//# sourceMappingURL=party.param.request.dto.js.map

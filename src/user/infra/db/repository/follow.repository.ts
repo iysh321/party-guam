@@ -24,7 +24,7 @@ export class FollowRepository implements IFollowRepository {
 
   async delete(userId: number, followId: number): Promise<boolean> {
     const result = await this.followRepository.delete({ userId, followId });
-    console.log(result);
+
     return result.affected ? true : false;
   }
 }

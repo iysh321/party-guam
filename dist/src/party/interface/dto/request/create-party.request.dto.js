@@ -33,4 +33,13 @@ __decorate([
     (0, class_validator_1.IsString)(),
     __metadata("design:type", String)
 ], CreatePartyRequestDto.prototype, "content", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)({
+        example: 1,
+        description: '글쓴이 참여할 포지션 position id(pk)',
+    }),
+    (0, class_validator_1.IsNotEmpty)(),
+    (0, class_validator_1.IsInt)(),
+    __metadata("design:type", Number)
+], CreatePartyRequestDto.prototype, "positionId", void 0);
 //# sourceMappingURL=create-party.request.dto.js.map

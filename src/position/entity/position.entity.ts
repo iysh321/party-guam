@@ -1,4 +1,5 @@
 import { PartyUserEntity } from 'src/party/infra/db/entity/party/party-user.entity';
+import { UserEntity } from 'src/user/infra/db/entity/user.entity';
 import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm';
 
 @Entity('postion')
@@ -12,6 +13,6 @@ export class PositionEntity {
   @OneToMany(() => PartyUserEntity, (position) => position.position)
   partyUsers: PartyUserEntity[];
 
-  @OneToMany(() => PartyUserEntity, (position) => position.position)
-  users: PartyUserEntity[];
+  @OneToMany(() => UserEntity, (user) => user.positions)
+  users: UserEntity;
 }

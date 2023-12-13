@@ -11,6 +11,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.PositionEntity = void 0;
 const party_user_entity_1 = require("../../party/infra/db/entity/party/party-user.entity");
+const user_entity_1 = require("../../user/infra/db/entity/user.entity");
 const typeorm_1 = require("typeorm");
 let PositionEntity = class PositionEntity {
 };
@@ -28,8 +29,8 @@ __decorate([
     __metadata("design:type", Array)
 ], PositionEntity.prototype, "partyUsers", void 0);
 __decorate([
-    (0, typeorm_1.OneToMany)(() => party_user_entity_1.PartyUserEntity, (position) => position.position),
-    __metadata("design:type", Array)
+    (0, typeorm_1.OneToMany)(() => user_entity_1.UserEntity, (user) => user.positions),
+    __metadata("design:type", user_entity_1.UserEntity)
 ], PositionEntity.prototype, "users", void 0);
 exports.PositionEntity = PositionEntity = __decorate([
     (0, typeorm_1.Entity)('postion')

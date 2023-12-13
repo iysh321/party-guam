@@ -30,7 +30,6 @@ let FollowRepository = class FollowRepository {
     }
     async delete(userId, followId) {
         const result = await this.followRepository.delete({ userId, followId });
-        console.log(result);
         return result.affected ? true : false;
     }
 };

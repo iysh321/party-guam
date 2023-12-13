@@ -21,7 +21,6 @@ export class GetUsersHandler implements IQueryHandler<GetUsersQuery> {
       .orderBy(`user.${sort}`, order)
       .getManyAndCount();
 
-    console.log(user);
     if (!user) {
       throw new NotFoundException('유저가 존재하지 않습니다');
     }

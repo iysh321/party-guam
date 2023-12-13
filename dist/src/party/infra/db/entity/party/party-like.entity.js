@@ -23,15 +23,15 @@ __decorate([
 __decorate([
     (0, typeorm_1.PrimaryColumn)(),
     __metadata("design:type", Number)
-], PartyLike.prototype, "party_post_id", void 0);
+], PartyLike.prototype, "partyId", void 0);
 __decorate([
     (0, typeorm_1.ManyToOne)(() => user_entity_1.UserEntity),
-    (0, typeorm_1.JoinColumn)({ name: 'user_id' }),
+    (0, typeorm_1.JoinColumn)({ name: 'user_id', referencedColumnName: 'id' }),
     __metadata("design:type", user_entity_1.UserEntity)
 ], PartyLike.prototype, "user", void 0);
 __decorate([
     (0, typeorm_1.ManyToOne)(() => party_entity_1.PartyEntity, (post) => post.partyLikes),
-    (0, typeorm_1.JoinColumn)({ name: 'party_post_id' }),
+    (0, typeorm_1.JoinColumn)({ name: 'party_id', referencedColumnName: 'id' }),
     __metadata("design:type", party_entity_1.PartyEntity)
 ], PartyLike.prototype, "party", void 0);
 exports.PartyLike = PartyLike = __decorate([

@@ -32,7 +32,6 @@ let GetUsersHandler = class GetUsersHandler {
             .offset(offset)
             .orderBy(`user.${sort}`, order)
             .getManyAndCount();
-        console.log(user);
         if (!user) {
             throw new common_1.NotFoundException('유저가 존재하지 않습니다');
         }

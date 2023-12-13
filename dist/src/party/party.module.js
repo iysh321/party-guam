@@ -15,11 +15,18 @@ const party_entity_1 = require("./infra/db/entity/party/party.entity");
 const party_factory_1 = require("./domain/party/party.factory");
 const party_repository_1 = require("./infra/db/repository/party.repository");
 const create_party_handler_1 = require("./application/command/create-party.handler");
+const party_user_repository_1 = require("./infra/db/repository/party-user.repository");
+const get_parties_handler_1 = require("./application/query/get-parties.handler");
+const get_party_handler_1 = require("./application/query/get-party.handler");
+const party_user_entity_1 = require("./infra/db/entity/party/party-user.entity");
 const commandHandlers = [create_party_handler_1.CreatePartyHandler];
-const queryHandlers = [];
+const queryHandlers = [get_parties_handler_1.GetPartiessHandler, get_party_handler_1.GetUserHandler];
 const eventHandlers = [];
 const factories = [party_factory_1.PartyFactory];
-const repositories = [{ provide: 'PartyRepository', useClass: party_repository_1.PartyRepository }];
+const repositories = [
+    { provide: 'PartyRepository', useClass: party_repository_1.PartyRepository },
+    { provide: 'PartyUserRepository', useClass: party_user_repository_1.PartyUserRepository },
+];
 let PartyModule = class PartyModule {
 };
 exports.PartyModule = PartyModule;
@@ -27,7 +34,7 @@ exports.PartyModule = PartyModule = __decorate([
     (0, common_1.Module)({
         controllers: [party_controller_1.PartyController],
         providers: [...commandHandlers, ...queryHandlers, ...eventHandlers, ...factories, ...repositories],
-        imports: [cqrs_1.CqrsModule, typeorm_1.TypeOrmModule.forFeature([party_entity_1.PartyEntity])],
+        imports: [cqrs_1.CqrsModule, typeorm_1.TypeOrmModule.forFeature([party_entity_1.PartyEntity, party_user_entity_1.PartyUserEntity])],
     })
 ], PartyModule);
 //# sourceMappingURL=party.module.js.map

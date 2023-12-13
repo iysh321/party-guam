@@ -8,6 +8,6 @@ export declare class UserResponseDto {
     createdAt: Date;
 }
 export declare class UsersResponseDto {
-    data: UserResponseDto;
+    data: UserResponseDto[];
     count: number;
 }

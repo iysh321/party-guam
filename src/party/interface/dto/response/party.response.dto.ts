@@ -1,7 +1,10 @@
 import { ApiProperty } from '@nestjs/swagger';
+import { Exclude, Expose } from 'class-transformer';
 import { IsNotEmpty, IsString } from 'class-validator';
 
-export class CreatePartyRequestDto {
+@Exclude()
+export class PartyResponseDto {
+  @Expose()
   @ApiProperty({
     example: '파티구함',
     description: '제목',
@@ -10,6 +13,7 @@ export class CreatePartyRequestDto {
   @IsString()
   readonly title: string;
 
+  @Expose()
   @ApiProperty({
     example: '풀스텍 구함',
     description: '본문',
@@ -17,4 +21,12 @@ export class CreatePartyRequestDto {
   @IsNotEmpty()
   @IsString()
   readonly content: string;
+}
+
+export class PartiesResponseDto {
+  @ApiProperty()
+  data: PartyResponseDto[]; // UserResponseData는 UserResponseDto의 데이터 형태를 정의하는 클래스입니다.
+
+  @ApiProperty()
+  count: number;
 }

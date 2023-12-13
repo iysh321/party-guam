@@ -77,7 +77,7 @@ export class UserEntity extends BaseEntity {
   @Column({ nullable: true })
   mp: number;
 
-  @Column()
+  @Column({ nullable: true })
   positionId: number;
 
   @ManyToOne(() => PositionEntity, (position) => position.users, {

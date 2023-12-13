@@ -27,11 +27,11 @@ __decorate([
 __decorate([
     (0, typeorm_1.Column)({ nullable: true }),
     __metadata("design:type", String)
-], PartyEntity.prototype, "party_status", void 0);
+], PartyEntity.prototype, "partyStatus", void 0);
 __decorate([
     (0, typeorm_1.Column)({ nullable: true }),
     __metadata("design:type", String)
-], PartyEntity.prototype, "project_status", void 0);
+], PartyEntity.prototype, "projectStatus", void 0);
 __decorate([
     (0, typeorm_1.Column)({ nullable: true }),
     __metadata("design:type", String)

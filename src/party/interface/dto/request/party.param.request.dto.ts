@@ -8,5 +8,5 @@ export class PartyRequestDto {
   })
   @IsNotEmpty()
   @IsInt()
-  readonly id: number;
+  readonly partyId: number;
 }
