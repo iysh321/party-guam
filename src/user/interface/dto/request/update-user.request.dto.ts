@@ -9,7 +9,7 @@ export class UpdateUserRequestDto {
   })
   @IsOptional()
   @IsBoolean()
-  readonly is_party: boolean;
+  readonly isParty: boolean;
 
   @ApiPropertyOptional({
     example: MeetingType.OFFLINE,
@@ -18,7 +18,7 @@ export class UpdateUserRequestDto {
   })
   @IsOptional()
   @IsString()
-  readonly meeting_type: string;
+  readonly meetingType: string;
 
   @ApiPropertyOptional({
     example: MeetingWeekType.WEEKDAY,
@@ -27,7 +27,7 @@ export class UpdateUserRequestDto {
   })
   @IsOptional()
   @IsString()
-  readonly meeting_week: string;
+  readonly meetingWeek: string;
 
   @ApiPropertyOptional({
     example: MeetingTimeType.AM,
@@ -36,7 +36,7 @@ export class UpdateUserRequestDto {
   })
   @IsOptional()
   @IsString()
-  readonly meeting_time: string;
+  readonly meetingTime: string;
 
   @ApiPropertyOptional({
     example: 'intp',
@@ -70,5 +70,13 @@ export class UpdateUserRequestDto {
   })
   @IsOptional()
   @IsInt()
-  readonly skills: number[];
+  readonly skillIds: number[];
+
+  @ApiPropertyOptional({
+    example: 1,
+    description: 'position id(pk)',
+  })
+  @IsOptional()
+  @IsInt()
+  readonly positionId: number[];
 }

@@ -6,7 +6,7 @@ export declare class KakaoLoginHandler implements ICommandHandler<KakaoLoginComm
     private userRepository;
     private authService;
     constructor(userRepository: IUserRepository, authService: AuthService);
-    execute({ access_token }: KakaoLoginCommand): Promise<{
+    execute({ accessToken }: KakaoLoginCommand): Promise<{
         accessToken: string;
         refreshToken: string;
     }>;

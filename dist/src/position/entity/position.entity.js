@@ -27,6 +27,10 @@ __decorate([
     (0, typeorm_1.OneToMany)(() => party_user_entity_1.PartyUserEntity, (position) => position.position),
     __metadata("design:type", Array)
 ], PositionEntity.prototype, "partyUsers", void 0);
+__decorate([
+    (0, typeorm_1.OneToMany)(() => party_user_entity_1.PartyUserEntity, (position) => position.position),
+    __metadata("design:type", Array)
+], PositionEntity.prototype, "users", void 0);
 exports.PositionEntity = PositionEntity = __decorate([
     (0, typeorm_1.Entity)('postion')
 ], PositionEntity);

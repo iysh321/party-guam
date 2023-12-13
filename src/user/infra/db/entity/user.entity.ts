@@ -1,13 +1,13 @@
-import { Entity, PrimaryGeneratedColumn, Column, OneToMany, OneToOne } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, OneToMany, OneToOne, ManyToOne, JoinColumn } from 'typeorm';
 
 import { UserSkillEntity } from './user-skill.entity';
-import { ExperienceEntity } from './experience.entity';
 import { PartyUserEntity } from 'src/party/infra/db/entity/party/party-user.entity';
 import { FollowEntity } from 'src/user/infra/db/entity/follow.entity';
 import { PartyRequestEntity } from 'src/party/infra/db/entity/apply/party-request.entity';
 import { PartyInviteEntity } from 'src/party/infra/db/entity/apply/party-invite.entity';
 import { BaseEntity } from 'src/common/entity/baseEntity';
 import { AuthEntity } from 'src/auth/entity/auth.entity';
+import { PositionEntity } from 'src/position/entity/position.entity';
 
 export enum MeetingType {
   ANY = '상관없음',
@@ -77,6 +77,16 @@ export class UserEntity extends BaseEntity {
   @Column({ nullable: true })
   mp: number;
 
+  @Column()
+  positionId: number;
+
+  @ManyToOne(() => PositionEntity, (position) => position.users, {
+    onUpdate: 'CASCADE',
+    onDelete: 'CASCADE',
+  })
+  @JoinColumn({ name: 'position_id', referencedColumnName: 'id' })
+  positions: PositionEntity;
+
   @OneToOne(() => AuthEntity, (auth) => auth.user)
   auth: AuthEntity;
 
@@ -91,9 +101,6 @@ export class UserEntity extends BaseEntity {
 
   @OneToMany(() => UserSkillEntity, (userSkill) => userSkill.user)
   userSkills: UserSkillEntity[];
-
-  @OneToMany(() => ExperienceEntity, (userExperience) => userExperience.user)
-  userExperiences: ExperienceEntity[];
 
   @OneToMany(() => PartyRequestEntity, (userExperience) => userExperience.user)
   partyRequests: PartyRequestEntity[];

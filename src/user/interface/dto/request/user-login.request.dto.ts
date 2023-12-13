@@ -7,5 +7,5 @@ export class UserLoginRequestDto {
     description: '서버에서 제공한 access token',
   })
   @IsNotEmpty()
-  access_token: string;
+  accessToken: string;
 }

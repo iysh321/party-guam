@@ -14,12 +14,12 @@ export class KakaoLoginHandler implements ICommandHandler<KakaoLoginCommand> {
     private authService: AuthService,
   ) {}
 
-  async execute({ access_token }: KakaoLoginCommand) {
+  async execute({ accessToken }: KakaoLoginCommand) {
     let userId: number;
 
     const kakaoUserInfo = await axios.get(`https://kapi.kakao.com/v2/user/me`, {
       headers: {
-        Authorization: `Bearer ${access_token}`,
+        Authorization: `Bearer ${accessToken}`,
         'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8',
       },
     });
@@ -38,11 +38,11 @@ export class KakaoLoginHandler implements ICommandHandler<KakaoLoginCommand> {
 
     const encryptUserId = await this.authService.encrypt(String(userId));
 
-    const accessToken = await this.authService.createAccessToken(encryptUserId);
-    const refreshToken = await this.authService.createRefreshToken(encryptUserId);
+    const createAccessToken = await this.authService.createAccessToken(encryptUserId);
+    const createRefreshToken = await this.authService.createRefreshToken(encryptUserId);
 
-    this.authService.saveRefreshToken(userId, refreshToken);
+    this.authService.saveRefreshToken(userId, createRefreshToken);
 
-    return { accessToken, refreshToken };
+    return { accessToken: createAccessToken, refreshToken: createRefreshToken };
   }
 }

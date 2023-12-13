@@ -1,4 +1,3 @@
-import { ExperienceEntity } from 'src/user/infra/db/entity/experience.entity';
 import { UserSkillEntity } from 'src/user/infra/db/entity/user-skill.entity';
 import { MeetingTimeType, MeetingType, MeetingWeekType } from 'src/user/infra/db/entity/user.entity';
 
@@ -17,7 +16,6 @@ export class User {
     public hp: number | null = null,
     public mp: number | null = null,
     public userSkills: UserSkillEntity[] = [],
-    public userExperiences: ExperienceEntity[] = [],
   ) {}
 
   getId(): Readonly<number> {

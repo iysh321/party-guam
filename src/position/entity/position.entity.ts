@@ -11,4 +11,7 @@ export class PositionEntity {
 
   @OneToMany(() => PartyUserEntity, (position) => position.position)
   partyUsers: PartyUserEntity[];
+
+  @OneToMany(() => PartyUserEntity, (position) => position.position)
+  users: PartyUserEntity[];
 }

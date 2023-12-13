@@ -23,11 +23,11 @@ let KakaoLoginHandler = class KakaoLoginHandler {
         this.userRepository = userRepository;
         this.authService = authService;
     }
-    async execute({ access_token }) {
+    async execute({ accessToken }) {
         let userId;
         const kakaoUserInfo = await axios_1.default.get(`https://kapi.kakao.com/v2/user/me`, {
             headers: {
-                Authorization: `Bearer ${access_token}`,
+                Authorization: `Bearer ${accessToken}`,
                 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8',
             },
         });
@@ -40,10 +40,10 @@ let KakaoLoginHandler = class KakaoLoginHandler {
             userId = user.getId();
         }
         const encryptUserId = await this.authService.encrypt(String(userId));
-        const accessToken = await this.authService.createAccessToken(encryptUserId);
-        const refreshToken = await this.authService.createRefreshToken(encryptUserId);
-        this.authService.saveRefreshToken(userId, refreshToken);
-        return { accessToken, refreshToken };
+        const createAccessToken = await this.authService.createAccessToken(encryptUserId);
+        const createRefreshToken = await this.authService.createRefreshToken(encryptUserId);
+        this.authService.saveRefreshToken(userId, createRefreshToken);
+        return { accessToken: createAccessToken, refreshToken: createRefreshToken };
     }
 };
 exports.KakaoLoginHandler = KakaoLoginHandler;

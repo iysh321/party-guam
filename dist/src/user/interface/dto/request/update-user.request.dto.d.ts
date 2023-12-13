@@ -1,8 +1,9 @@
 export declare class UpdateUserRequestDto {
-    readonly is_party: boolean;
-    readonly meeting_type: string;
-    readonly meeting_week: string;
-    readonly meeting_time: string;
+    readonly isParty: boolean;
+    readonly meetingType: string;
+    readonly meetingWeek: string;
+    readonly meetingTime: string;
     readonly mbti: string;
-    readonly skills: number[];
+    readonly skillIds: number[];
+    readonly positionId: number[];
 }

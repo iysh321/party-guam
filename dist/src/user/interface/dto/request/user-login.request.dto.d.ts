@@ -1,3 +1,3 @@
 export declare class UserLoginRequestDto {
-    access_token: string;
+    accessToken: string;
 }

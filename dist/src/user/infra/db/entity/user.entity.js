@@ -12,13 +12,13 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.UserEntity = exports.MeetingTimeType = exports.MeetingWeekType = exports.MeetingType = void 0;
 const typeorm_1 = require("typeorm");
 const user_skill_entity_1 = require("./user-skill.entity");
-const experience_entity_1 = require("./experience.entity");
 const party_user_entity_1 = require("../../../../party/infra/db/entity/party/party-user.entity");
 const follow_entity_1 = require("./follow.entity");
 const party_request_entity_1 = require("../../../../party/infra/db/entity/apply/party-request.entity");
 const party_invite_entity_1 = require("../../../../party/infra/db/entity/apply/party-invite.entity");
 const baseEntity_1 = require("../../../../common/entity/baseEntity");
 const auth_entity_1 = require("../../../../auth/entity/auth.entity");
+const position_entity_1 = require("../../../../position/entity/position.entity");
 var MeetingType;
 (function (MeetingType) {
     MeetingType["ANY"] = "\uC0C1\uAD00\uC5C6\uC74C";
@@ -101,6 +101,18 @@ __decorate([
     __metadata("design:type", Number)
 ], UserEntity.prototype, "mp", void 0);
 __decorate([
+    (0, typeorm_1.Column)(),
+    __metadata("design:type", Number)
+], UserEntity.prototype, "positionId", void 0);
+__decorate([
+    (0, typeorm_1.ManyToOne)(() => position_entity_1.PositionEntity, (position) => position.users, {
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE',
+    }),
+    (0, typeorm_1.JoinColumn)({ name: 'position_id', referencedColumnName: 'id' }),
+    __metadata("design:type", position_entity_1.PositionEntity)
+], UserEntity.prototype, "positions", void 0);
+__decorate([
     (0, typeorm_1.OneToOne)(() => auth_entity_1.AuthEntity, (auth) => auth.user),
     __metadata("design:type", auth_entity_1.AuthEntity)
 ], UserEntity.prototype, "auth", void 0);
@@ -120,10 +132,6 @@ __decorate([
     (0, typeorm_1.OneToMany)(() => user_skill_entity_1.UserSkillEntity, (userSkill) => userSkill.user),
     __metadata("design:type", Array)
 ], UserEntity.prototype, "userSkills", void 0);
-__decorate([
-    (0, typeorm_1.OneToMany)(() => experience_entity_1.ExperienceEntity, (userExperience) => userExperience.user),
-    __metadata("design:type", Array)
-], UserEntity.prototype, "userExperiences", void 0);
 __decorate([
     (0, typeorm_1.OneToMany)(() => party_request_entity_1.PartyRequestEntity, (userExperience) => userExperience.user),
     __metadata("design:type", Array)

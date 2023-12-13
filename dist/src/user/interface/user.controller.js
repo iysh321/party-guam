@@ -53,8 +53,8 @@ let UserController = class UserController {
         res.send({ accessToken: reuslt.accessToken });
     }
     async login(res, dto) {
-        const { access_token } = dto;
-        const command = new kakao_login_command_1.KakaoLoginCommand(access_token);
+        const { accessToken } = dto;
+        const command = new kakao_login_command_1.KakaoLoginCommand(accessToken);
         const reuslt = await this.commandBus.execute(command);
         res.cookie('refreshToken', reuslt.refreshToken, {
             httpOnly: true,
@@ -64,8 +64,8 @@ let UserController = class UserController {
         res.send({ accessToken: reuslt.accessToken });
     }
     async updateUser(payload, dto) {
-        const { is_party, meeting_type, meeting_week, meeting_time, mbti, skills } = dto;
-        const command = new update_user_command_1.UpdateUserCommand(payload.id, is_party, meeting_type, meeting_week, meeting_time, mbti, skills);
+        const { isParty, meetingType, meetingWeek, meetingTime, mbti, skillIds } = dto;
+        const command = new update_user_command_1.UpdateUserCommand(payload.id, isParty, meetingType, meetingWeek, meetingTime, mbti, skillIds);
         return this.commandBus.execute(command);
     }
     async getUsers(query) {

@@ -57,9 +57,9 @@ export class UserController {
   @Post('kakao/login')
   @ApiOperation({ summary: 'Kakao 로그인 / 자동 회원가입' })
   async login(@Res() res: Response, @Body() dto: UserLoginRequestDto) {
-    const { access_token } = dto;
+    const { accessToken } = dto;
 
-    const command = new KakaoLoginCommand(access_token);
+    const command = new KakaoLoginCommand(accessToken);
 
     const reuslt = await this.commandBus.execute(command);
 
@@ -76,9 +76,9 @@ export class UserController {
   @Patch('info')
   @ApiOperation({ summary: '추가 정보 기입 또는 수정' })
   async updateUser(@CurrentAccount() payload: DecodedPayload, @Body() dto: UpdateUserRequestDto): Promise<void> {
-    const { is_party, meeting_type, meeting_week, meeting_time, mbti, skills } = dto;
+    const { isParty, meetingType, meetingWeek, meetingTime, mbti, skillIds } = dto;
 
-    const command = new UpdateUserCommand(payload.id, is_party, meeting_type, meeting_week, meeting_time, mbti, skills);
+    const command = new UpdateUserCommand(payload.id, isParty, meetingType, meetingWeek, meetingTime, mbti, skillIds);
 
     return this.commandBus.execute(command);
   }

@@ -24,7 +24,7 @@ __decorate([
     (0, class_validator_1.IsOptional)(),
     (0, class_validator_1.IsBoolean)(),
     __metadata("design:type", Boolean)
-], UpdateUserRequestDto.prototype, "is_party", void 0);
+], UpdateUserRequestDto.prototype, "isParty", void 0);
 __decorate([
     (0, swagger_1.ApiPropertyOptional)({
         example: user_entity_1.MeetingType.OFFLINE,
@@ -34,7 +34,7 @@ __decorate([
     (0, class_validator_1.IsOptional)(),
     (0, class_validator_1.IsString)(),
     __metadata("design:type", String)
-], UpdateUserRequestDto.prototype, "meeting_type", void 0);
+], UpdateUserRequestDto.prototype, "meetingType", void 0);
 __decorate([
     (0, swagger_1.ApiPropertyOptional)({
         example: user_entity_1.MeetingWeekType.WEEKDAY,
@@ -44,7 +44,7 @@ __decorate([
     (0, class_validator_1.IsOptional)(),
     (0, class_validator_1.IsString)(),
     __metadata("design:type", String)
-], UpdateUserRequestDto.prototype, "meeting_week", void 0);
+], UpdateUserRequestDto.prototype, "meetingWeek", void 0);
 __decorate([
     (0, swagger_1.ApiPropertyOptional)({
         example: user_entity_1.MeetingTimeType.AM,
@@ -54,7 +54,7 @@ __decorate([
     (0, class_validator_1.IsOptional)(),
     (0, class_validator_1.IsString)(),
     __metadata("design:type", String)
-], UpdateUserRequestDto.prototype, "meeting_time", void 0);
+], UpdateUserRequestDto.prototype, "meetingTime", void 0);
 __decorate([
     (0, swagger_1.ApiPropertyOptional)({
         example: 'intp',
@@ -90,5 +90,14 @@ __decorate([
     (0, class_validator_1.IsOptional)(),
     (0, class_validator_1.IsInt)(),
     __metadata("design:type", Array)
-], UpdateUserRequestDto.prototype, "skills", void 0);
+], UpdateUserRequestDto.prototype, "skillIds", void 0);
+__decorate([
+    (0, swagger_1.ApiPropertyOptional)({
+        example: 1,
+        description: 'position id(pk)',
+    }),
+    (0, class_validator_1.IsOptional)(),
+    (0, class_validator_1.IsInt)(),
+    __metadata("design:type", Array)
+], UpdateUserRequestDto.prototype, "positionId", void 0);
 //# sourceMappingURL=update-user.request.dto.js.map

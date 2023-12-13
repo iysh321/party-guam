@@ -3,4 +3,5 @@ export declare class PositionEntity {
     id: number;
     position: string;
     partyUsers: PartyUserEntity[];
+    users: PartyUserEntity[];
 }

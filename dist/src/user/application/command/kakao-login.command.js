@@ -2,8 +2,8 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.KakaoLoginCommand = void 0;
 class KakaoLoginCommand {
-    constructor(access_token) {
-        this.access_token = access_token;
+    constructor(accessToken) {
+        this.accessToken = accessToken;
     }
 }
 exports.KakaoLoginCommand = KakaoLoginCommand;

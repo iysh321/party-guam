@@ -22,5 +22,5 @@ __decorate([
     }),
     (0, class_validator_1.IsNotEmpty)(),
     __metadata("design:type", String)
-], UserLoginRequestDto.prototype, "access_token", void 0);
+], UserLoginRequestDto.prototype, "accessToken", void 0);
 //# sourceMappingURL=user-login.request.dto.js.map

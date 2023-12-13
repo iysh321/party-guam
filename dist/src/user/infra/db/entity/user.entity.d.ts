@@ -1,11 +1,11 @@
 import { UserSkillEntity } from './user-skill.entity';
-import { ExperienceEntity } from './experience.entity';
 import { PartyUserEntity } from 'src/party/infra/db/entity/party/party-user.entity';
 import { FollowEntity } from 'src/user/infra/db/entity/follow.entity';
 import { PartyRequestEntity } from 'src/party/infra/db/entity/apply/party-request.entity';
 import { PartyInviteEntity } from 'src/party/infra/db/entity/apply/party-invite.entity';
 import { BaseEntity } from 'src/common/entity/baseEntity';
 import { AuthEntity } from 'src/auth/entity/auth.entity';
+import { PositionEntity } from 'src/position/entity/position.entity';
 export declare enum MeetingType {
     ANY = "\uC0C1\uAD00\uC5C6\uC74C",
     ONLINE = "\uC628\uB77C\uC778",
@@ -34,12 +34,13 @@ export declare class UserEntity extends BaseEntity {
     mbti: string;
     hp: number;
     mp: number;
+    positionId: number;
+    positions: PositionEntity;
     auth: AuthEntity;
     followers: FollowEntity[];
     followings: FollowEntity[];
     parties: PartyUserEntity[];
     userSkills: UserSkillEntity[];
-    userExperiences: ExperienceEntity[];
     partyRequests: PartyRequestEntity[];
     partyInvites: PartyInviteEntity[];
 }
