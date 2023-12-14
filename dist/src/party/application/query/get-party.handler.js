@@ -25,13 +25,13 @@ let GetUserHandler = class GetUserHandler {
     }
     async execute(query) {
         const { partyId } = query;
-        const user = await this.partyRepository.findOne({
+        const result = await this.partyRepository.findOne({
             where: { id: partyId },
         });
-        if (!user) {
-            throw new common_1.NotFoundException('유저가 존재하지 않습니다');
+        if (!result) {
+            throw new common_1.NotFoundException('파티가 존재하지 않습니다');
         }
-        return user;
+        return result;
     }
 };
 exports.GetUserHandler = GetUserHandler;

@@ -13,7 +13,6 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.GetPartiessHandler = void 0;
-const common_1 = require("@nestjs/common");
 const typeorm_1 = require("@nestjs/typeorm");
 const typeorm_2 = require("typeorm");
 const cqrs_1 = require("@nestjs/cqrs");
@@ -32,9 +31,6 @@ let GetPartiessHandler = class GetPartiessHandler {
             .offset(offset)
             .orderBy(`party.${sort}`, order)
             .getManyAndCount();
-        if (!parties) {
-            throw new common_1.NotFoundException('유저가 존재하지 않습니다');
-        }
         return parties;
     }
 };

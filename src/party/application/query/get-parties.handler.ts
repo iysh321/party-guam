@@ -1,4 +1,3 @@
-import { NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
@@ -20,10 +19,6 @@ export class GetPartiessHandler implements IQueryHandler<GetPartiesQuery> {
       .offset(offset)
       .orderBy(`party.${sort}`, order)
       .getManyAndCount();
-
-    if (!parties) {
-      throw new NotFoundException('유저가 존재하지 않습니다');
-    }
 
     return parties;
   }

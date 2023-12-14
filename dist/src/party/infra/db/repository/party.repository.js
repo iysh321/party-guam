@@ -18,15 +18,34 @@ const common_1 = require("@nestjs/common");
 const typeorm_2 = require("@nestjs/typeorm");
 const party_entity_1 = require("../entity/party/party.entity");
 const party_factory_1 = require("../../../domain/party/party.factory");
+const baseEntity_1 = require("../../../../common/entity/baseEntity");
 let PartyRepository = class PartyRepository {
     constructor(dataSource, partyRepository, partyFactory) {
         this.dataSource = dataSource;
         this.partyRepository = partyRepository;
         this.partyFactory = partyFactory;
     }
-    async create(userId, title, contents) {
-        await this.partyRepository.save({ userId, title, contents });
-        return this.partyFactory.reconstitute(userId, title, contents);
+    async create(title, content) {
+        const party = await this.partyRepository.save({ title, content });
+        return this.partyFactory.reconstitute(party.id, title, content);
+    }
+    async findOne(partyId) {
+        const party = await this.partyRepository.findOne({
+            where: { id: partyId },
+        });
+        if (!party) {
+            throw new common_1.NotFoundException('파티가 존재하지 않습니다');
+        }
+        return this.partyFactory.reconstitute(party.id, party.title, party.content);
+    }
+    async update(partyId, title, content) {
+        const party = await this.findOne(partyId);
+        await this.partyRepository.save({ ...party, title, content });
+    }
+    async delete(partyId) {
+        const party = await this.findOne(partyId);
+        const status = baseEntity_1.StatusType.DELETED;
+        await this.partyRepository.save({ ...party, status });
     }
 };
 exports.PartyRepository = PartyRepository;

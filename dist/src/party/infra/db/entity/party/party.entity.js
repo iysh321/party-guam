@@ -41,11 +41,11 @@ __decorate([
     __metadata("design:type", String)
 ], PartyEntity.prototype, "content", void 0);
 __decorate([
-    (0, typeorm_1.OneToMany)(() => party_user_entity_1.PartyUserEntity, (party) => party.party),
+    (0, typeorm_1.OneToMany)(() => party_user_entity_1.PartyUserEntity, (partyUser) => partyUser.party),
     __metadata("design:type", Array)
 ], PartyEntity.prototype, "partyUser", void 0);
 __decorate([
-    (0, typeorm_1.OneToMany)(() => party_like_entity_1.PartyLike, (party) => party.party),
+    (0, typeorm_1.OneToMany)(() => party_like_entity_1.PartyLikeEntity, (partyLike) => partyLike.party),
     __metadata("design:type", Array)
 ], PartyEntity.prototype, "partyLikes", void 0);
 __decorate([
@@ -53,11 +53,11 @@ __decorate([
     __metadata("design:type", Array)
 ], PartyEntity.prototype, "comments", void 0);
 __decorate([
-    (0, typeorm_1.OneToMany)(() => party_request_entity_1.PartyRequestEntity, (comment) => comment.party),
+    (0, typeorm_1.OneToMany)(() => party_request_entity_1.PartyRequestEntity, (partyRequests) => partyRequests.party),
     __metadata("design:type", Array)
 ], PartyEntity.prototype, "partyRequests", void 0);
 __decorate([
-    (0, typeorm_1.OneToMany)(() => party_invite_entity_1.PartyInviteEntity, (comment) => comment.party),
+    (0, typeorm_1.OneToMany)(() => party_invite_entity_1.PartyInviteEntity, (partyInvites) => partyInvites.party),
     __metadata("design:type", Array)
 ], PartyEntity.prototype, "partyInvites", void 0);
 exports.PartyEntity = PartyEntity = __decorate([

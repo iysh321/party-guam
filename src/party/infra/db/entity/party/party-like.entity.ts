@@ -1,15 +1,22 @@
-import { Entity, PrimaryColumn, ManyToOne, JoinColumn } from 'typeorm';
+import { Entity, PrimaryColumn, ManyToOne, JoinColumn, Column, Unique, CreateDateColumn } from 'typeorm';
 
 import { PartyEntity } from './party.entity';
 import { UserEntity } from 'src/user/infra/db/entity/user.entity';
 
 @Entity('party_like')
-export class PartyLike {
+@Unique(['userId', 'partyId'])
+export class PartyLikeEntity {
   @PrimaryColumn()
   id: number;
 
-  @PrimaryColumn()
+  @Column()
+  userId: number;
+
+  @Column()
   partyId: number;
+
+  @CreateDateColumn()
+  createdAt: Date;
 
   @ManyToOne(() => UserEntity)
   @JoinColumn({ name: 'user_id', referencedColumnName: 'id' })

@@ -8,5 +8,8 @@ export declare class PartyRepository implements IPartyRepository {
     private partyRepository;
     private partyFactory;
     constructor(dataSource: DataSource, partyRepository: Repository<PartyEntity>, partyFactory: PartyFactory);
-    create(userId: number, title: string, contents: string): Promise<Party>;
+    create(title: string, content: string): Promise<Party>;
+    findOne(partyId: number): Promise<Party>;
+    update(partyId: number, title: string, content: string): Promise<void>;
+    delete(partyId: number): Promise<void>;
 }

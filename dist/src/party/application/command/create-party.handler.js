@@ -25,8 +25,8 @@ let CreatePartyHandler = class CreatePartyHandler {
     }
     async execute(command) {
         const { userId, title, content, positionId } = command;
-        const party = await this.partyRepository.create(userId, title, content);
-        await this.partyUserRepository.create(userId, party.getId(), positionId);
+        const party = await this.partyRepository.create(title, content);
+        await this.partyUserRepository.createMaster(userId, party.getId(), positionId);
         return party;
     }
 };

@@ -22,8 +22,19 @@ let PartyUserRepository = class PartyUserRepository {
         this.dataSource = dataSource;
         this.partyUserRepository = partyUserRepository;
     }
-    async create(userId, partyId, positionId) {
+    async createUser(userId, partyId, positionId) {
         await this.partyUserRepository.save({ userId, partyId, positionId });
+    }
+    async createMaster(userId, partyId, positionId) {
+        const permission = party_user_entity_1.Permission.MASTER;
+        await this.partyUserRepository.save({ userId, partyId, positionId, permission });
+    }
+    async createEditor(userId, partyId, positionId) {
+        const permission = party_user_entity_1.Permission.EDITOR;
+        await this.partyUserRepository.save({ userId, partyId, positionId, permission });
+    }
+    async findOne(userId, partyId) {
+        return await this.partyUserRepository.findOne({ where: { userId, partyId } });
     }
 };
 exports.PartyUserRepository = PartyUserRepository;

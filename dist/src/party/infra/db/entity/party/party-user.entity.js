@@ -9,7 +9,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.PartyUserEntity = void 0;
+exports.PartyUserEntity = exports.Permission = void 0;
 const position_entity_1 = require("../../../../../position/entity/position.entity");
 const user_entity_1 = require("../../../../../user/infra/db/entity/user.entity");
 const typeorm_1 = require("typeorm");
@@ -18,7 +18,7 @@ var Permission;
 (function (Permission) {
     Permission["MASTER"] = "master";
     Permission["EDITOR"] = "editor";
-})(Permission || (Permission = {}));
+})(Permission || (exports.Permission = Permission = {}));
 let PartyUserEntity = class PartyUserEntity {
 };
 exports.PartyUserEntity = PartyUserEntity;
