@@ -8,6 +8,7 @@ import { PartyInviteEntity } from 'src/party/infra/db/entity/apply/party-invite.
 import { BaseEntity } from 'src/common/entity/baseEntity';
 import { AuthEntity } from 'src/auth/entity/auth.entity';
 import { PositionEntity } from 'src/position/entity/position.entity';
+import { PartyCommentEntity } from 'src/party/infra/db/entity/party/party-comment.entity';
 
 export enum MeetingType {
   ANY = '상관없음',
@@ -98,6 +99,9 @@ export class UserEntity extends BaseEntity {
 
   @OneToMany(() => PartyUserEntity, (party) => party.user)
   parties: PartyUserEntity[];
+
+  @OneToMany(() => PartyCommentEntity, (party) => party.user)
+  comments: PartyUserEntity[];
 
   @OneToMany(() => UserSkillEntity, (userSkill) => userSkill.user)
   userSkills: UserSkillEntity[];

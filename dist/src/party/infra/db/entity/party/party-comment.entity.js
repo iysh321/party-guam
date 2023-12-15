@@ -10,9 +10,11 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.PartyCommentEntity = void 0;
+const baseEntity_1 = require("../../../../../common/entity/baseEntity");
+const user_entity_1 = require("../../../../../user/infra/db/entity/user.entity");
 const typeorm_1 = require("typeorm");
-const party_entity_1 = require("../party/party.entity");
-let PartyCommentEntity = class PartyCommentEntity {
+const party_entity_1 = require("./party.entity");
+let PartyCommentEntity = class PartyCommentEntity extends baseEntity_1.BaseEntity {
 };
 exports.PartyCommentEntity = PartyCommentEntity;
 __decorate([
@@ -20,22 +22,27 @@ __decorate([
     __metadata("design:type", Number)
 ], PartyCommentEntity.prototype, "id", void 0);
 __decorate([
-    (0, typeorm_1.ManyToOne)(() => party_entity_1.PartyEntity, (post) => post.comments),
-    (0, typeorm_1.JoinColumn)({ name: 'party_post_id' }),
-    __metadata("design:type", party_entity_1.PartyEntity)
-], PartyCommentEntity.prototype, "party", void 0);
+    (0, typeorm_1.Column)(),
+    __metadata("design:type", Number)
+], PartyCommentEntity.prototype, "userId", void 0);
+__decorate([
+    (0, typeorm_1.Column)(),
+    __metadata("design:type", Number)
+], PartyCommentEntity.prototype, "partyId", void 0);
 __decorate([
     (0, typeorm_1.Column)(),
     __metadata("design:type", String)
 ], PartyCommentEntity.prototype, "content", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ nullable: true, type: 'date' }),
-    __metadata("design:type", Date)
-], PartyCommentEntity.prototype, "created_at", void 0);
+    (0, typeorm_1.ManyToOne)(() => user_entity_1.UserEntity, (post) => post.comments),
+    (0, typeorm_1.JoinColumn)({ name: 'user_id' }),
+    __metadata("design:type", user_entity_1.UserEntity)
+], PartyCommentEntity.prototype, "user", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ nullable: true, type: 'date' }),
-    __metadata("design:type", Date)
-], PartyCommentEntity.prototype, "updated_at", void 0);
+    (0, typeorm_1.ManyToOne)(() => party_entity_1.PartyEntity, (post) => post.comments),
+    (0, typeorm_1.JoinColumn)({ name: 'party_id' }),
+    __metadata("design:type", party_entity_1.PartyEntity)
+], PartyCommentEntity.prototype, "party", void 0);
 exports.PartyCommentEntity = PartyCommentEntity = __decorate([
     (0, typeorm_1.Entity)('party_comment')
 ], PartyCommentEntity);

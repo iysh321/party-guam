@@ -19,6 +19,7 @@ const party_invite_entity_1 = require("../../../../party/infra/db/entity/apply/p
 const baseEntity_1 = require("../../../../common/entity/baseEntity");
 const auth_entity_1 = require("../../../../auth/entity/auth.entity");
 const position_entity_1 = require("../../../../position/entity/position.entity");
+const party_comment_entity_1 = require("../../../../party/infra/db/entity/party/party-comment.entity");
 var MeetingType;
 (function (MeetingType) {
     MeetingType["ANY"] = "\uC0C1\uAD00\uC5C6\uC74C";
@@ -128,6 +129,10 @@ __decorate([
     (0, typeorm_1.OneToMany)(() => party_user_entity_1.PartyUserEntity, (party) => party.user),
     __metadata("design:type", Array)
 ], UserEntity.prototype, "parties", void 0);
+__decorate([
+    (0, typeorm_1.OneToMany)(() => party_comment_entity_1.PartyCommentEntity, (party) => party.user),
+    __metadata("design:type", Array)
+], UserEntity.prototype, "comments", void 0);
 __decorate([
     (0, typeorm_1.OneToMany)(() => user_skill_entity_1.UserSkillEntity, (userSkill) => userSkill.user),
     __metadata("design:type", Array)

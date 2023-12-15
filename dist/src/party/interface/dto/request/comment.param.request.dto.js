@@ -9,19 +9,19 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.PartyCommentRequestDto = void 0;
+exports.CommentRequestDto = void 0;
 const swagger_1 = require("@nestjs/swagger");
 const class_validator_1 = require("class-validator");
-class PartyCommentRequestDto {
+class CommentRequestDto {
 }
-exports.PartyCommentRequestDto = PartyCommentRequestDto;
+exports.CommentRequestDto = CommentRequestDto;
 __decorate([
     (0, swagger_1.ApiProperty)({
-        example: '지원하고 싶습니다.',
-        description: '댓글 내용',
+        example: '파티 댓글 고유 ID',
+        description: '파티 댓글 고유ID',
     }),
     (0, class_validator_1.IsNotEmpty)(),
-    (0, class_validator_1.IsString)(),
-    __metadata("design:type", String)
-], PartyCommentRequestDto.prototype, "comment", void 0);
-//# sourceMappingURL=party-comment.request.dto.js.map
+    (0, class_validator_1.IsInt)(),
+    __metadata("design:type", Number)
+], CommentRequestDto.prototype, "commentId", void 0);
+//# sourceMappingURL=comment.param.request.dto.js.map

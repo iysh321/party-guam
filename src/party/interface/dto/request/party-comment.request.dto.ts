@@ -8,5 +8,5 @@ export class PartyCommentRequestDto {
   })
   @IsNotEmpty()
   @IsString()
-  readonly content: string;
+  readonly comment: string;
 }

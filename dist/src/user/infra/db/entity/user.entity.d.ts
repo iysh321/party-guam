@@ -40,6 +40,7 @@ export declare class UserEntity extends BaseEntity {
     followers: FollowEntity[];
     followings: FollowEntity[];
     parties: PartyUserEntity[];
+    comments: PartyUserEntity[];
     userSkills: UserSkillEntity[];
     partyRequests: PartyRequestEntity[];
     partyInvites: PartyInviteEntity[];

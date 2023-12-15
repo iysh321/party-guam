@@ -12,7 +12,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.PartyEntity = void 0;
 const typeorm_1 = require("typeorm");
 const party_user_entity_1 = require("./party-user.entity");
-const party_comment_entity_1 = require("../comment/party-comment.entity");
+const party_comment_entity_1 = require("./party-comment.entity");
 const party_like_entity_1 = require("./party-like.entity");
 const party_invite_entity_1 = require("../apply/party-invite.entity");
 const party_request_entity_1 = require("../apply/party-request.entity");

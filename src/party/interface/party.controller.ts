@@ -22,6 +22,8 @@ import { PartyResponseDto } from './dto/response/party.response.dto';
 import { GetPartyLikeQuery } from '../application/query/get-party-like.query';
 import { CreatePartyLikeCommand } from '../application/command/create-party-like.comand';
 import { DeletePartyLikeCommand } from '../application/command/delete-party-like.comand';
+import { CreateCommentCommand } from '../application/command/create-comment.comand';
+import { CommentRequestDto } from './dto/request/comment.param.request.dto';
 
 @UseGuards(AccessJwtAuthGuard)
 @Controller('parties')
@@ -122,14 +124,18 @@ export class PartyController {
     @Param() param: PartyRequestDto,
     @Body() dto: PartyCommentRequestDto,
   ): Promise<void> {
-    dto;
+    const { comment } = dto;
+
+    const command = new CreateCommentCommand(payload.id, param.partyId, comment);
+
+    return this.commandBus.execute(command);
   }
 
   @Put('comments/:commentId')
   @ApiOperation({ summary: '파티(게시물) 댓글 수정' })
   async updatePartyComment(
     @CurrentAccount() payload: DecodedPayload,
-    @Param('commentId') commentId: number,
+    @Param() commentId: CommentRequestDto,
     @Body() dto: PartyCommentRequestDto,
   ): Promise<void> {
     dto;

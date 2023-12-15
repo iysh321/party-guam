@@ -1,5 +1,5 @@
 import { PartyUserEntity } from './party-user.entity';
-import { PartyCommentEntity } from '../comment/party-comment.entity';
+import { PartyCommentEntity } from './party-comment.entity';
 import { PartyLikeEntity } from './party-like.entity';
 import { PartyInviteEntity } from '../apply/party-invite.entity';
 import { PartyRequestEntity } from '../apply/party-request.entity';

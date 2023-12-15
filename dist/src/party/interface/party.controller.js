@@ -33,6 +33,8 @@ const party_response_dto_1 = require("./dto/response/party.response.dto");
 const get_party_like_query_1 = require("../application/query/get-party-like.query");
 const create_party_like_comand_1 = require("../application/command/create-party-like.comand");
 const delete_party_like_comand_1 = require("../application/command/delete-party-like.comand");
+const create_comment_comand_1 = require("../application/command/create-comment.comand");
+const comment_param_request_dto_1 = require("./dto/request/comment.param.request.dto");
 let PartyController = class PartyController {
     constructor(commandBus, queryBus) {
         this.commandBus = commandBus;
@@ -77,7 +79,9 @@ let PartyController = class PartyController {
         this.commandBus.execute(command);
     }
     async createPartyComment(payload, param, dto) {
-        dto;
+        const { comment } = dto;
+        const command = new create_comment_comand_1.CreateCommentCommand(payload.id, param.partyId, comment);
+        return this.commandBus.execute(command);
     }
     async updatePartyComment(payload, commentId, dto) {
         dto;
@@ -198,10 +202,11 @@ __decorate([
     (0, common_1.Put)('comments/:commentId'),
     (0, swagger_1.ApiOperation)({ summary: '파티(게시물) 댓글 수정' }),
     __param(0, (0, auth_decorator_1.CurrentAccount)()),
-    __param(1, (0, common_1.Param)('commentId')),
+    __param(1, (0, common_1.Param)()),
     __param(2, (0, common_1.Body)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object, Number, party_comment_request_dto_1.PartyCommentRequestDto]),
+    __metadata("design:paramtypes", [Object, comment_param_request_dto_1.CommentRequestDto,
+        party_comment_request_dto_1.PartyCommentRequestDto]),
     __metadata("design:returntype", Promise)
 ], PartyController.prototype, "updatePartyComment", null);
 __decorate([

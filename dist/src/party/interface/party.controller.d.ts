@@ -6,6 +6,7 @@ import { CreatePartyRequestDto } from './dto/request/create-party.request.dto';
 import { UpdatePartyRequestDto } from './dto/request/update-party.request.dto';
 import { PartyQueryRequestDto } from './dto/request/party.query.request.dto';
 import { PartyResponseDto } from './dto/response/party.response.dto';
+import { CommentRequestDto } from './dto/request/comment.param.request.dto';
 export declare class PartyController {
     private commandBus;
     private queryBus;
@@ -19,7 +20,7 @@ export declare class PartyController {
     createPartyToLike(payload: DecodedPayload, param: PartyRequestDto): Promise<void>;
     deletePartyToLike(payload: DecodedPayload, param: PartyRequestDto): Promise<void>;
     createPartyComment(payload: DecodedPayload, param: PartyRequestDto, dto: PartyCommentRequestDto): Promise<void>;
-    updatePartyComment(payload: DecodedPayload, commentId: number, dto: PartyCommentRequestDto): Promise<void>;
+    updatePartyComment(payload: DecodedPayload, commentId: CommentRequestDto, dto: PartyCommentRequestDto): Promise<void>;
     deletePartyComment(payload: DecodedPayload, commentId: number, dto: UpdatePartyRequestDto): Promise<void>;
     getPartyRequestList(payload: DecodedPayload, partyId: number, dto: PartyCommentRequestDto): Promise<void>;
     sendPartyRequest(payload: DecodedPayload, commentId: number): Promise<void>;
