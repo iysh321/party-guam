@@ -7,7 +7,7 @@ import { DeleteCommentCommand } from './delete-comment.comand';
 
 @Injectable()
 @CommandHandler(DeleteCommentCommand)
-export class UpdateCommentHandler implements ICommandHandler<DeleteCommentCommand> {
+export class DeleteCommentHandler implements ICommandHandler<DeleteCommentCommand> {
   constructor(
     private partyFactory: PartyFactory,
     @Inject('PartyCommentRepository') private partyCommentRepository: IPartyCommentRepository,

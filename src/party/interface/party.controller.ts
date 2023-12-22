@@ -24,6 +24,8 @@ import { CreatePartyLikeCommand } from '../application/command/create-party-like
 import { DeletePartyLikeCommand } from '../application/command/delete-party-like.comand';
 import { CreateCommentCommand } from '../application/command/create-comment.comand';
 import { CommentRequestDto } from './dto/request/comment.param.request.dto';
+import { UpdateCommentCommand } from '../application/command/update-comment.comand';
+import { DeleteCommentCommand } from '../application/command/delete-comment.comand';
 
 @UseGuards(AccessJwtAuthGuard)
 @Controller('parties')
@@ -135,20 +137,25 @@ export class PartyController {
   @ApiOperation({ summary: '파티(게시물) 댓글 수정' })
   async updatePartyComment(
     @CurrentAccount() payload: DecodedPayload,
-    @Param() commentId: CommentRequestDto,
+    @Param() param: CommentRequestDto,
     @Body() dto: PartyCommentRequestDto,
   ): Promise<void> {
-    dto;
+    const { comment } = dto;
+
+    const command = new UpdateCommentCommand(param.commentId, payload.id, comment);
+
+    return this.commandBus.execute(command);
   }
 
   @Delete('comments/:commentId')
   @ApiOperation({ summary: '파티(게시물) 댓글 삭제' })
   async deletePartyComment(
     @CurrentAccount() payload: DecodedPayload,
-    @Param('commentId') commentId: number,
-    @Body() dto: UpdatePartyRequestDto,
+    @Param() param: CommentRequestDto,
   ): Promise<void> {
-    dto;
+    const command = new DeleteCommentCommand(param.commentId, payload.id);
+
+    return this.commandBus.execute(command);
   }
 
   // 신청
