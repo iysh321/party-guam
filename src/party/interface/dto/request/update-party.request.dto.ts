@@ -6,15 +6,15 @@ export class UpdatePartyRequestDto {
     example: '파티구함',
     description: '제목',
   })
-  @IsOptional()
   @IsString()
+  @IsOptional()
   readonly title: string;
 
   @ApiProperty({
     example: '풀스텍 구함',
     description: '본문',
   })
-  @IsOptional()
   @IsString()
+  @IsOptional()
   readonly content: string;
 }

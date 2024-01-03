@@ -6,7 +6,7 @@ export class CommentRequestDto {
     example: '파티 댓글 고유 ID',
     description: '파티 댓글 고유ID',
   })
-  @IsNotEmpty()
   @IsInt()
+  @IsNotEmpty()
   readonly commentId: number;
 }

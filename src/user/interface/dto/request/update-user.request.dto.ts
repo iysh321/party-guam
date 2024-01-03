@@ -7,8 +7,8 @@ export class UpdateUserRequestDto {
     example: true,
     description: '모임참석여부',
   })
-  @IsOptional()
   @IsBoolean()
+  @IsOptional()
   readonly isParty: boolean;
 
   @ApiPropertyOptional({
@@ -16,8 +16,8 @@ export class UpdateUserRequestDto {
     description: '모임참석형태',
     enum: MeetingType,
   })
-  @IsOptional()
   @IsString()
+  @IsOptional()
   readonly meetingType: string;
 
   @ApiPropertyOptional({
@@ -25,8 +25,8 @@ export class UpdateUserRequestDto {
     description: '모임참석 주중, 주말',
     enum: MeetingWeekType,
   })
-  @IsOptional()
   @IsString()
+  @IsOptional()
   readonly meetingWeek: string;
 
   @ApiPropertyOptional({
@@ -34,8 +34,8 @@ export class UpdateUserRequestDto {
     description: '모임참석 시간',
     enum: MeetingTimeType,
   })
-  @IsOptional()
   @IsString()
+  @IsOptional()
   readonly meetingTime: string;
 
   @ApiPropertyOptional({
@@ -60,23 +60,23 @@ export class UpdateUserRequestDto {
       'isfj',
     ],
   })
-  @IsOptional()
   @IsString()
+  @IsOptional()
   readonly mbti: string;
 
   @ApiPropertyOptional({
     example: [1, 2],
     description: 'skill id(pk)',
   })
-  @IsOptional()
   @IsInt()
+  @IsOptional()
   readonly skillIds: number[];
 
   @ApiPropertyOptional({
     example: 1,
     description: 'position id(pk)',
   })
-  @IsOptional()
   @IsInt()
+  @IsOptional()
   readonly positionId: number[];
 }

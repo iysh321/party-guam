@@ -6,9 +6,9 @@ export class UserParamRequestDto {
     example: 'nickname',
     description: '닉네임 2자 이상 30자 이하',
   })
-  @IsNotEmpty()
-  @IsString()
-  @MinLength(2)
   @MaxLength(30)
+  @MinLength(2)
+  @IsString()
+  @IsNotEmpty()
   public nickname: string;
 }

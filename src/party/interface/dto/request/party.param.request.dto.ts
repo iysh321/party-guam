@@ -6,7 +6,7 @@ export class PartyRequestDto {
     example: '파티 고유 ID',
     description: '파티고유ID',
   })
-  @IsNotEmpty()
   @IsInt()
+  @IsNotEmpty()
   readonly partyId: number;
 }

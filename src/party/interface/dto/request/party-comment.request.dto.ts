@@ -6,7 +6,7 @@ export class PartyCommentRequestDto {
     example: '지원하고 싶습니다.',
     description: '댓글 내용',
   })
-  @IsNotEmpty()
   @IsString()
+  @IsNotEmpty()
   readonly comment: string;
 }

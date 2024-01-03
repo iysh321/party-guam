@@ -6,33 +6,33 @@ export class PartyQueryRequestDto {
     example: 1,
     description: 'page',
   })
-  @IsNotEmpty()
   @IsInt()
+  @IsNotEmpty()
   public page: number;
 
   @ApiProperty({
     example: 5,
     description: '최대 조회 수',
   })
-  @IsNotEmpty()
   @IsInt()
+  @IsNotEmpty()
   public limit: number;
 
   @ApiProperty({
     enum: ['createdAt'],
     description: 'order 조회 기준',
   })
-  @IsNotEmpty()
-  @IsString()
   @IsIn(['createdAt'])
+  @IsString()
+  @IsNotEmpty()
   public sort: string;
 
   @ApiProperty({
     enum: ['ASC', 'DESC'],
     description: '오름, 내림차순',
   })
-  @IsNotEmpty()
-  @IsString()
   @IsIn(['ASC', 'DESC'])
+  @IsString()
+  @IsNotEmpty()
   public order: 'ASC' | 'DESC';
 }
